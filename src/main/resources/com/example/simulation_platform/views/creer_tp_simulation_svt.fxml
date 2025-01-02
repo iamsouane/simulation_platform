@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationSVTController" spacing="10" alignment="CENTER">
+    <children>
+        <Label text="Créer TP Simulation SVT"/>
+        <TextField fx:id="titreField" promptText="Titre"/>
+        <TextField fx:id="detailsField" promptText="Détails"/>
+        <Button text="Créer Simulation SVT" onAction="#handleCreer"/>
+    </children>
+</VBox>

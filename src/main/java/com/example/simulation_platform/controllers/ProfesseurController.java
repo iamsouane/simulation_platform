@@ -27,8 +27,11 @@ public class ProfesseurController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp_view.fxml"));
             Scene scene = new Scene(loader.load());
+
             CreerTPController controller = loader.getController();
-            controller.setProfesseur(professeur); // Passer le professeur au contrôleur de création de TP
+            controller.setProfesseur(professeur);
+            controller.setStage(stage); // Passer le stage au contrôleur
+
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

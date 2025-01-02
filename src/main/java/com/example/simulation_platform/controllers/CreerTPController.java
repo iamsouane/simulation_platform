@@ -1,14 +1,15 @@
 package com.example.simulation_platform.controllers;
 
-import com.example.simulation_platform.models.Matiere;
 import com.example.simulation_platform.models.Professeur;
-import com.example.simulation_platform.models.TP;
-import com.example.simulation_platform.models.TypeTP;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class CreerTPController {
 
@@ -22,26 +23,73 @@ public class CreerTPController {
     private ComboBox<String> typeTPComboBox;
 
     private Professeur professeur;
+    private Stage stage;
 
     public void setProfesseur(Professeur professeur) {
         this.professeur = professeur;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML
     private void handleCreer() {
         String titre = titreField.getText();
         String details = detailsField.getText();
-        Matiere matiere = Matiere.valueOf(matiereComboBox.getValue().toUpperCase());
-        TypeTP typeTP = TypeTP.valueOf(typeTPComboBox.getValue().toUpperCase());
+        String matiere = matiereComboBox.getValue();
+        String typeTP = typeTPComboBox.getValue();
 
         if (titre.isEmpty() || details.isEmpty() || matiere == null || typeTP == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
-        TP tp = professeur.creerTP(titre, details, matiere, typeTP);
-        showAlert(Alert.AlertType.INFORMATION, "Succès", "TP créé avec succès.");
-        // Logique supplémentaire pour enregistrer le TP dans la base de données peut être ajoutée ici
+        try {
+            String fxmlPath = getFxmlPath(matiere, typeTP);
+            if (fxmlPath == null) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Chemin FXML non trouvé pour la combinaison sélectionnée.");
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Scene scene = new Scene(loader.load());
+
+            if (typeTP.equals("Quizz")) {
+                if (matiere.equals("Chimie")) {
+                    CreerTPQuizzChimieController controller = loader.getController();
+                } else if (matiere.equals("SVT")) {
+                    CreerTPQuizzSVTController controller = loader.getController();
+                }
+            } else if (typeTP.equals("Simulation")) {
+                if (matiere.equals("Chimie")) {
+                    CreerTPSimulationChimieController controller = loader.getController();
+                } else if (matiere.equals("SVT")) {
+                    CreerTPSimulationSVTController controller = loader.getController();
+                }
+            }
+
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue.");
+        }
+    }
+
+    private String getFxmlPath(String matiere, String typeTP) {
+        if (typeTP.equals("Quizz")) {
+            if (matiere.equals("Chimie")) {
+                return "/com/example/simulation_platform/views/creer_tp_quizz_chimie.fxml";
+            } else if (matiere.equals("SVT")) {
+                return "/com/example/simulation_platform/views/creer_tp_quizz_svt.fxml";
+            }
+        } else if (typeTP.equals("Simulation")) {
+            if (matiere.equals("Chimie")) {
+                return "/com/example/simulation_platform/views/creer_tp_simulation_chimie.fxml";
+            } else if (matiere.equals("SVT")) {
+                return "/com/example/simulation_platform/views/creer_tp_simulation_svt.fxml";
+            }
+        }
+        return null;
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
