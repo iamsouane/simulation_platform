@@ -1,9 +1,22 @@
 package com.example.simulation_platform.controllers;
 
+import com.example.simulation_platform.models.Eleve;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class EleveController {
+
+    private Eleve eleve;
+    private Stage stage;
+
+    public void setEleve(Eleve eleve) {
+        this.eleve = eleve;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     private void handleFaireTP() {

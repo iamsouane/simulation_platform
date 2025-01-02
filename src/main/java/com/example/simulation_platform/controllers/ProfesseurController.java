@@ -1,13 +1,39 @@
 package com.example.simulation_platform.controllers;
 
+import com.example.simulation_platform.models.Professeur;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ProfesseurController {
 
+    private Professeur professeur;
+    private Stage stage;
+
+    public void setProfesseur(Professeur professeur) {
+        this.professeur = professeur;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     @FXML
     private void handleCreerTP() {
-        showAlert(Alert.AlertType.INFORMATION, "Créer TP", "Fonctionnalité de création de TP.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp_view.fxml"));
+            Scene scene = new Scene(loader.load());
+            CreerTPController controller = loader.getController();
+            controller.setProfesseur(professeur); // Passer le professeur au contrôleur de création de TP
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
+        }
     }
 
     @FXML

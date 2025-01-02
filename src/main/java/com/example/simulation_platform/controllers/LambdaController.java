@@ -1,9 +1,22 @@
 package com.example.simulation_platform.controllers;
 
+import com.example.simulation_platform.models.Lambda;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class LambdaController {
+
+    private Lambda lambda;
+    private Stage stage;
+
+    public void setLambda(Lambda lambda) {
+        this.lambda = lambda;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     private void handleTesterTP() {

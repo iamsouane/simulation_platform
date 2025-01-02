@@ -82,7 +82,7 @@ public class MainViewController {
                             resultSet.getString("email"),
                             resultSet.getString("motDePasse")
                     );
-                    loadView("/com/example/simulation_platform/views/professeur_view.fxml");
+                    loadView("/com/example/simulation_platform/views/professeur_view.fxml", utilisateur);
                 } else if (role.equals("ELEVE")) {
                     utilisateur = new Eleve(
                             resultSet.getInt("idUtilisateur"),
@@ -91,7 +91,7 @@ public class MainViewController {
                             resultSet.getString("email"),
                             resultSet.getString("motDePasse")
                     );
-                    loadView("/com/example/simulation_platform/views/eleve_view.fxml");
+                    loadView("/com/example/simulation_platform/views/eleve_view.fxml", utilisateur);
                 } else {
                     utilisateur = new Lambda(
                             resultSet.getInt("idUtilisateur"),
@@ -100,7 +100,7 @@ public class MainViewController {
                             resultSet.getString("email"),
                             resultSet.getString("motDePasse")
                     );
-                    loadView("/com/example/simulation_platform/views/lambda_view.fxml");
+                    loadView("/com/example/simulation_platform/views/lambda_view.fxml", utilisateur);
                 }
             } else {
                 showAlert(Alert.AlertType.ERROR, "Erreur de connexion", "Email ou mot de passe incorrect.");
@@ -138,9 +138,25 @@ public class MainViewController {
         }
     }
 
-    private void loadView(String fxmlPath) throws IOException {
+    private void loadView(String fxmlPath, Utilisateur utilisateur) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(loader.load());
+
+        // Passer le stage et l'utilisateur au contrôleur approprié
+        if (utilisateur instanceof Professeur) {
+            ProfesseurController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setProfesseur((Professeur) utilisateur);
+        } else if (utilisateur instanceof Eleve) {
+            EleveController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setEleve((Eleve) utilisateur);
+        } else if (utilisateur instanceof Lambda) {
+            LambdaController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setLambda((Lambda) utilisateur);
+        }
+
         stage.setScene(scene);
     }
 

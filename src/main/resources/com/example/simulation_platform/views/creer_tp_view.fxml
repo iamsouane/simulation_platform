@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.collections.FXCollections?>
+
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPController" spacing="10" alignment="CENTER">
+    <children>
+        <Label text="Créer TP"/>
+        <TextField fx:id="titreField" promptText="Titre"/>
+        <TextField fx:id="detailsField" promptText="Détails"/>
+        <ComboBox fx:id="matiereComboBox">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Chimie"/>
+                    <String fx:value="SVT"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <ComboBox fx:id="typeTPComboBox">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Quizz"/>
+                    <String fx:value="Simulation"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button text="Créer" onAction="#handleCreer"/>
+    </children>
+</VBox>
