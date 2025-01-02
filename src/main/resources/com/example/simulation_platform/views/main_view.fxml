@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.MainViewController" spacing="10" alignment="CENTER">
+    <children>
+        <!-- Boutons pour basculer entre les formulaires -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Connexion" onAction="#showLoginForm"/>
+            <Button text="Inscription" onAction="#showSignupForm"/>
+        </HBox>
+
+        <!-- Formulaire de Connexion -->
+        <VBox fx:id="loginForm" spacing="10" alignment="CENTER">
+            <Label text="Connexion"/>
+            <TextField fx:id="loginEmailField" promptText="Email"/>
+            <PasswordField fx:id="loginPasswordField" promptText="Mot de Passe"/>
+            <Button text="Se Connecter" onAction="#handleLogin"/>
+        </VBox>
+
+        <!-- Formulaire d'Inscription -->
+        <VBox fx:id="signupForm" spacing="10" alignment="CENTER" visible="false">
+            <Label text="Inscription"/>
+            <TextField fx:id="signupNomField" promptText="Nom"/>
+            <TextField fx:id="signupPrenomField" promptText="Prénom"/>
+            <TextField fx:id="signupEmailField" promptText="Email"/>
+            <PasswordField fx:id="signupPasswordField" promptText="Mot de Passe"/>
+            <ComboBox fx:id="signupRoleComboBox">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Professeur"/>
+                        <String fx:value="Élève"/>
+                        <String fx:value="Lambda"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Button text="S'inscrire" onAction="#handleSignup"/>
+        </VBox>
+    </children>
+</VBox>
