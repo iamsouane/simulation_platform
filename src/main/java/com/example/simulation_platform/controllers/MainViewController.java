@@ -6,10 +6,13 @@ import com.example.simulation_platform.models.Lambda;
 import com.example.simulation_platform.models.Utilisateur;
 import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +43,6 @@ public class MainViewController {
     @FXML
     private ComboBox<String> signupRoleComboBox;
 
-    // Définir la méthode setStage
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -80,6 +82,7 @@ public class MainViewController {
                             resultSet.getString("email"),
                             resultSet.getString("motDePasse")
                     );
+                    loadView("/com/example/simulation_platform/views/professeur_view.fxml");
                 } else if (role.equals("ELEVE")) {
                     utilisateur = new Eleve(
                             resultSet.getInt("idUtilisateur"),
@@ -88,6 +91,7 @@ public class MainViewController {
                             resultSet.getString("email"),
                             resultSet.getString("motDePasse")
                     );
+                    loadView("/com/example/simulation_platform/views/eleve_view.fxml");
                 } else {
                     utilisateur = new Lambda(
                             resultSet.getInt("idUtilisateur"),
@@ -96,13 +100,12 @@ public class MainViewController {
                             resultSet.getString("email"),
                             resultSet.getString("motDePasse")
                     );
+                    loadView("/com/example/simulation_platform/views/lambda_view.fxml");
                 }
-                // Rediriger vers la page d'accueil de l'utilisateur
-                // ...
             } else {
                 showAlert(Alert.AlertType.ERROR, "Erreur de connexion", "Email ou mot de passe incorrect.");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -133,6 +136,12 @@ public class MainViewController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadView(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

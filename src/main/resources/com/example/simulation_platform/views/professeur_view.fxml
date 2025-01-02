@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.ProfesseurController" spacing="10" alignment="CENTER">
+    <children>
+        <Label text="Bienvenue Professeur"/>
+        <Button text="Créer TP" onAction="#handleCreerTP"/>
+        <Button text="Consulter Résultats" onAction="#handleConsulterResultats"/>
+        <Button text="Se Déconnecter" onAction="#handleLogout"/>
+    </children>
+</VBox>
