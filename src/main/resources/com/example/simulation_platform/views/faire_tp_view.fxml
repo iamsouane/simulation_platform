@@ -5,10 +5,10 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPController" spacing="10" alignment="CENTER">
     <children>
-        <Label text="Faire un TP"/>
-        <Button text="Faire un Quizz en Chimie" onAction="#handleFaireQuizzChimie"/>
-        <Button text="Faire un Quizz en SVT" onAction="#handleFaireQuizzSVT"/>
-        <Button text="Faire une Simulation en Chimie" onAction="#handleFaireSimulationChimie"/>
-        <Button text="Faire une Simulation en SVT" onAction="#handleFaireSimulationSVT"/>
+        <Label text="Choisissez une option de TP"/>
+        <Button text="Faire un Quizz en Chimie" onAction="#handleFaireTPQuizzChimie"/>
+        <Button text="Faire un Quizz en SVT" onAction="#handleFaireTPQuizzSVT"/>
+        <Button text="Faire une Simulation en Chimie" onAction="#handleFaireTPSimulationChimie"/>
+        <Button text="Faire une Simulation en SVT" onAction="#handleFaireTPSimulationSVT"/>
     </children>
 </VBox>

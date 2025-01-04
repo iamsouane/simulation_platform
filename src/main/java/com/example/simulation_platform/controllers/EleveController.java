@@ -2,43 +2,63 @@ package com.example.simulation_platform.controllers;
 
 import com.example.simulation_platform.models.Eleve;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class EleveController {
 
-    private Eleve eleve;
     private Stage stage;
+    private Eleve eleve;
 
-    public void setEleve(Eleve eleve) {
-        this.eleve = eleve;
-    }
+    @FXML
+    private VBox mainVBox;
+
+    @FXML
+    private Label welcomeLabel;
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    public void setEleve(Eleve eleve) {
+        this.eleve = eleve;
+    }
+
     @FXML
     private void handleFaireTP() {
-        showAlert(Alert.AlertType.INFORMATION, "Faire TP", "Fonctionnalité pour faire un TP.");
+        // Logique pour gérer l'action du bouton "Faire TP"
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/faire_tp_view.fxml"));
+            VBox faireTpView = loader.load();
+            Scene scene = new Scene(faireTpView);
+
+            FaireTPController controller = loader.getController();
+            controller.setStage(stage); // Assurez-vous que `stage` est passé ici
+            controller.setEleve(eleve);
+
+            stage.setScene(scene);
+            stage.setTitle("Faire TP - Simulation Platform");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleConsulterHistorique() {
-        showAlert(Alert.AlertType.INFORMATION, "Consulter Historique", "Fonctionnalité pour consulter l'historique.");
+        // Logique pour gérer l'action du bouton "Consulter Historique"
+        System.out.println("Consulter Historique button clicked");
+        // Vous pouvez ajouter le code pour charger une nouvelle vue ici
     }
 
     @FXML
     private void handleLogout() {
-        showAlert(Alert.AlertType.INFORMATION, "Déconnexion", "Vous avez été déconnecté.");
-        // Logique pour retourner à la page de connexion
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        // Logique pour gérer l'action du bouton "Se Déconnecter"
+        System.out.println("Logout button clicked");
+        // Vous pouvez ajouter le code pour gérer la déconnexion ici
     }
 }

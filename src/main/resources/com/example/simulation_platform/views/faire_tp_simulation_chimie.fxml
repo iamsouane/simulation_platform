@@ -6,7 +6,6 @@
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationChimieController" spacing="10" alignment="CENTER">
     <children>
         <Label fx:id="titreLabel" text="TP Simulation Chimie"/>
-        <VBox fx:id="simulationVBox" spacing="10"/>
-        <Button text="Soumettre" onAction="#handleSoumettre"/>
+        <!-- Autres éléments spécifiques à la simulation en chimie -->
     </children>
 </VBox>
