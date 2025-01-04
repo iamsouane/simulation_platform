@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPController" spacing="10" alignment="CENTER">
+    <children>
+        <Label text="Faire un TP"/>
+        <Button text="Faire un Quizz en Chimie" onAction="#handleFaireQuizzChimie"/>
+        <Button text="Faire un Quizz en SVT" onAction="#handleFaireQuizzSVT"/>
+        <Button text="Faire une Simulation en Chimie" onAction="#handleFaireSimulationChimie"/>
+        <Button text="Faire une Simulation en SVT" onAction="#handleFaireSimulationSVT"/>
+    </children>
+</VBox>
