@@ -54,17 +54,30 @@ public class CreerTPController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Scene scene = new Scene(loader.load());
 
+            // Passer les informations nécessaires aux contrôleurs spécifiques
             if (typeTP.equals("Quizz")) {
                 if (matiere.equals("Chimie")) {
                     CreerTPQuizzChimieController controller = loader.getController();
+                    controller.setProfesseur(professeur);  // Transférer le professeur
+                    controller.setTitre(titre);            // Transférer le titre
+                    controller.setDetails(details);        // Transférer les détails
                 } else if (matiere.equals("SVT")) {
                     CreerTPQuizzSVTController controller = loader.getController();
+                    controller.setProfesseur(professeur);  // Transférer le professeur
+                    controller.setTitre(titre);            // Transférer le titre
+                    controller.setDetails(details);        // Transférer les détails
                 }
             } else if (typeTP.equals("Simulation")) {
                 if (matiere.equals("Chimie")) {
                     CreerTPSimulationChimieController controller = loader.getController();
+                    controller.setProfesseur(professeur);  // Transférer le professeur
+                    controller.setTitre(titre);            // Transférer le titre
+                    controller.setDetails(details);        // Transférer les détails
                 } else if (matiere.equals("SVT")) {
                     CreerTPSimulationSVTController controller = loader.getController();
+                    controller.setProfesseur(professeur);  // Transférer le professeur
+                    controller.setTitre(titre);            // Transférer le titre
+                    controller.setDetails(details);        // Transférer les détails
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.example.simulation_platform.controllers;
 
+import com.example.simulation_platform.models.Professeur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
@@ -10,7 +11,25 @@ public class CreerTPSimulationSVTController {
     @FXML
     private TextField titreField;
     @FXML
-    private TextField detailsField;
+    private TextArea detailsField;
+
+    private Professeur professeur;
+    private String titre;
+    private String details;
+
+    public void setProfesseur(Professeur professeur) {
+        this.professeur = professeur;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+        titreField.setText(titre); // Initialiser le champ titre avec la valeur transférée
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+        detailsField.setText(details); // Initialiser le champ détails avec la valeur transférée
+    }
 
     @FXML
     private void handleCreer() {
@@ -23,6 +42,8 @@ public class CreerTPSimulationSVTController {
         }
 
         // Logique pour créer la simulation de SVT
+        // Vous pouvez ajouter ici des actions supplémentaires si nécessaire
+
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Simulation SVT créée avec succès.");
     }
 

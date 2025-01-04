@@ -17,6 +17,10 @@ public abstract class Utilisateur {
         this.role = role;
     }
 
+    public int getIdUtilisateur() {
+        return idUtilisateur;
+    }
+
     public abstract void sInscrire();
     public abstract void seConnecter();
     public abstract void seDeconnecter();

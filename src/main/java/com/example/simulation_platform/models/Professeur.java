@@ -11,6 +11,10 @@ public class Professeur extends Utilisateur {
         this.listeTP = new ArrayList<>();
     }
 
+    public int getId() {
+        return getIdUtilisateur();
+    }
+
     public TP creerTP(String titre, String details, Matiere matiere, TypeTP typeTP) {
         TP tp = new TP(titre, details, matiere, typeTP, this);
         listeTP.add(tp);
