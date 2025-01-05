@@ -133,7 +133,8 @@ public class FaireTPQuizzChimieController {
         }
 
         int totalQuestions = questions.size();
-        int score = (int) ((correctAnswers / (double) totalQuestions) * 20); // Note sur 20
+        double pointsPerQuestion = 20.0 / totalQuestions;
+        int score = (int) (correctAnswers * pointsPerQuestion); // Note sur 20
 
         String commentaires;
         if (score >= 16) {

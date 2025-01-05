@@ -137,7 +137,7 @@ public class EleveController {
                 int note = resultSet.getInt("note");
                 String commentaires = resultSet.getString("commentaires");
                 resultats.append("TP: ").append(resultSet.getInt("tp")).append("\n");
-                resultats.append("Note: ").append(note).append("\n");
+                resultats.append("Note: ").append(note).append("/20\n");
                 resultats.append("Commentaires: ").append(commentaires).append("\n\n");
             }
 
