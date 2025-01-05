@@ -103,6 +103,7 @@ public class FaireTPQuizzSVTController {
     @FXML
     private void handleSoumettre() {
         List<Reponse> reponsesEleve = new ArrayList<>();
+        int correctAnswers = 0;
         for (int i = 0; i < questionsVBox.getChildren().size(); i += 2) {
             Label questionLabel = (Label) questionsVBox.getChildren().get(i);
             VBox reponsesVBox = (VBox) questionsVBox.getChildren().get(i + 1);
@@ -121,6 +122,9 @@ public class FaireTPQuizzSVTController {
                 if (selectedRadioButton != null) {
                     Reponse reponse = (Reponse) selectedRadioButton.getUserData();
                     reponsesEleve.add(reponse);
+                    if (reponse.isEstCorrecte()) {
+                        correctAnswers++;
+                    }
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez répondre à toutes les questions.");
                     return;
@@ -128,19 +132,56 @@ public class FaireTPQuizzSVTController {
             }
         }
 
+        int totalQuestions = questions.size();
+        int score = (int) ((correctAnswers / (double) totalQuestions) * 20); // Note sur 20
+
+        String commentaires;
+        if (score >= 16) {
+            commentaires = "Très bien";
+        } else if (score >= 14) {
+            commentaires = "Bien";
+        } else if (score >= 12) {
+            commentaires = "Assez bien";
+        } else if (score >= 10) {
+            commentaires = "Passable";
+        } else {
+            commentaires = "Insuffisant";
+        }
+
         try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "INSERT INTO resultat (eleve, tp, note, commentaires) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, eleve.getId());
+            statement.setInt(2, tp.getIdTP());
+            statement.setInt(3, score);
+            statement.setString(4, commentaires);
+            statement.executeUpdate();
+
             for (Reponse reponse : reponsesEleve) {
-                String query = "INSERT INTO reponse_eleve (idEleve, idQuestion, reponse) VALUES (?, ?, ?)";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setInt(1, eleve.getId());
-                statement.setInt(2, reponse.getId());
-                statement.setString(3, reponse.getTexte());
-                statement.executeUpdate();
+                String queryReponse = "INSERT INTO reponse_eleve (idEleve, idQuestion, reponse) VALUES (?, ?, ?)";
+                PreparedStatement statementReponse = connection.prepareStatement(queryReponse);
+                statementReponse.setInt(1, eleve.getId());
+                statementReponse.setInt(2, getIdQuestionByReponse(connection, reponse.getId()));
+                statementReponse.setString(3, reponse.getTexte());
+                statementReponse.executeUpdate();
             }
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "TP Quizz SVT soumis avec succès.");
+
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "TP Quizz SVT soumis avec succès. Votre score est : " + score + "/20\nCommentaires : " + commentaires);
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la soumission.");
+        }
+    }
+
+    private int getIdQuestionByReponse(Connection connection, int idReponse) throws SQLException {
+        String query = "SELECT idQuestion FROM reponse WHERE idReponse = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, idReponse);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("idQuestion");
+        } else {
+            throw new SQLException("Question not found for response id: " + idReponse);
         }
     }
 

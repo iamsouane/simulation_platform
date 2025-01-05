@@ -17,4 +17,31 @@ public class Resultat {
     }
 
     // Getters and Setters
+    public int getIdResultat() {
+        return idResultat;
+    }
+
+    public int getNote() {
+        return note;
+    }
+
+    public void setNote(int note) {
+        this.note = note;
+    }
+
+    public String getCommentaires() {
+        return commentaires;
+    }
+
+    public void setCommentaires(String commentaires) {
+        this.commentaires = commentaires;
+    }
+
+    public Eleve getEleve() {
+        return eleve;
+    }
+
+    public TP getTp() {
+        return tp;
+    }
 }

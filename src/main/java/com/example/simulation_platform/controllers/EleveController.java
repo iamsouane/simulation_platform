@@ -1,10 +1,6 @@
 package com.example.simulation_platform.controllers;
 
-import com.example.simulation_platform.models.Eleve;
-import com.example.simulation_platform.models.Matiere;
-import com.example.simulation_platform.models.Professeur;
-import com.example.simulation_platform.models.TP;
-import com.example.simulation_platform.models.TypeTP;
+import com.example.simulation_platform.models.*;
 import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -128,6 +124,44 @@ public class EleveController {
         }
     }
 
+    @FXML
+    private void handleConsulterResultat() {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM resultat WHERE eleve = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, eleve.getId());
+            ResultSet resultSet = statement.executeQuery();
+            StringBuilder resultats = new StringBuilder("Résultats :\n");
+
+            while (resultSet.next()) {
+                int note = resultSet.getInt("note");
+                String commentaires = resultSet.getString("commentaires");
+                resultats.append("TP: ").append(resultSet.getInt("tp")).append("\n");
+                resultats.append("Note: ").append(note).append("\n");
+                resultats.append("Commentaires: ").append(commentaires).append("\n\n");
+            }
+
+            showAlert(Alert.AlertType.INFORMATION, "Résultats", resultats.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la récupération des résultats.");
+        }
+    }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/login_view.fxml"));
+            VBox loginView = loader.load();
+            Scene scene = new Scene(loginView);
+
+            stage.setScene(scene);
+            stage.setTitle("Connexion - Simulation Platform");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String determineFXMLFile(TP tp) {
         if (tp.getTypeTP() == TypeTP.QUIZZ) {
             if (tp.getMatiere() == Matiere.CHIMIE) {
@@ -143,25 +177,6 @@ public class EleveController {
             }
         }
         return null;
-    }
-
-    @FXML
-    private void handleConsulterHistorique() {
-        System.out.println("Consulter Historique button clicked");
-    }
-
-    @FXML
-    private void handleLogout() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/login_view.fxml"));
-            VBox loginView = loader.load();
-            Scene scene = new Scene(loginView);
-
-            stage.setScene(scene);
-            stage.setTitle("Connexion - Simulation Platform");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

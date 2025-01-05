@@ -8,7 +8,7 @@
         <Label fx:id="welcomeLabel" text="Bienvenue Élève"/>
         <ListView fx:id="tpListView"/>
         <Button text="Faire TP" onAction="#handleFaireTP"/>
-        <Button text="Consulter Historique" onAction="#handleConsulterHistorique"/>
+        <Button text="Consulter Resulat" onAction="#handleConsulterResultat"/>
         <Button text="Se Déconnecter" onAction="#handleLogout"/>
     </children>
 </VBox>
