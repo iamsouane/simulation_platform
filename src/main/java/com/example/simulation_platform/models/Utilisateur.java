@@ -1,12 +1,12 @@
 package com.example.simulation_platform.models;
 
 public abstract class Utilisateur {
-    protected int idUtilisateur;
-    protected String nom;
-    protected String prenom;
-    protected String email;
-    protected String motDePasse;
-    protected Role role;
+    private int idUtilisateur;
+    private String nom;
+    private String prenom;
+    private String email;
+    private String motDePasse;
+    private Role role;
 
     public Utilisateur(int idUtilisateur, String nom, String prenom, String email, String motDePasse, Role role) {
         this.idUtilisateur = idUtilisateur;
@@ -21,7 +21,29 @@ public abstract class Utilisateur {
         return idUtilisateur;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
     public abstract void sInscrire();
+
     public abstract void seConnecter();
+
     public abstract void seDeconnecter();
 }

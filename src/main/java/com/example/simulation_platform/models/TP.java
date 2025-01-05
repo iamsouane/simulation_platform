@@ -23,6 +23,35 @@ public class TP {
         this.resultats = new ArrayList<>();
     }
 
+    // Getters
+    public int getIdTP() {
+        return idTP;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public Matiere getMatiere() {
+        return matiere;
+    }
+
+    public TypeTP getTypeTP() {
+        return typeTP;
+    }
+
+    public Professeur getCreateur() {
+        return createur;
+    }
+
+    public List<Resultat> getResultats() {
+        return resultats;
+    }
+
     public void demarrerTP() {
         // Implementation
     }
@@ -35,9 +64,5 @@ public class TP {
         Resultat resultat = new Resultat(eleve, this);
         resultats.add(resultat);
         return resultat;
-    }
-
-    public List<Resultat> getResultats() {
-        return resultats;
     }
 }

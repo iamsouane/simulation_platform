@@ -5,7 +5,8 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.EleveController" spacing="10" alignment="CENTER">
     <children>
-        <Label text="Bienvenue Élève"/>
+        <Label fx:id="welcomeLabel" text="Bienvenue Élève"/>
+        <ListView fx:id="tpListView"/>
         <Button text="Faire TP" onAction="#handleFaireTP"/>
         <Button text="Consulter Historique" onAction="#handleConsulterHistorique"/>
         <Button text="Se Déconnecter" onAction="#handleLogout"/>

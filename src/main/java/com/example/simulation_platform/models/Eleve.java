@@ -35,4 +35,19 @@ public class Eleve extends Utilisateur {
     public void seDeconnecter() {
         // Implementation
     }
+
+    // Méthode pour obtenir le prénom
+    public String getPrenom() {
+        return super.getPrenom();
+    }
+
+    // Méthode pour obtenir le nom
+    public String getNom() {
+        return super.getNom();
+    }
+
+    // Méthode pour obtenir l'ID
+    public int getId() {
+        return getIdUtilisateur();
+    }
 }
