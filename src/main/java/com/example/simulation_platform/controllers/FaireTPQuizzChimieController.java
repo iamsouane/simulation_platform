@@ -8,6 +8,8 @@ import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -86,10 +88,13 @@ public class FaireTPQuizzChimieController {
         questionsVBox.getChildren().clear();
         for (Question question : questions) {
             Label questionLabel = new Label(question.getEnonce());
+            ToggleGroup toggleGroup = new ToggleGroup();
             VBox reponsesVBox = new VBox();
             for (Reponse reponse : question.getReponses()) {
-                Label reponseLabel = new Label(reponse.getTexte());
-                reponsesVBox.getChildren().add(reponseLabel);
+                RadioButton radioButton = new RadioButton(reponse.getTexte());
+                radioButton.setToggleGroup(toggleGroup);
+                radioButton.setUserData(reponse);
+                reponsesVBox.getChildren().add(radioButton);
             }
             questionsVBox.getChildren().addAll(questionLabel, reponsesVBox);
         }
@@ -97,7 +102,46 @@ public class FaireTPQuizzChimieController {
 
     @FXML
     private void handleSoumettre() {
-        // Logic for submitting answers
+        List<Reponse> reponsesEleve = new ArrayList<>();
+        for (int i = 0; i < questionsVBox.getChildren().size(); i += 2) {
+            Label questionLabel = (Label) questionsVBox.getChildren().get(i);
+            VBox reponsesVBox = (VBox) questionsVBox.getChildren().get(i + 1);
+            ToggleGroup toggleGroup = null;
+
+            for (javafx.scene.Node node : reponsesVBox.getChildren()) {
+                if (node instanceof RadioButton) {
+                    RadioButton radioButton = (RadioButton) node;
+                    toggleGroup = radioButton.getToggleGroup();
+                    break;
+                }
+            }
+
+            if (toggleGroup != null) {
+                RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+                if (selectedRadioButton != null) {
+                    Reponse reponse = (Reponse) selectedRadioButton.getUserData();
+                    reponsesEleve.add(reponse);
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez répondre à toutes les questions.");
+                    return;
+                }
+            }
+        }
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            for (Reponse reponse : reponsesEleve) {
+                String query = "INSERT INTO reponse_eleve (idEleve, idQuestion, reponse) VALUES (?, ?, ?)";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setInt(1, eleve.getId());
+                statement.setInt(2, reponse.getId());
+                statement.setString(3, reponse.getTexte());
+                statement.executeUpdate();
+            }
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "TP Quizz Chimie soumis avec succès.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la soumission.");
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
