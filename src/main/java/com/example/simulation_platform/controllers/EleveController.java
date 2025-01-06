@@ -127,16 +127,22 @@ public class EleveController {
     @FXML
     private void handleConsulterResultat() {
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM resultat WHERE eleve = ?";
+            String query = """
+                SELECT r.note, r.commentaires, t.titre 
+                FROM resultat r 
+                JOIN tp t ON r.tp = t.idTP 
+                WHERE r.eleve = ?
+                """;
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, eleve.getId());
             ResultSet resultSet = statement.executeQuery();
             StringBuilder resultats = new StringBuilder("Résultats :\n");
 
             while (resultSet.next()) {
+                String tpTitre = resultSet.getString("titre");
                 int note = resultSet.getInt("note");
                 String commentaires = resultSet.getString("commentaires");
-                resultats.append("TP: ").append(resultSet.getInt("tp")).append("\n");
+                resultats.append("TP: ").append(tpTitre).append("\n");
                 resultats.append("Note: ").append(note).append("/20\n");
                 resultats.append("Commentaires: ").append(commentaires).append("\n\n");
             }

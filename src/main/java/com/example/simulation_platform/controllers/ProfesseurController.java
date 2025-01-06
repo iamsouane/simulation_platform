@@ -6,9 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -51,9 +48,10 @@ public class ProfesseurController {
     private void handleConsulterResultats() {
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = """
-                SELECT r.eleve, r.note, r.commentaires, t.titre 
-                FROM resultat r 
-                JOIN tp t ON r.tp = t.idTP 
+                SELECT r.note, r.commentaires, t.titre, u.nom AS eleveNom, u.prenom AS elevePrenom
+                FROM resultat r
+                JOIN tp t ON r.tp = t.idTP
+                JOIN utilisateur u ON r.eleve = u.idUtilisateur
                 WHERE t.createur = ?
                 """;
             PreparedStatement statement = connection.prepareStatement(query);
@@ -63,13 +61,14 @@ public class ProfesseurController {
             StringBuilder resultats = new StringBuilder("Résultats des élèves :\n");
 
             while (resultSet.next()) {
-                int eleveId = resultSet.getInt("eleve");
+                String eleveNom = resultSet.getString("eleveNom");
+                String elevePrenom = resultSet.getString("elevePrenom");
                 int note = resultSet.getInt("note");
                 String commentaires = resultSet.getString("commentaires");
                 String tpTitre = resultSet.getString("titre");
 
                 resultats.append("TP: ").append(tpTitre).append("\n");
-                resultats.append("Élève ID: ").append(eleveId).append("\n");
+                resultats.append("Élève: ").append(elevePrenom).append(" ").append(eleveNom).append("\n");
                 resultats.append("Note: ").append(note).append("/20\n");
                 resultats.append("Commentaires: ").append(commentaires).append("\n\n");
             }
