@@ -1,13 +1,21 @@
 package com.example.simulation_platform.controllers;
 
 import com.example.simulation_platform.models.Professeur;
+import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ProfesseurController {
 
@@ -41,7 +49,36 @@ public class ProfesseurController {
 
     @FXML
     private void handleConsulterResultats() {
-        showAlert(Alert.AlertType.INFORMATION, "Consulter Résultats", "Fonctionnalité de consultation des résultats.");
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = """
+                SELECT r.eleve, r.note, r.commentaires, t.titre 
+                FROM resultat r 
+                JOIN tp t ON r.tp = t.idTP 
+                WHERE t.createur = ?
+                """;
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, professeur.getId());
+            ResultSet resultSet = statement.executeQuery();
+
+            StringBuilder resultats = new StringBuilder("Résultats des élèves :\n");
+
+            while (resultSet.next()) {
+                int eleveId = resultSet.getInt("eleve");
+                int note = resultSet.getInt("note");
+                String commentaires = resultSet.getString("commentaires");
+                String tpTitre = resultSet.getString("titre");
+
+                resultats.append("TP: ").append(tpTitre).append("\n");
+                resultats.append("Élève ID: ").append(eleveId).append("\n");
+                resultats.append("Note: ").append(note).append("/20\n");
+                resultats.append("Commentaires: ").append(commentaires).append("\n\n");
+            }
+
+            showAlert(Alert.AlertType.INFORMATION, "Résultats", resultats.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la récupération des résultats.");
+        }
     }
 
     @FXML
