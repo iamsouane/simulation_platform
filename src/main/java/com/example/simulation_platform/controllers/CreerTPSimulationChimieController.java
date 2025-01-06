@@ -11,7 +11,7 @@ public class CreerTPSimulationChimieController {
     @FXML
     private TextField titreField;
     @FXML
-    private TextArea detailsField;
+    private TextField detailsField;
 
     private Professeur professeur;
     private String titre;
