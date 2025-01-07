@@ -2,12 +2,31 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationChimieController" spacing="10" alignment="CENTER">
     <children>
-        <Label text="Créer TP Simulation Chimie"/>
-        <TextField fx:id="titreField" promptText="Titre"/>
-        <TextField fx:id="detailsField" promptText="Détails"/>
+        <Label text="Créer TP Simulation Chimie" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <TextField fx:id="champTitre" promptText="Titre"/>
+        <TextArea fx:id="champDetails" promptText="Détails"/>
         <Button text="Créer Simulation Chimie" onAction="#handleCreer"/>
+        <Label text="Simulation Chimie: Détermination du pH" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <ComboBox fx:id="comboSolution" promptText="Choisissez une solution">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Eau distillée (neutre)"/>
+                    <String fx:value="Vinaigre (acide)"/>
+                    <String fx:value="Eau savonneuse (basique)"/>
+                    <String fx:value="Jus de citron (acide)"/>
+                    <String fx:value="Bicarbonate de soude (basique)"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button text="Ajouter Indicateur" onAction="#handleAjouterIndicateur"/>
+        <StackPane fx:id="stackPaneSimulation" prefWidth="600.0" prefHeight="400.0"/>
+        <Label fx:id="labelResultat" text="Résultat" style="-fx-font-size: 14px;"/>
+        <Button text="Retour" onAction="#handleRetour"/>
     </children>
 </VBox>
