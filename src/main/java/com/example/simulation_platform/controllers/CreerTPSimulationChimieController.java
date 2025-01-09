@@ -72,7 +72,7 @@ public class CreerTPSimulationChimieController {
 
         // Créer le fond de la simulation (représenté par un rectangle)
         Rectangle fond = new Rectangle(400, 400);
-        fond.setFill(Color.LIGHTGRAY);
+        fond.setFill(Color.LIGHTBLUE);
         fond.setTranslateZ(-1); // Assurez-vous que le fond est derrière les béchers
 
         // Ajouter les objets à la scène 3D
@@ -84,12 +84,18 @@ public class CreerTPSimulationChimieController {
 
 
     private void moveBecherToOther(Cylinder becher1, Cylinder becher2) {
-        // Animation du bécher 1 : déplace le bécher en arc de cercle sans pénétrer dans le bécher 2
+        // Animation du bécher 1 : déplace le bécher en arc de cercle pour se retrouver à côté de becher2
         Path path = new Path();
         path.getElements().add(new MoveTo(becher1.getTranslateX(), becher1.getTranslateY()));
 
-        // Crée un arc de cercle avec la courbe qui s'arrête au-dessus du bécher 2
-        path.getElements().add(new QuadCurveTo(becher2.getTranslateX(), becher1.getTranslateY() - 100, becher2.getTranslateX(), becher2.getTranslateY() - 50));  // Au-dessus du bécher 2
+        // Crée un arc de cercle qui finit à côté de becher2
+        double offsetX = -50;  // Décalage horizontal pour être à côté de becher2
+        path.getElements().add(new QuadCurveTo(
+                (becher1.getTranslateX() + becher2.getTranslateX()) / 2, // Point de contrôle pour l'arc
+                becher1.getTranslateY() - 150,                          // Hauteur maximale de l'arc
+                becher2.getTranslateX() + offsetX,                      // Position finale : à côté de becher2
+                becher2.getTranslateY() - 90                            // Position finale : au niveau de becher2
+        ));
 
         PathTransition pathTransition1 = new PathTransition();
         pathTransition1.setPath(path);
@@ -97,19 +103,23 @@ public class CreerTPSimulationChimieController {
         pathTransition1.setInterpolator(Interpolator.LINEAR);
         pathTransition1.setCycleCount(1);
         pathTransition1.setAutoReverse(false);
-        pathTransition1.setRate(0.05);
+        pathTransition1.setRate(0.05);  // Réduction de la vitesse
 
-        // Animation pour incliner le bécher 1 légèrement (sans le faire entrer dans le bécher 2)
-        RotateTransition rotateTransition1 = new RotateTransition(Duration.seconds(1), becher1);
-        rotateTransition1.setToAngle(45);  // Inclinaison plus douce pour simuler l'action de verser
-        rotateTransition1.setAxis(Rotate.X_AXIS);
+        // Animation pour incliner le bécher 1 pour simuler le versement
+        RotateTransition rotateTransition1 = new RotateTransition(Duration.seconds(4), becher1);  // Inclinaison lente
+        rotateTransition1.setToAngle(90);  // Inclinaison plus marquée pour simuler un versement
+        rotateTransition1.setAxis(Rotate.Z_AXIS);  // Rotation autour de l'axe Z (inclinaison latérale)
         rotateTransition1.setCycleCount(1);
         rotateTransition1.setAutoReverse(false);
 
+        // Synchroniser les animations (inclinaison après le déplacement)
+        pathTransition1.setOnFinished(event -> rotateTransition1.play());
+
         // Démarrer les animations
         pathTransition1.play();
-        rotateTransition1.play();
     }
+
+
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
