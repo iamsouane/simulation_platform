@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.EleveController" spacing="10" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.EleveController"
+      spacing="20" alignment="CENTER"
+      stylesheets="@/eleve_view.css"
+      styleClass="root">
     <children>
-        <Label fx:id="welcomeLabel" text="Bienvenue Élève"/>
-        <ListView fx:id="tpListView"/>
-        <Button text="Faire TP" onAction="#handleFaireTP"/>
-        <Button text="Consulter Resulat" onAction="#handleConsulterResultat"/>
-        <Button text="Se Déconnecter" onAction="#handleLogout"/>
+        <!-- Conteneur principal avec un message de bienvenue -->
+        <VBox alignment="CENTER" spacing="10">
+            <Label fx:id="welcomeLabel" text="Bienvenue Élève"
+                   style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+        </VBox>
+
+        <!-- Titre de la liste des TP -->
+        <Label text="Liste des TP disponibles"
+               style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-padding: 10 0;"/>
+
+        <!-- Liste des TP disponibles -->
+        <ListView fx:id="tpListView"
+                  maxWidth="400" maxHeight="300"/>
+
+        <!-- Boutons pour les actions -->
+        <VBox spacing="15" alignment="CENTER" style="-fx-padding: 20;">
+            <Button text="Faire TP" onAction="#handleFaireTP" styleClass="button" prefWidth="250"/>
+            <Button text="Consulter Résultat" onAction="#handleConsulterResultat" styleClass="button" prefWidth="250"/>
+            <Button text="Se Déconnecter" onAction="#handleLogout" styleClass="button" prefWidth="250"/>
+        </VBox>
     </children>
 </VBox>

@@ -15,7 +15,7 @@ public class MainApp extends Application {
         MainViewController controller = loader.getController();
         controller.setStage(primaryStage);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Simulation Platform");
+        primaryStage.setTitle("Plateforme de Simulation");
         primaryStage.show();
     }
 

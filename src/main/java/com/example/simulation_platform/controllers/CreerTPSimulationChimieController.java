@@ -1,29 +1,22 @@
 package com.example.simulation_platform.controllers;
 
 import com.example.simulation_platform.models.Professeur;
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Cylinder;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Sphere;
-import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
-import javafx.scene.PerspectiveCamera;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -42,6 +35,9 @@ public class CreerTPSimulationChimieController {
     private ComboBox<String> comboSolution;
 
     @FXML
+    private ComboBox<String> comboIndicateur;
+
+    @FXML
     private Label labelResultat;
 
     @FXML
@@ -52,8 +48,10 @@ public class CreerTPSimulationChimieController {
 
     private static final Map<String, String> solutionPHMap = new HashMap<>();
     private static final Map<String, Color> solutionColorMap = new HashMap<>();
+    private static final Map<String, Color> indicateurColorMap = new HashMap<>();
 
     static {
+        // Solutions avec leurs propriétés de pH et couleurs
         solutionPHMap.put("Eau distillée (neutre)", "Violet (pH 7 - Neutre)");
         solutionPHMap.put("Vinaigre (acide)", "Rouge (pH 2 - Acide)");
         solutionPHMap.put("Eau savonneuse (basique)", "Vert (pH 9 - Basique)");
@@ -65,107 +63,147 @@ public class CreerTPSimulationChimieController {
         solutionColorMap.put("Eau savonneuse (basique)", Color.GREEN);
         solutionColorMap.put("Jus de citron (acide)", Color.RED);
         solutionColorMap.put("Bicarbonate de soude (basique)", Color.YELLOW);
+
+        // Indicateurs avec leurs couleurs
+        indicateurColorMap.put("Phénolphtaléine", Color.PINK);
+        indicateurColorMap.put("Bleu de bromothymol", Color.BLUE);
+        indicateurColorMap.put("Jus de chou rouge", Color.PURPLE);
+        indicateurColorMap.put("Rouge de méthyle", Color.ORANGE);
     }
 
     private Group root3D;
     private SubScene sousSceneSimulation;
-    private Cylinder becher;
+    private Cylinder becherIndicateur;
+    private Cylinder becherSolution;
+    private Cylinder indicateur;
     private Cylinder solution;
-    private Sphere indicateur;
 
     public void initialize() {
         // Initialiser la scène 3D
         root3D = new Group();
-        sousSceneSimulation = new SubScene(root3D, 600, 400, true, SceneAntialiasing.BALANCED);
+        sousSceneSimulation = new SubScene(root3D, 800, 600, true, SceneAntialiasing.BALANCED);
         sousSceneSimulation.setFill(Color.LIGHTBLUE);
         sousSceneSimulation.setCamera(createCamera());
 
-        // Ajouter SubScene à StackPane
         stackPaneSimulation.getChildren().add(sousSceneSimulation);
 
-        // Créer le bécher
-        becher = createBecher();
-        root3D.getChildren().add(becher);
+        // Initialiser les objets 3D
+        becherIndicateur = createBecher(-100, 0, 200);
+        root3D.getChildren().add(becherIndicateur);
 
-        // Créer la solution
-        solution = createSolution();
+        becherSolution = createBecher(100, 0, 200);
+        root3D.getChildren().add(becherSolution);
+
+        indicateur = createSolutionCylinder();
+        indicateur.setTranslateX(-100);
+        indicateur.setTranslateY(50); // Positionner à l'intérieur du bécher
+        indicateur.setVisible(false);
+        root3D.getChildren().add(indicateur);
+
+        solution = createSolutionCylinder();
+        solution.setTranslateX(100);
+        solution.setTranslateY(50); // Positionner à l'intérieur du bécher
+        solution.setVisible(false);
         root3D.getChildren().add(solution);
 
-        // Créer l'indicateur
-        indicateur = createIndicateur();
-        root3D.getChildren().add(indicateur);
+        // Initialiser les ComboBox
+        initializeComboBoxes();
+    }
+
+    private void initializeComboBoxes() {
+        // Ajouter les éléments dans les ComboBox une seule fois
+        if (comboSolution.getItems().isEmpty()) {
+            comboSolution.getItems().addAll(solutionPHMap.keySet());
+        }
+
+        if (comboIndicateur.getItems().isEmpty()) {
+            comboIndicateur.getItems().addAll(indicateurColorMap.keySet());
+        }
     }
 
     public void setProfesseur(Professeur professeur) {
         this.professeur = professeur;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     public void setTitre(String titre) {
-        champTitre.setText(titre); // Initialiser le champ titre avec la valeur transférée
+        champTitre.setText(titre);
     }
 
     public void setDetails(String details) {
-        champDetails.setText(details); // Initialiser le champ détails avec la valeur transférée
+        champDetails.setText(details);
     }
 
     @FXML
-    private void handleCreer() {
-        String titre = champTitre.getText();
-        String details = champDetails.getText();
-
-        if (titre.isEmpty() || details.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
-            return;
-        }
-
-        // Logique pour créer la simulation de chimie
-        // Vous pouvez ajouter ici des actions supplémentaires si nécessaire
-
-        showAlert(Alert.AlertType.INFORMATION, "Succès", "Simulation Chimie créée avec succès.");
-    }
-
-    @FXML
-    private void handleAjouterIndicateur() {
+    private void handleDemarrerSimulation() {
         String solutionType = comboSolution.getValue();
-        if (solutionType == null) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez choisir une solution.");
+        String indicateurType = comboIndicateur.getValue();
+
+        if (solutionType == null || indicateurType == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez choisir une solution et un indicateur.");
             return;
         }
 
-        String result = solutionPHMap.get(solutionType);
-        labelResultat.setText(result);
+        // Ajouter l'indicateur
+        Color indicateurColor = indicateurColorMap.get(indicateurType);
+        PhongMaterial materialIndicateur = new PhongMaterial();
+        materialIndicateur.setDiffuseColor(indicateurColor);
+        materialIndicateur.setSpecularColor(indicateurColor.darker());
+        indicateur.setMaterial(materialIndicateur);
+        indicateur.setVisible(true);
 
+        // Ajouter la solution
         Color solutionColor = solutionColorMap.get(solutionType);
+        PhongMaterial materialSolution = new PhongMaterial();
+        materialSolution.setDiffuseColor(solutionColor);
+        materialSolution.setSpecularColor(solutionColor.darker());
+        solution.setMaterial(materialSolution);
+        solution.setVisible(true);
 
-        // Animation de l'indicateur tombant dans la solution
+        // Animation de versement de l'indicateur dans la solution
         PathTransition transition = new PathTransition();
-        transition.setDuration(Duration.seconds(5));
-        transition.setNode(indicateur);
+        transition.setDuration(Duration.seconds(3));
+        transition.setNode(becherIndicateur);
         Path path = new Path();
-        path.getElements().add(new MoveTo(0, 0));  // Commence au centre
-        path.getElements().add(new LineTo(0, 200));  // Déplace l'indicateur vers le bas
+        path.getElements().add(new MoveTo(-100, 0));
+        path.getElements().add(new LineTo(0, 0));
         transition.setPath(path);
-        transition.setCycleCount(1);
-        transition.setOnFinished(e -> {
-            // Changer la couleur de la solution après l'animation
-            PhongMaterial material = (PhongMaterial) solution.getMaterial();
-            material.setDiffuseColor(solutionColor);
-            material.setSpecularColor(solutionColor.darker());
 
-            // Modifier la couleur de l'indicateur pour refléter la solution
-            PhongMaterial indicatorMaterial = (PhongMaterial) indicateur.getMaterial();
-            indicatorMaterial.setDiffuseColor(solutionColor);
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), becherIndicateur);
+        rotateTransition.setByAngle(-45);
+        rotateTransition.setAxis(Rotate.Z_AXIS);
+
+        PathTransition dropTransition = new PathTransition();
+        dropTransition.setDuration(Duration.seconds(1));
+        dropTransition.setNode(indicateur);
+        Path dropPath = new Path();
+        dropPath.getElements().add(new MoveTo(0, 50));
+        dropPath.getElements().add(new LineTo(100, 50));
+        dropTransition.setPath(dropPath);
+
+        SequentialTransition sequentialTransition = new SequentialTransition(
+                transition,
+                rotateTransition,
+                dropTransition
+        );
+
+        sequentialTransition.setOnFinished(e -> {
+            // Changer la couleur de la solution après le mélange
+            PhongMaterial material = (PhongMaterial) solution.getMaterial();
+            Color solutionColorAfterMix = ((PhongMaterial) indicateur.getMaterial()).getDiffuseColor();
+            material.setDiffuseColor(solutionColorAfterMix);
+            material.setSpecularColor(solutionColorAfterMix.darker());
+            labelResultat.setText("Mélange effectué: " + solutionPHMap.get(solutionType));
         });
-        transition.play();
+
+        sequentialTransition.play();
     }
 
     @FXML
     private void handleRetour() {
-        stage.close(); // Fermer la fenêtre actuelle
+        // Fermer la fenêtre actuelle
+        if (stage != null) {
+            stage.close();
+        }
     }
 
     private PerspectiveCamera createCamera() {
@@ -173,45 +211,28 @@ public class CreerTPSimulationChimieController {
         camera.getTransforms().addAll(
                 new Rotate(-20, Rotate.Y_AXIS),
                 new Rotate(-20, Rotate.X_AXIS),
-                new Translate(0, 0, -50)
+                new Translate(0, 0, -300) // Rapprocher la caméra pour voir les objets
         );
-        camera.setNearClip(1);
-        camera.setFarClip(1000);
-        camera.setFieldOfView(35);
         return camera;
     }
 
-    private Cylinder createBecher() {
-        Cylinder cylinder = new Cylinder(50, 100);
+    private Cylinder createBecher(int x, int y, int height) {
+        Cylinder cylinder = new Cylinder(50, height); // Augmenter la hauteur du bécher
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseColor(Color.LIGHTGRAY);
         cylinder.setMaterial(material);
-        cylinder.setTranslateX(300);
-        cylinder.setTranslateY(200);
-        cylinder.setTranslateZ(0);
+        cylinder.setTranslateX(x);
+        cylinder.setTranslateY(y);
+        cylinder.setTranslateZ(0); // Assurez-vous que le bécher est bien dans le plan Z
         return cylinder;
     }
 
-    private Cylinder createSolution() {
-        Cylinder cylinder = new Cylinder(45, 90);
+    private Cylinder createSolutionCylinder() {
+        Cylinder cylinder = new Cylinder(45, 90); // Ajuster la taille de la solution
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseColor(Color.LIGHTBLUE);
+        material.setDiffuseColor(Color.TRANSPARENT);
         cylinder.setMaterial(material);
-        cylinder.setTranslateX(300);
-        cylinder.setTranslateY(200);
-        cylinder.setTranslateZ(0);
         return cylinder;
-    }
-
-    private Sphere createIndicateur() {
-        Sphere sphere = new Sphere(10);
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseColor(Color.ORANGE);
-        sphere.setMaterial(material);
-        sphere.setTranslateX(300);
-        sphere.setTranslateY(0);
-        sphere.setTranslateZ(0);
-        return sphere;
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

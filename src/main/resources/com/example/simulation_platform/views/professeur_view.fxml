@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.ProfesseurController" spacing="10" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.simulation_platform.controllers.ProfesseurController"
+      alignment="CENTER" spacing="20"
+      stylesheets="@/professeur_view.css"
+      styleClass="root">
+
     <children>
-        <Label text="Bienvenue Professeur"/>
-        <Button text="Créer TP" onAction="#handleCreerTP"/>
-        <Button text="Consulter Résultats" onAction="#handleConsulterResultats"/>
-        <Button text="Se Déconnecter" onAction="#handleLogout"/>
+        <!-- Conteneur principal avec un message de bienvenue -->
+        <VBox spacing="15" alignment="CENTER"
+              style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-border-radius: 10; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);"
+              maxWidth="400">
+            <Label text="Bienvenue, Professeur !"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #444;"/>
+
+            <!-- Boutons pour les fonctionnalités -->
+            <Button text="Créer TP" onAction="#handleCreerTP" styleClass="button" prefWidth="250"/>
+            <Button text="Consulter Résultats" onAction="#handleConsulterResultats" styleClass="button" prefWidth="250"/>
+            <Button text="Se Déconnecter" onAction="#handleLogout" styleClass="button" prefWidth="250"/>
+        </VBox>
     </children>
 </VBox>
