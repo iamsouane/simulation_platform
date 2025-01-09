@@ -80,14 +80,6 @@ public class CreerTPSimulationChimieController {
         moveBecherToOther(becher1, becher2);
     }
 
-    private Text createFixedLabel(double positionX, double offsetY, String label) {
-        Text textLabel = new Text(label);
-        textLabel.setFill(Color.BLACK);
-        textLabel.setTranslateX(positionX - 15);  // Centrer légèrement par rapport au bécher
-        textLabel.setTranslateY(50 + offsetY);  // Position sous le bécher (en fonction de la hauteur du bécher)
-        return textLabel;
-    }
-
     private Cylinder createBecher(double positionX) {
         Cylinder becher = new Cylinder(20, 100);  // Rayon et hauteur
         PhongMaterial material = new PhongMaterial();
@@ -96,6 +88,15 @@ public class CreerTPSimulationChimieController {
         becher.setTranslateX(positionX);
         return becher;
     }
+
+    private Text createFixedLabel(double positionX, double offsetY, String label) {
+        Text textLabel = new Text(label);
+        textLabel.setFill(Color.BLACK);
+        textLabel.setTranslateX(positionX - 15);  // Centrer légèrement par rapport au bécher
+        textLabel.setTranslateY(50 + offsetY);  // Position sous le bécher (en fonction de la hauteur du bécher)
+        return textLabel;
+    }
+
 
     private void moveBecherToOther(Cylinder becher1, Cylinder becher2) {
         // Animation du bécher 1 : déplace le bécher en arc de cercle pour se retrouver à côté de becher2
@@ -108,7 +109,7 @@ public class CreerTPSimulationChimieController {
                 (becher1.getTranslateX() + becher2.getTranslateX()) / 2, // Point de contrôle pour l'arc
                 becher1.getTranslateY() - 150,                          // Hauteur maximale de l'arc
                 becher2.getTranslateX() + offsetX,                      // Position finale : à côté de becher2
-                becher2.getTranslateY() - 90                          // Position finale : au niveau de becher2
+                becher2.getTranslateY() - 90                           // Position finale : au niveau de becher2
         ));
 
         PathTransition pathTransition1 = new PathTransition();
