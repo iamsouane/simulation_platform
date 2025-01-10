@@ -9,6 +9,8 @@
         <Label text="Créer TP Simulation Chimie"/>
         <TextField fx:id="titreField" promptText="Titre"/>
         <TextField fx:id="detailsField" promptText="Détails"/>
+        <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution"/>
+        <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur"/> <!-- Ajout de la ComboBox -->
         <Button text="Créer Simulation Chimie" onAction="#handleCreer"/>
 
         <!-- Conteneur pour la simulation 3D -->

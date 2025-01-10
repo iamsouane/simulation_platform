@@ -1,22 +1,19 @@
 package com.example.simulation_platform.controllers;
 
 import com.example.simulation_platform.models.Professeur;
-import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.util.Duration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreerTPSimulationChimieController {
 
@@ -26,8 +23,15 @@ public class CreerTPSimulationChimieController {
     private TextField detailsField;
     @FXML
     private StackPane simulationContainer;
+    @FXML
+    private ComboBox<String> solutionComboBox;
+    @FXML
+    private ComboBox<String> indicateurComboBox;  // Ajout de la ComboBox pour sélectionner l'indicateur
 
     private Professeur professeur;  // Déclarez la variable professeur
+
+    private Map<String, Color> solutionsMap;  // Map pour associer une solution à sa couleur
+    private Map<String, Color> indicateursMap;  // Map pour associer un indicateur à une couleur
 
     // Méthode pour définir le professeur
     public void setProfesseur(Professeur professeur) {
@@ -43,73 +47,128 @@ public class CreerTPSimulationChimieController {
     }
 
     @FXML
+    private void initialize() {
+        // Initialiser les solutions et leur couleur associée
+        solutionsMap = new HashMap<>();
+        solutionsMap.put("Eau distillée (neutre)", Color.VIOLET);
+        solutionsMap.put("Vinaigre (acide)", Color.RED);
+        solutionsMap.put("Eau savonneuse (basique)", Color.GREEN);
+        solutionsMap.put("Jus de citron (acide)", Color.RED);
+        solutionsMap.put("Bicarbonate de soude (basique)", Color.YELLOW);
+
+        // Initialiser les indicateurs et leur couleur associée
+        indicateursMap = new HashMap<>();
+        indicateursMap.put("Phénolphtaléine", Color.PINK);
+        indicateursMap.put("Bleu de bromothymol", Color.BLUE);
+        indicateursMap.put("Jus de chou rouge", Color.VIOLET);
+        indicateursMap.put("Rouge de méthyle", Color.ORANGE);
+
+        // Ajouter une ComboBox pour sélectionner la solution
+        solutionComboBox.getItems().addAll(solutionsMap.keySet());
+
+        // Ajouter les éléments à la ComboBox pour les indicateurs
+        indicateurComboBox.getItems().addAll(indicateursMap.keySet());
+    }
+
+
+    @FXML
     private void handleCreer() {
         String titre = titreField.getText();
         String details = detailsField.getText();
 
+        // Vérifier que tous les champs sont remplis
         if (titre.isEmpty() || details.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
+        // Vérifier que l'utilisateur a sélectionné un indicateur et une solution
+        String selectedSolution = solutionComboBox.getValue();
+        String selectedIndicateur = indicateurComboBox.getValue();
+        if (selectedIndicateur == null || selectedSolution == null) {
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez choisir un indicateur et une solution.");
+            return;
+        }
+
         // Logique pour créer la simulation de chimie
-        create3DSimulation();
+        create3DSimulation(selectedSolution);
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Simulation Chimie créée avec succès.");
     }
 
-    private void create3DSimulation() {
+
+
+    private void create3DSimulation(String selectedSolution) {
         // Créer un bécher 1
         Cylinder becher1 = createBecher(-50);
 
         // Créer un bécher 2
         Cylinder becher2 = createBecher(50);
 
+        // Appliquer la couleur de l'indicateur à Bécher 1
+        String selectedIndicateur = indicateurComboBox.getValue();
+        if (selectedIndicateur != null) {
+            Color color = indicateursMap.get(selectedIndicateur);
+            setBecherColor(becher1, color);
+        }
+
+        // Appliquer la couleur de la solution à Bécher 2
+        if (selectedSolution != null) {
+            Color solutionColor = solutionsMap.get(selectedSolution);
+            setBecherColor(becher2, solutionColor);
+        }
+
         // Créer les étiquettes fixes sous chaque bécher
         Text becher1Label = createFixedLabel(-30, 50, "Bécher 1");
         Text becher2Label = createFixedLabel(70, 50, "Bécher 2");
 
-        // Créer le fond de la simulation (représenté par un rectangle)
+        // Créer le fond de la simulation
         Rectangle fond = new Rectangle(400, 400);
         fond.setFill(Color.CORNFLOWERBLUE);
-        fond.setTranslateZ(-1); // Assurez-vous que le fond est derrière les béchers
+        fond.setTranslateZ(-1);
 
         // Ajouter les objets à la scène 3D
         simulationContainer.getChildren().addAll(fond, becher1, becher2, becher1Label, becher2Label);
 
-        // Déplacer le bécher 1 vers le bécher 2 pour simuler l'action de verser en arc de cercle
+        // Déplacer le bécher 1 vers le bécher 2
         moveBecherToOther(becher1, becher2);
     }
+
 
     private Cylinder createBecher(double positionX) {
         Cylinder becher = new Cylinder(20, 100);  // Rayon et hauteur
         PhongMaterial material = new PhongMaterial();
-        material.setDiffuseColor(Color.rgb(192, 192, 192, 0.2));  // Couleur argentée avec transparence
+        material.setDiffuseColor(Color.rgb(192, 192, 192, 0.2));  // Couleur argentée
         becher.setMaterial(material);
         becher.setTranslateX(positionX);
         return becher;
     }
 
+    private void setBecherColor(Cylinder becher, Color color) {
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseColor(color);
+        becher.setMaterial(material);
+    }
+
     private Text createFixedLabel(double positionX, double offsetY, String label) {
         Text textLabel = new Text(label);
         textLabel.setFill(Color.BLACK);
-        textLabel.setTranslateX(positionX - 15);  // Centrer légèrement par rapport au bécher
-        textLabel.setTranslateY(50 + offsetY);  // Position sous le bécher (en fonction de la hauteur du bécher)
+        textLabel.setTranslateX(positionX - 15);
+        textLabel.setTranslateY(50 + offsetY);
         return textLabel;
     }
 
-
     private void moveBecherToOther(Cylinder becher1, Cylinder becher2) {
-        // Animation du bécher 1 : déplace le bécher en arc de cercle pour se retrouver à côté de becher2
+        // Animation pour déplacer et incliner le bécher 1
         Path path = new Path();
         path.getElements().add(new MoveTo(becher1.getTranslateX(), becher1.getTranslateY()));
 
-        // Crée un arc de cercle qui finit à côté de becher2
-        double offsetX = -50;  // Décalage horizontal pour être à côté de becher2
+        // Créer un arc de cercle pour le déplacement
+        double offsetX = -50;
         path.getElements().add(new QuadCurveTo(
-                (becher1.getTranslateX() + becher2.getTranslateX()) / 2, // Point de contrôle pour l'arc
-                becher1.getTranslateY() - 150,                          // Hauteur maximale de l'arc
-                becher2.getTranslateX() + offsetX,                      // Position finale : à côté de becher2
-                becher2.getTranslateY() - 90                           // Position finale : au niveau de becher2
+                (becher1.getTranslateX() + becher2.getTranslateX()) / 2,
+                becher1.getTranslateY() - 150,
+                becher2.getTranslateX() + offsetX,
+                becher2.getTranslateY() - 90
         ));
 
         PathTransition pathTransition1 = new PathTransition();
@@ -118,24 +177,18 @@ public class CreerTPSimulationChimieController {
         pathTransition1.setInterpolator(Interpolator.LINEAR);
         pathTransition1.setCycleCount(1);
         pathTransition1.setAutoReverse(false);
-        pathTransition1.setRate(0.05);  // Réduction de la vitesse
+        pathTransition1.setRate(0.05);
 
-        // Animation pour incliner le bécher 1 pour simuler le versement
-        RotateTransition rotateTransition1 = new RotateTransition(Duration.seconds(4), becher1);  // Inclinaison lente
-        rotateTransition1.setToAngle(90);  // Inclinaison plus marquée pour simuler un versement
-        rotateTransition1.setAxis(Rotate.Z_AXIS);  // Rotation autour de l'axe Z (inclinaison latérale)
+        RotateTransition rotateTransition1 = new RotateTransition(Duration.seconds(4), becher1);
+        rotateTransition1.setToAngle(90);
+        rotateTransition1.setAxis(Rotate.Z_AXIS);
         rotateTransition1.setCycleCount(1);
         rotateTransition1.setAutoReverse(false);
 
-        // Synchroniser les animations (inclinaison après le déplacement)
         pathTransition1.setOnFinished(event -> rotateTransition1.play());
 
-        // Démarrer les animations
         pathTransition1.play();
     }
-
-
-
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
