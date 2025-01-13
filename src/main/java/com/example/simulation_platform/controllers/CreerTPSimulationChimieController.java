@@ -185,7 +185,23 @@ public class CreerTPSimulationChimieController {
         rotateTransition1.setCycleCount(1);
         rotateTransition1.setAutoReverse(false);
 
-        pathTransition1.setOnFinished(event -> rotateTransition1.play());
+        pathTransition1.setOnFinished(event -> {
+            rotateTransition1.play();
+        });
+
+        rotateTransition1.setOnFinished(event -> {
+            // Changer la couleur du bécher 2 en fonction de l'indicateur
+            String selectedIndicateur = indicateurComboBox.getValue();
+            if (selectedIndicateur != null) {
+                Color color = indicateursMap.get(selectedIndicateur);
+                setBecherColor(becher2, color);
+            }
+
+            // Rendre le bécher 1 transparent
+            PhongMaterial material = new PhongMaterial();
+            material.setDiffuseColor(Color.rgb(192, 192, 192, 0.2)); // Couleur argentée avec transparence
+            becher1.setMaterial(material);
+        });
 
         pathTransition1.play();
     }

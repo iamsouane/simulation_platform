@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
-<?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.MainViewController"
-      spacing="20" alignment="CENTER" stylesheets="@/main_view.css" styleClass="root">
+<VBox alignment="CENTER" spacing="20" styleClass="root" stylesheets="@/main_view.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.simulation_platform.controllers.MainViewController">
 
     <children>
         <!-- Section de titre avec un logo ou une image -->
         <VBox alignment="CENTER" spacing="10">
-            <Label text="Plateforme de Simulation" styleClass="label" style="-fx-font-size: 24;"/>
+            <Label style="-fx-font-size: 24;" styleClass="label" text="Plateforme de Simulation" />
         </VBox>
 
         <!-- Boutons pour basculer entre les formulaires -->
-        <HBox spacing="20" alignment="CENTER" style="-fx-padding: 10;">
-            <Button text="Connexion" onAction="#showLoginForm" styleClass="button" prefWidth="150"/>
-            <Button text="Inscription" onAction="#showSignupForm" styleClass="button" prefWidth="150"/>
+        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10;">
+            <Button onAction="#showLoginForm" prefWidth="150" styleClass="button" text="Connexion" />
+            <Button onAction="#showSignupForm" prefWidth="150" styleClass="button" text="Inscription" />
         </HBox>
 
         <!-- Conteneur des formulaires -->
-        <StackPane style="-fx-padding: 20;" maxWidth="400">
+        <StackPane maxWidth="400" style="-fx-padding: 20;">
             <!-- Formulaire de Connexion -->
-            <VBox fx:id="loginForm" spacing="15" alignment="CENTER"
-                  style="-fx-background-color: rgba(255,255,255,0.9); -fx-border-color: #ddd; -fx-border-radius: 10;
-                         -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
-                <Label text="Connexion" styleClass="label" style="-fx-font-size: 18; -fx-text-fill: #060336;"/>
-                <TextField fx:id="loginEmailField" promptText="Email" styleClass="text-field"/>
-                <PasswordField fx:id="loginPasswordField" promptText="Mot de Passe" styleClass="password-field"/>
-                <Button text="Se Connecter" onAction="#handleLogin" styleClass="button" prefWidth="150"/>
+            <VBox fx:id="loginForm" alignment="CENTER" spacing="15" style="-fx-background-color: rgba(255,255,255,0.9); -fx-border-color: #ddd; -fx-border-radius: 10;                          -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
+                <Label style="-fx-font-size: 18; -fx-text-fill: #060336;" styleClass="label" text="Connexion" />
+                <TextField fx:id="loginEmailField" promptText="Email" styleClass="text-field" />
+                <PasswordField fx:id="loginPasswordField" promptText="Mot de Passe" styleClass="password-field" />
+                <Button onAction="#handleLogin" prefWidth="150" styleClass="button" text="Se Connecter" />
             </VBox>
 
             <!-- Formulaire d'Inscription -->
-            <VBox fx:id="signupForm" spacing="15" alignment="CENTER" visible="false"
-                  style="-fx-background-color: rgba(255,255,255,0.9); -fx-border-color: #ddd; -fx-border-radius: 10;
-                         -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);">
-                <Label text="Inscription" styleClass="label" style="-fx-font-size: 18; -fx-text-fill: #060336;"/>
-                <TextField fx:id="signupNomField" promptText="Nom" styleClass="text-field"/>
-                <TextField fx:id="signupPrenomField" promptText="Prénom" styleClass="text-field"/>
-                <TextField fx:id="signupEmailField" promptText="Email" styleClass="text-field"/>
-                <PasswordField fx:id="signupPasswordField" promptText="Mot de Passe" styleClass="password-field"/>
-                <ComboBox fx:id="signupRoleComboBox" styleClass="combo-box" prefWidth="200">
+            <VBox fx:id="signupForm" alignment="CENTER" spacing="15" style="-fx-background-color: rgba(255,255,255,0.9); -fx-border-color: #ddd; -fx-border-radius: 10;                          -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);" visible="false">
+                <Label style="-fx-font-size: 18; -fx-text-fill: #060336;" styleClass="label" text="Inscription" />
+                <TextField fx:id="signupNomField" promptText="Nom" styleClass="text-field" />
+                <TextField fx:id="signupPrenomField" promptText="Prénom" styleClass="text-field" />
+                <TextField fx:id="signupEmailField" promptText="Email" styleClass="text-field" />
+                <PasswordField fx:id="signupPasswordField" promptText="Mot de Passe" styleClass="password-field" />
+                <ComboBox fx:id="signupRoleComboBox" prefWidth="200" styleClass="combo-box">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Professeur"/>
-                            <String fx:value="Élève"/>
-                            <String fx:value="Lambda"/>
+                            <String fx:value="Professeur" />
+                            <String fx:value="Élève" />
+                            <String fx:value="Lambda" />
                         </FXCollections>
                     </items>
                 </ComboBox>
-                <Button text="S'inscrire" onAction="#handleSignup" styleClass="button" prefWidth="150"/>
+                <Button onAction="#handleSignup" prefWidth="150" styleClass="button" text="S'inscrire" />
             </VBox>
         </StackPane>
     </children>
