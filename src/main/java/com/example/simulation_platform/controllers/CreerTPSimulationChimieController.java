@@ -4,9 +4,10 @@ import com.example.simulation_platform.models.Professeur;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
+import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
@@ -26,12 +27,13 @@ public class CreerTPSimulationChimieController {
     @FXML
     private ComboBox<String> solutionComboBox;
     @FXML
-    private ComboBox<String> indicateurComboBox;  // Ajout de la ComboBox pour sélectionner l'indicateur
+    private ComboBox<String> indicateurComboBox;
 
-    private Professeur professeur;  // Déclarez la variable professeur
+    private Professeur professeur;
 
-    private Map<String, Color> solutionsMap;  // Map pour associer une solution à sa couleur
-    private Map<String, Color> indicateursMap;  // Map pour associer un indicateur à une couleur
+    private Map<String, Color> solutionsMap;
+    private Map<String, Color> indicateursMap;
+    private Map<String, Map<String, Color>> solutionIndicateurColorsMap;
 
     // Méthode pour définir le professeur
     public void setProfesseur(Professeur professeur) {
@@ -63,13 +65,55 @@ public class CreerTPSimulationChimieController {
         indicateursMap.put("Jus de chou rouge", Color.VIOLET);
         indicateursMap.put("Rouge de méthyle", Color.ORANGE);
 
+        // Initialiser la carte des couleurs des solutions en fonction des indicateurs
+        solutionIndicateurColorsMap = new HashMap<>();
+
+        // Eau distillée
+        Map<String, Color> eauDistilleColors = new HashMap<>();
+        eauDistilleColors.put("Phénolphtaléine", Color.TRANSPARENT);
+        eauDistilleColors.put("Bleu de bromothymol", Color.GREEN);
+        eauDistilleColors.put("Jus de chou rouge", Color.VIOLET);
+        eauDistilleColors.put("Rouge de méthyle", Color.ORANGE);
+        solutionIndicateurColorsMap.put("Eau distillée (neutre)", eauDistilleColors);
+
+        // Vinaigre
+        Map<String, Color> vinaigreColors = new HashMap<>();
+        vinaigreColors.put("Phénolphtaléine", Color.TRANSPARENT);
+        vinaigreColors.put("Bleu de bromothymol", Color.YELLOW);
+        vinaigreColors.put("Jus de chou rouge", Color.RED);
+        vinaigreColors.put("Rouge de méthyle", Color.RED);
+        solutionIndicateurColorsMap.put("Vinaigre (acide)", vinaigreColors);
+
+        // Eau savonneuse
+        Map<String, Color> eauSavonneuseColors = new HashMap<>();
+        eauSavonneuseColors.put("Phénolphtaléine", Color.PINK);
+        eauSavonneuseColors.put("Bleu de bromothymol", Color.BLUE);
+        eauSavonneuseColors.put("Jus de chou rouge", Color.GREEN);
+        eauSavonneuseColors.put("Rouge de méthyle", Color.YELLOW);
+        solutionIndicateurColorsMap.put("Eau savonneuse (basique)", eauSavonneuseColors);
+
+        // Jus de citron
+        Map<String, Color> jusDeCitronColors = new HashMap<>();
+        jusDeCitronColors.put("Phénolphtaléine", Color.TRANSPARENT);
+        jusDeCitronColors.put("Bleu de bromothymol", Color.YELLOW);
+        jusDeCitronColors.put("Jus de chou rouge", Color.RED);
+        jusDeCitronColors.put("Rouge de méthyle", Color.RED);
+        solutionIndicateurColorsMap.put("Jus de citron (acide)", jusDeCitronColors);
+
+        // Bicarbonate de soude
+        Map<String, Color> bicarbonateColors = new HashMap<>();
+        bicarbonateColors.put("Phénolphtaléine", Color.PINK);
+        bicarbonateColors.put("Bleu de bromothymol", Color.BLUE);
+        bicarbonateColors.put("Jus de chou rouge", Color.GREEN);
+        bicarbonateColors.put("Rouge de méthyle", Color.YELLOW);
+        solutionIndicateurColorsMap.put("Bicarbonate de soude (basique)", bicarbonateColors);
+
         // Ajouter une ComboBox pour sélectionner la solution
         solutionComboBox.getItems().addAll(solutionsMap.keySet());
 
         // Ajouter les éléments à la ComboBox pour les indicateurs
         indicateurComboBox.getItems().addAll(indicateursMap.keySet());
     }
-
 
     @FXML
     private void handleCreer() {
@@ -91,13 +135,11 @@ public class CreerTPSimulationChimieController {
         }
 
         // Logique pour créer la simulation de chimie
-        create3DSimulation(selectedSolution);
+        create3DSimulation(selectedSolution, selectedIndicateur);
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Simulation Chimie créée avec succès.");
     }
 
-
-
-    private void create3DSimulation(String selectedSolution) {
+    private void create3DSimulation(String selectedSolution, String selectedIndicateur) {
         // Créer un bécher 1
         Cylinder becher1 = createBecher(-50);
 
@@ -105,7 +147,6 @@ public class CreerTPSimulationChimieController {
         Cylinder becher2 = createBecher(50);
 
         // Appliquer la couleur de l'indicateur à Bécher 1
-        String selectedIndicateur = indicateurComboBox.getValue();
         if (selectedIndicateur != null) {
             Color color = indicateursMap.get(selectedIndicateur);
             setBecherColor(becher1, color);
@@ -130,9 +171,8 @@ public class CreerTPSimulationChimieController {
         simulationContainer.getChildren().addAll(fond, becher1, becher2, becher1Label, becher2Label);
 
         // Déplacer le bécher 1 vers le bécher 2
-        moveBecherToOther(becher1, becher2);
+        moveBecherToOther(becher1, becher2, selectedSolution, selectedIndicateur);
     }
-
 
     private Cylinder createBecher(double positionX) {
         Cylinder becher = new Cylinder(20, 100);  // Rayon et hauteur
@@ -157,7 +197,7 @@ public class CreerTPSimulationChimieController {
         return textLabel;
     }
 
-    private void moveBecherToOther(Cylinder becher1, Cylinder becher2) {
+    private void moveBecherToOther(Cylinder becher1, Cylinder becher2, String selectedSolution, String selectedIndicateur) {
         // Animation pour déplacer et incliner le bécher 1
         Path path = new Path();
         path.getElements().add(new MoveTo(becher1.getTranslateX(), becher1.getTranslateY()));
@@ -190,11 +230,9 @@ public class CreerTPSimulationChimieController {
         });
 
         rotateTransition1.setOnFinished(event -> {
-            // Changer la couleur du bécher 2 en fonction de l'indicateur
-            String selectedIndicateur = indicateurComboBox.getValue();
-            if (selectedIndicateur != null) {
-                Color color = indicateursMap.get(selectedIndicateur);
-                setBecherColor(becher2, color);
+            // Changer la couleur du bécher 2 en fonction de la solution et de l'indicateur
+            if (selectedIndicateur != null && selectedSolution != null) {
+                animateBecherColor(becher2, selectedSolution, selectedIndicateur);
             }
 
             // Rendre le bécher 1 transparent
@@ -204,6 +242,33 @@ public class CreerTPSimulationChimieController {
         });
 
         pathTransition1.play();
+    }
+
+    private void animateBecherColor(Cylinder becher, String selectedSolution, String selectedIndicateur) {
+        // Obtenez la couleur de la solution et de l'indicateur
+        Color solutionColor = solutionsMap.get(selectedSolution);
+        Color indicatorColor = indicateursMap.get(selectedIndicateur);
+
+        // Obtenez la couleur finale de la solution en fonction de l'indicateur
+        Color finalColor = solutionIndicateurColorsMap.get(selectedSolution).get(selectedIndicateur);
+
+        // Appliquer la couleur finale au matériau du bécher
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseColor(finalColor);
+        becher.setMaterial(material);
+
+        // Animation pour changer la couleur
+        Timeline timeline = new Timeline();
+        for (int i = 0; i <= 100; i++) {
+            final int index = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 50), event -> {
+                // Interpolation entre la couleur de la solution et la couleur finale
+                material.setDiffuseColor(solutionColor.interpolate(finalColor, index / 100.0));
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
