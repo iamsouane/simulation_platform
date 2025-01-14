@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -165,25 +166,45 @@ public class CreerTPSimulationChimieController {
         String couleurFinale = getColorName(finalColor);
 
         try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "INSERT INTO simulation_resultat " +
-                    "(titre, details, solution, indicateur, couleur_finale, description, createur) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, titre);
-            statement.setString(2, details);
-            statement.setString(3, selectedSolution);
-            statement.setString(4, selectedIndicateur);
-            statement.setString(5, couleurFinale);
-            statement.setString(6, description);
-            statement.setInt(7, professeur.getId());
-            statement.executeUpdate();
+            // Insérer dans la table tp
+            String insertTpQuery = "INSERT INTO tp (titre, details, matiere, typeTP, createur) VALUES (?, ?, 'CHIMIE', 'SIMULATION', ?)";
+            PreparedStatement insertTpStatement = connection.prepareStatement(insertTpQuery, PreparedStatement.RETURN_GENERATED_KEYS);
+            insertTpStatement.setString(1, titre);
+            insertTpStatement.setString(2, details);
+            insertTpStatement.setInt(3, professeur.getId());
+            insertTpStatement.executeUpdate();
 
-            showAlert(Alert.AlertType.INFORMATION, "Succès", "Résultat de la simulation enregistré avec succès.");
+            // Récupérer l'ID du TP créé
+            ResultSet generatedKeys = insertTpStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int idTp = generatedKeys.getInt(1);
+
+                // Insérer dans la table simulation
+                String insertSimulationQuery = "INSERT INTO simulation (idTP) VALUES (?)";
+                PreparedStatement insertSimulationStatement = connection.prepareStatement(insertSimulationQuery);
+                insertSimulationStatement.setInt(1, idTp);
+                insertSimulationStatement.executeUpdate();
+
+                // Enregistrer le résultat de la simulation dans la table simulation_resultat
+                String insertResultatQuery = "INSERT INTO simulation_resultat (titre, details, solution, indicateur, couleur_finale, description, createur) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertResultatStatement = connection.prepareStatement(insertResultatQuery);
+                insertResultatStatement.setString(1, titre);
+                insertResultatStatement.setString(2, details);
+                insertResultatStatement.setString(3, selectedSolution);
+                insertResultatStatement.setString(4, selectedIndicateur);
+                insertResultatStatement.setString(5, couleurFinale);
+                insertResultatStatement.setString(6, description);
+                insertResultatStatement.setInt(7, professeur.getId());
+                insertResultatStatement.executeUpdate();
+
+                showAlert(Alert.AlertType.INFORMATION, "Succès", "Simulation et résultat enregistrés avec succès.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de l'enregistrement du résultat.");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de l'enregistrement du TP et de la simulation.");
         }
     }
+
 
     @FXML
     private void create3DSimulation(String selectedSolution, String selectedIndicateur) {

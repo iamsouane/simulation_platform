@@ -2,10 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationChimieController" spacing="10" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationChimieController"
+      spacing="10" alignment="CENTER">
     <children>
-        <Label fx:id="titreLabel" text="TP Simulation Chimie"/>
-        <!-- Autres éléments spécifiques à la simulation en chimie -->
+        <Label text="Simulation Chimie"/>
+        <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution"/>
+        <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur"/>
+        <Button text="Démarrer" onAction="#handleCreer"/>
+        <StackPane fx:id="simulationContainer" prefWidth="600" prefHeight="600"/>
     </children>
 </VBox>
