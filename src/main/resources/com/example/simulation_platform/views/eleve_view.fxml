@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.EleveController"
       spacing="20" alignment="CENTER"
       stylesheets="@/eleve_view.css"
@@ -24,7 +23,8 @@
 
         <!-- Boutons pour les actions -->
         <VBox spacing="15" alignment="CENTER" style="-fx-padding: 20;">
-            <Button text="Faire TP" onAction="#handleFaireTP" styleClass="button" prefWidth="250"/>
+            <Button text="Faire TP Quizz" onAction="#handleFaireTP" styleClass="button" prefWidth="250"/>
+            <Button text="Faire TP Simulation" onAction="#handleFaireTPSimulation" styleClass="button" prefWidth="250"/>
             <Button text="Consulter Résultat" onAction="#handleConsulterResultat" styleClass="button" prefWidth="250"/>
             <Button text="Se Déconnecter" onAction="#handleLogout" styleClass="button" prefWidth="250"/>
         </VBox>

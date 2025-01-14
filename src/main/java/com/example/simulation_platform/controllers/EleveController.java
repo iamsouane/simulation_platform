@@ -85,42 +85,50 @@ public class EleveController {
                 showAlert(Alert.AlertType.WARNING, "Avertissement", "Type de TP non supporté.");
                 return;
             }
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-                VBox faireTpView = loader.load();
-                Scene scene = new Scene(faireTpView);
-
-                if (fxmlFile.endsWith("faire_tp_quizz_chimie.fxml")) {
-                    FaireTPQuizzChimieController controller = loader.getController();
-                    controller.setStage(stage);
-                    controller.setEleve(eleve);
-                    controller.setTP(selectedTP);
-                } else if (fxmlFile.endsWith("faire_tp_quizz_svt.fxml")) {
-                    FaireTPQuizzSVTController controller = loader.getController();
-                    controller.setStage(stage);
-                    controller.setEleve(eleve);
-                    controller.setTP(selectedTP);
-                } else if (fxmlFile.endsWith("faire_tp_simulation_chimie.fxml")) {
-                    FaireTPSimulationChimieController controller = loader.getController();
-                    controller.setStage(stage);
-                    controller.setEleve(eleve);
-                    controller.setTP(selectedTP);
-                } else if (fxmlFile.endsWith("faire_tp_simulation_svt.fxml")) {
-                    FaireTPSimulationSVTController controller = loader.getController();
-                    controller.setStage(stage);
-                    controller.setEleve(eleve);
-                    controller.setTP(selectedTP);
-                }
-
-                stage.setScene(scene);
-                stage.setTitle("Faire TP - " + selectedTP.getTitre());
-            } catch (IOException e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors du chargement du TP.");
-            }
+            navigateToFaireTP(fxmlFile, selectedTP);
         } else {
             showAlert(Alert.AlertType.WARNING, "Avertissement", "Veuillez sélectionner un TP.");
+        }
+    }
+
+    @FXML
+    private void handleFaireTPSimulation() {
+        TP selectedTP = tpListView.getSelectionModel().getSelectedItem();
+        if (selectedTP != null && selectedTP.getTypeTP() == TypeTP.SIMULATION) {
+            if (selectedTP.getMatiere() == Matiere.CHIMIE) {
+                navigateToFaireTP("/com/example/simulation_platform/views/faire_tp_simulation_chimie.fxml", selectedTP);
+            } else if (selectedTP.getMatiere() == Matiere.SVT) {
+                navigateToFaireTP("/com/example/simulation_platform/views/faire_tp_simulation_svt.fxml", selectedTP);
+            }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Avertissement", "Veuillez sélectionner un TP de simulation.");
+        }
+    }
+
+    private void navigateToFaireTP(String fxmlFile, TP selectedTP) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            VBox view = loader.load();
+            Scene scene = new Scene(view);
+
+            // Configurer le contrôleur en fonction du type de TP
+            if (fxmlFile.endsWith("faire_tp_simulation_chimie.fxml")) {
+                FaireTPSimulationChimieController controller = loader.getController();
+                controller.setStage(stage);
+                controller.setEleve(eleve);
+                controller.setTP(selectedTP);
+            } else if (fxmlFile.endsWith("faire_tp_simulation_svt.fxml")) {
+                FaireTPSimulationSVTController controller = loader.getController();
+                controller.setStage(stage);
+                controller.setEleve(eleve);
+                controller.setTP(selectedTP);
+            }
+
+            stage.setScene(scene);
+            stage.setTitle("Faire TP - " + selectedTP.getTitre());
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors du chargement du TP.");
         }
     }
 
