@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
-
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationChimieController"
       spacing="10" alignment="CENTER">
@@ -12,6 +12,7 @@
         <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution"/>
         <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur"/>
         <Button text="Démarrer" onAction="#handleCreer"/>
+        <Text fx:id="resultatText" wrappingWidth="400" fill="black"/>
         <StackPane fx:id="simulationContainer" prefWidth="600" prefHeight="600"/>
     </children>
 </VBox>

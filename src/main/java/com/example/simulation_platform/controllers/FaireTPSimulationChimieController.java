@@ -24,6 +24,8 @@ public class FaireTPSimulationChimieController {
     private ComboBox<String> solutionComboBox;
     @FXML
     private ComboBox<String> indicateurComboBox;
+    @FXML
+    private Text resultatText;
 
     private Professeur professeur;
     private Stage stage;
@@ -168,54 +170,50 @@ public class FaireTPSimulationChimieController {
 
     @FXML
     private void afficherResultat(String selectedSolution, String selectedIndicateur) {
-        String description = "";
+        StringBuilder description = new StringBuilder();
 
         if (selectedSolution != null) {
             if (selectedSolution.contains("acide")) {
-                description += "La solution est acide\n";
+                description.append("La solution est acide\n");
             } else if (selectedSolution.contains("basique")) {
-                description += "La solution est basique\n";
+                description.append("La solution est basique\n");
             } else {
-                description += "La solution est neutre\n";
+                description.append("La solution est neutre\n");
             }
 
             Color finalColor = solutionIndicateurColorsMap.get(selectedSolution).get(selectedIndicateur);
             String couleurFinale = getColorName(finalColor);
-            description += "Couleur: " + couleurFinale + "\n";
+            description.append("Couleur: ").append(couleurFinale).append("\n");
 
+            // Affichage du pH attendu
             if ("Phénolphtaléine".equals(selectedIndicateur)) {
-                if (finalColor.equals(Color.TRANSPARENT)) {
-                    description += "pH: < 8,2 (Acide ou Neutre)";
-                } else if (finalColor.equals(Color.PINK)) {
-                    description += "pH: > 8,2 (Basique)";
-                }
+                description.append(finalColor.equals(Color.TRANSPARENT)
+                        ? "pH: < 8,2 (Acide ou Neutre)"
+                        : "pH: > 8,2 (Basique)");
             } else if ("Bleu de bromothymol".equals(selectedIndicateur)) {
-                if (finalColor.equals(Color.YELLOW)) {
-                    description += "pH: < 7 (Acide)";
-                } else if (finalColor.equals(Color.GREEN)) {
-                    description += "pH: 7 (Neutre)";
-                } else if (finalColor.equals(Color.BLUE)) {
-                    description += "pH: > 7 (Basique)";
-                }
+                description.append(finalColor.equals(Color.YELLOW)
+                        ? "pH: < 7 (Acide)"
+                        : finalColor.equals(Color.GREEN)
+                        ? "pH: 7 (Neutre)"
+                        : "pH: > 7 (Basique)");
             } else if ("Jus de chou rouge".equals(selectedIndicateur)) {
-                if (finalColor.equals(Color.RED)) {
-                    description += "pH: < 7 (Acide)";
-                } else if (finalColor.equals(Color.VIOLET)) {
-                    description += "pH: 7 (Neutre)";
-                } else if (finalColor.equals(Color.GREEN) || finalColor.equals(Color.BLUE)) {
-                    description += "pH: > 7 (Basique)";
-                }
+                description.append(finalColor.equals(Color.RED)
+                        ? "pH: < 7 (Acide)"
+                        : finalColor.equals(Color.VIOLET)
+                        ? "pH: 7 (Neutre)"
+                        : "pH: > 7 (Basique)");
             } else if ("Rouge de méthyle".equals(selectedIndicateur)) {
-                if (finalColor.equals(Color.RED)) {
-                    description += "pH: < 4,4 (Acide)";
-                } else if (finalColor.equals(Color.YELLOW)) {
-                    description += "pH: > 6,2 (Basique)";
-                }
+                description.append(finalColor.equals(Color.RED)
+                        ? "pH: < 4,4 (Acide)"
+                        : "pH: > 6,2 (Basique)");
             } else {
-                description += "pH: Indéterminé pour cet indicateur";
+                description.append("pH: Indéterminé pour cet indicateur");
             }
         }
+
+        resultatText.setText(description.toString());
     }
+
 
     @FXML
     private Cylinder createBecher(double positionX) {
