@@ -29,16 +29,25 @@ public class CreerTPSimulationSVTController {
     private Label labelTemperature;
 
     @FXML
+    private Label descriptionTemperature;  // Label pour décrire l'effet de la température
+
+    @FXML
     private Slider sliderHumidite;
 
     @FXML
     private Label labelHumidite;
 
     @FXML
+    private Label descriptionHumidite;  // Label pour décrire l'effet de l'humidité
+
+    @FXML
     private Slider sliderLumiere;
 
     @FXML
     private Label labelLumiere;
+
+    @FXML
+    private Label descriptionLumiere;  // Label pour décrire l'effet de la lumière
 
     private Professeur professeur;
 
@@ -78,20 +87,20 @@ public class CreerTPSimulationSVTController {
         // Gestion des sliders
         sliderTemperature.valueProperty().addListener((obs, oldVal, newVal) -> {
             labelTemperature.setText(String.format("Température : %.1f°C", newVal.doubleValue()));
-            // Appliquer l'effet de température aux plantes
             applyTemperatureEffect(stackPanePlantes, newVal.doubleValue());
+            updateTemperatureDescription(newVal.doubleValue());
         });
 
         sliderHumidite.valueProperty().addListener((obs, oldVal, newVal) -> {
             labelHumidite.setText(String.format("Humidité : %.1f%%", newVal.doubleValue()));
-            // Appliquer l'effet d'humidité aux plantes (changer la couleur)
             applyHumidityEffect(stackPanePlantes, newVal.doubleValue());
+            updateHumidityDescription(newVal.doubleValue());
         });
 
         sliderLumiere.valueProperty().addListener((obs, oldVal, newVal) -> {
             labelLumiere.setText(String.format("Lumière : %.1f%%", newVal.doubleValue()));
-            // Appliquer l'effet de lumière aux plantes (influence photosynthèse)
             applyLumiereEffect(stackPanePlantes, newVal.doubleValue());
+            updateLumiereDescription(newVal.doubleValue());
         });
     }
 
@@ -123,18 +132,41 @@ public class CreerTPSimulationSVTController {
                 Group plante = (Group) node;
                 Circle feuille1 = (Circle) plante.getChildren().get(1);
                 Circle feuille2 = (Circle) plante.getChildren().get(2);
+                Cylinder tige = (Cylinder) plante.getChildren().get(0);
 
+                // Effet sur les feuilles en fonction de la température
                 if (temperature < 15) {
                     feuille1.setFill(Color.LIGHTYELLOW);  // Température basse
                     feuille2.setFill(Color.LIGHTYELLOW);
+
+                    // Réduction de la taille de la plante (tige) si la température est trop élevée
+                    tige.setHeight(80);  // Réduire la hauteur de la tige
+                    tige.setRadius(8);   // Réduire le rayon de la tige
                 } else if (temperature <= 25) {
                     feuille1.setFill(Color.DARKGREEN);  // Température optimale
                     feuille2.setFill(Color.DARKGREEN);
+
+                    tige.setHeight(100);
+                    tige.setRadius(10);
                 } else {
                     feuille1.setFill(Color.BROWN);  // Température élevée
                     feuille2.setFill(Color.BROWN);
+
+                    tige.setHeight(100);
+                    tige.setRadius(10);
                 }
             }
+        }
+    }
+
+
+    private void updateTemperatureDescription(double temperature) {
+        if (temperature < 15) {
+            descriptionTemperature.setText("Température trop basse, la croissance des plantes est réduite.");
+        } else if (temperature <= 25) {
+            descriptionTemperature.setText("Température optimale pour la croissance des plantes.");
+        } else {
+            descriptionTemperature.setText("Température trop élevée, les plantes peuvent souffrir.");
         }
     }
 
@@ -147,16 +179,26 @@ public class CreerTPSimulationSVTController {
 
                 // Modifie la couleur des feuilles en fonction de l'humidité
                 if (humidite < 30) {
-                    feuille1.setFill(Color.YELLOWGREEN); // Feuilles sèches (très faible humidité)
-                    feuille2.setFill(Color.YELLOWGREEN); // Feuilles sèches (très faible humidité)
+                    feuille1.setFill(Color.YELLOWGREEN);
+                    feuille2.setFill(Color.YELLOWGREEN);
                 } else if (humidite <= 70) {
-                    feuille1.setFill(Color.DARKGREEN); // Feuilles bien hydratées (haute humidité)
-                    feuille2.setFill(Color.DARKGREEN); // Feuilles bien hydratées (haute humidité)
+                    feuille1.setFill(Color.DARKGREEN);
+                    feuille2.setFill(Color.DARKGREEN);
                 } else {
-                    feuille1.setFill(Color.DARKOLIVEGREEN); // Humidité moyenne
-                    feuille2.setFill(Color.DARKOLIVEGREEN); // Humidité moyenne
+                    feuille1.setFill(Color.DARKOLIVEGREEN);
+                    feuille2.setFill(Color.DARKOLIVEGREEN);
                 }
             }
+        }
+    }
+
+    private void updateHumidityDescription(double humidite) {
+        if (humidite < 30) {
+            descriptionHumidite.setText("Humidité trop faible, les feuilles peuvent jaunir.");
+        } else if (humidite <= 70) {
+            descriptionHumidite.setText("Humidité idéale pour une croissance saine des plantes.");
+        } else {
+            descriptionHumidite.setText("Humidité trop élevée, les plantes peuvent être vulnérables à la moisissure.");
         }
     }
 
@@ -179,6 +221,16 @@ public class CreerTPSimulationSVTController {
                     feuille2.setOpacity(1.2);
                 }
             }
+        }
+    }
+
+    private void updateLumiereDescription(double lumiere) {
+        if (lumiere < 30) {
+            descriptionLumiere.setText("Manque de lumière, la photosynthèse est limitée.");
+        } else if (lumiere <= 70) {
+            descriptionLumiere.setText("Lumière idéale pour une photosynthèse optimale.");
+        } else {
+            descriptionLumiere.setText("Excès de lumière, la photosynthèse peut être perturbée.");
         }
     }
 }
