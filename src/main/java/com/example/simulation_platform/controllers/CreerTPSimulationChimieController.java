@@ -186,7 +186,7 @@ public class CreerTPSimulationChimieController {
                 insertSimulationStatement.executeUpdate();
 
                 // Enregistrer le résultat de la simulation dans la table simulation_resultat
-                String insertResultatQuery = "INSERT INTO simulation_resultat (titre, details, solution, indicateur, couleur_finale, description, createur) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String insertResultatQuery = "INSERT INTO simulation_resultat (titre, details, solution, indicateur, couleur_finale, resultat, createur) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertResultatStatement = connection.prepareStatement(insertResultatQuery);
                 insertResultatStatement.setString(1, titre);
                 insertResultatStatement.setString(2, details);
