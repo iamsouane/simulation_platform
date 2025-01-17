@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationSVTController" spacing="10" alignment="CENTER">
+<VBox xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationSVTController">
     <children>
         <Label text="Créer TP Simulation SVT"/>
-        <TextField fx:id="titreField" promptText="Titre"/>
-        <TextField fx:id="detailsField" promptText="Détails"/>
-        <Button text="Créer Simulation SVT" onAction="#handleCreer"/>
+
+        <Label text="Titre du TP:"/>
+        <TextField fx:id="titreField" promptText="Entrez le titre"/>
+
+        <Label text="Détails du TP:"/>
+        <TextField fx:id="detailsField" promptText="Entrez les détails"/>
+
+        <Label text="Température:"/>
+        <Slider fx:id="sliderTemperature" min="0" max="50" value="25"/>
+        <Label fx:id="labelTemperature" text="Température : 25°C"/>
+
+        <Label text="Humidité:"/>
+        <Slider fx:id="sliderHumidite" min="0" max="100" value="50"/>
+        <Label fx:id="labelHumidite" text="Humidité : 50%"/>
+
+        <Label text="Lumière:"/>
+        <Slider fx:id="sliderLumiere" min="0" max="100" value="70"/>
+        <Label fx:id="labelLumiere" text="Lumière : 70%"/>
+
+        <StackPane fx:id="stackPanePlantes" prefWidth="600" prefHeight="400"/>
     </children>
 </VBox>
