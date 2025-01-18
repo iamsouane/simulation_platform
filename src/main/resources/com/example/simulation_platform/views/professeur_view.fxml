@@ -2,11 +2,13 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.simulation_platform.controllers.ProfesseurController"
       alignment="CENTER" spacing="20"
-      stylesheets="@/professeur_view.css"
+      stylesheets="@../../../../styles/professeur_view.css"
       styleClass="root">
 
     <children>
@@ -14,13 +16,44 @@
         <VBox spacing="15" alignment="CENTER"
               style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-border-radius: 10; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);"
               maxWidth="400">
-            <Label text="Bienvenue, Professeur !"
-                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #444;"/>
 
-            <!-- Boutons pour les fonctionnalités -->
-            <Button text="Créer TP" onAction="#handleCreerTP" styleClass="button" prefWidth="250"/>
-            <Button text="Consulter Résultats" onAction="#handleConsulterResultats" styleClass="button" prefWidth="250"/>
-            <Button text="Se Déconnecter" onAction="#handleLogout" styleClass="button" prefWidth="250"/>
+            <!-- Label de bienvenue avec un message dynamique -->
+            <Label fx:id="bienvenueLabel"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #0077b6;"/>
+
+            <!-- Boutons pour les fonctionnalités avec icônes -->
+            <Button onAction="#handleCreerTP" styleClass="button" prefWidth="250">
+                <graphic>
+                    <ImageView fitWidth="20" fitHeight="20">
+                        <image>
+                            <Image url="@../../../../images/create_icon.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+                <text>Créer TP</text>
+            </Button>
+
+            <Button onAction="#handleConsulterResultats" styleClass="button" prefWidth="250">
+                <graphic>
+                    <ImageView fitWidth="20" fitHeight="20">
+                        <image>
+                            <Image url="@../../../../images/results_icon.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+                <text>Consulter Résultats</text>
+            </Button>
+
+            <Button onAction="#handleLogout" styleClass="button" prefWidth="250">
+                <graphic>
+                    <ImageView fitWidth="20" fitHeight="20">
+                        <image>
+                            <Image url="@../../../../images/logout_icon.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+                <text>Se Déconnecter</text>
+            </Button>
         </VBox>
     </children>
 </VBox>
