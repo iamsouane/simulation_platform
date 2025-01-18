@@ -1,6 +1,9 @@
 package com.example.simulation_platform.controllers;
 
 import com.example.simulation_platform.models.Professeur;
+import javafx.animation.FillTransition;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -10,44 +13,34 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Cylinder;
+import javafx.util.Duration;
 
 public class CreerTPSimulationSVTController {
 
     @FXML
     private TextField titreField;
-
     @FXML
     private TextField detailsField;
-
     @FXML
     private StackPane stackPanePlantes;
-
     @FXML
     private Slider sliderTemperature;
-
     @FXML
     private Label labelTemperature;
-
     @FXML
-    private Label descriptionTemperature;  // Label pour décrire l'effet de la température
-
+    private Label descriptionTemperature;
     @FXML
     private Slider sliderHumidite;
-
     @FXML
     private Label labelHumidite;
-
     @FXML
-    private Label descriptionHumidite;  // Label pour décrire l'effet de l'humidité
-
+    private Label descriptionHumidite;
     @FXML
     private Slider sliderLumiere;
-
     @FXML
     private Label labelLumiere;
-
     @FXML
-    private Label descriptionLumiere;  // Label pour décrire l'effet de la lumière
+    private Label descriptionLumiere;
 
     private Professeur professeur;
 
@@ -84,7 +77,7 @@ public class CreerTPSimulationSVTController {
             stackPanePlantes.getChildren().add(plante);
         }
 
-        // Gestion des sliders
+        // Gestion des sliders avec animations
         sliderTemperature.valueProperty().addListener((obs, oldVal, newVal) -> {
             labelTemperature.setText(String.format("Température : %.1f°C", newVal.doubleValue()));
             applyTemperatureEffect(stackPanePlantes, newVal.doubleValue());
@@ -112,11 +105,11 @@ public class CreerTPSimulationSVTController {
         tige.setMaterial(new javafx.scene.paint.PhongMaterial(Color.SADDLEBROWN));
 
         // Feuilles sous forme de cercles
-        Circle feuille1 = new Circle(20, Color.DARKGREEN); // couleur initiale
+        Circle feuille1 = new Circle(20, Color.DARKGREEN);
         feuille1.setTranslateY(-60);
         feuille1.setTranslateX(-15);
 
-        Circle feuille2 = new Circle(20, Color.DARKGREEN); // couleur initiale
+        Circle feuille2 = new Circle(20, Color.DARKGREEN);
         feuille2.setTranslateY(-60);
         feuille2.setTranslateX(15);
 
@@ -134,31 +127,47 @@ public class CreerTPSimulationSVTController {
                 Circle feuille2 = (Circle) plante.getChildren().get(2);
                 Cylinder tige = (Cylinder) plante.getChildren().get(0);
 
-                // Effet sur les feuilles en fonction de la température
+                // Animation de la couleur des feuilles
+                FillTransition fillTransition1 = new FillTransition(Duration.millis(500), feuille1);
+                FillTransition fillTransition2 = new FillTransition(Duration.millis(500), feuille2);
+
                 if (temperature < 15) {
-                    feuille1.setFill(Color.LIGHTYELLOW);  // Température basse
-                    feuille2.setFill(Color.LIGHTYELLOW);
+                    fillTransition1.setToValue(Color.LIGHTYELLOW);
+                    fillTransition2.setToValue(Color.LIGHTYELLOW);
+                    fillTransition1.play();
+                    fillTransition2.play();
 
-                    // Réduction de la taille de la plante (tige) si la température est trop élevée
-                    tige.setHeight(80);  // Réduire la hauteur de la tige
-                    tige.setRadius(8);   // Réduire le rayon de la tige
+                    // Animation de la taille de la tige
+                    ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), tige);
+                    scaleTransition.setToX(0.8);
+                    scaleTransition.setToY(0.8);
+                    scaleTransition.play();
                 } else if (temperature <= 25) {
-                    feuille1.setFill(Color.DARKGREEN);  // Température optimale
-                    feuille2.setFill(Color.DARKGREEN);
+                    fillTransition1.setToValue(Color.DARKGREEN);
+                    fillTransition2.setToValue(Color.DARKGREEN);
+                    fillTransition1.play();
+                    fillTransition2.play();
 
-                    tige.setHeight(100);
-                    tige.setRadius(10);
+                    // Animation de la taille de la tige
+                    ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), tige);
+                    scaleTransition.setToX(1);
+                    scaleTransition.setToY(1);
+                    scaleTransition.play();
                 } else {
-                    feuille1.setFill(Color.BROWN);  // Température élevée
-                    feuille2.setFill(Color.BROWN);
+                    fillTransition1.setToValue(Color.BROWN);
+                    fillTransition2.setToValue(Color.BROWN);
+                    fillTransition1.play();
+                    fillTransition2.play();
 
-                    tige.setHeight(100);
-                    tige.setRadius(10);
+                    // Animation de la taille de la tige
+                    ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), tige);
+                    scaleTransition.setToX(0.8);
+                    scaleTransition.setToY(0.8);
+                    scaleTransition.play();
                 }
             }
         }
     }
-
 
     private void updateTemperatureDescription(double temperature) {
         if (temperature < 15) {
@@ -177,16 +186,25 @@ public class CreerTPSimulationSVTController {
                 Circle feuille1 = (Circle) plante.getChildren().get(1);
                 Circle feuille2 = (Circle) plante.getChildren().get(2);
 
-                // Modifie la couleur des feuilles en fonction de l'humidité
+                // Animation de la couleur des feuilles
+                FillTransition fillTransition1 = new FillTransition(Duration.millis(500), feuille1);
+                FillTransition fillTransition2 = new FillTransition(Duration.millis(500), feuille2);
+
                 if (humidite < 30) {
-                    feuille1.setFill(Color.YELLOWGREEN);
-                    feuille2.setFill(Color.YELLOWGREEN);
+                    fillTransition1.setToValue(Color.YELLOWGREEN);
+                    fillTransition2.setToValue(Color.YELLOWGREEN);
+                    fillTransition1.play();
+                    fillTransition2.play();
                 } else if (humidite <= 70) {
-                    feuille1.setFill(Color.DARKGREEN);
-                    feuille2.setFill(Color.DARKGREEN);
+                    fillTransition1.setToValue(Color.DARKGREEN);
+                    fillTransition2.setToValue(Color.DARKGREEN);
+                    fillTransition1.play();
+                    fillTransition2.play();
                 } else {
-                    feuille1.setFill(Color.DARKOLIVEGREEN);
-                    feuille2.setFill(Color.DARKOLIVEGREEN);
+                    fillTransition1.setToValue(Color.DARKOLIVEGREEN);
+                    fillTransition2.setToValue(Color.DARKOLIVEGREEN);
+                    fillTransition1.play();
+                    fillTransition2.play();
                 }
             }
         }
@@ -209,16 +227,25 @@ public class CreerTPSimulationSVTController {
                 Circle feuille1 = (Circle) plante.getChildren().get(1);
                 Circle feuille2 = (Circle) plante.getChildren().get(2);
 
-                // Influence de la lumière sur la photosynthèse
+                // Animation de l'opacité des feuilles
+                FadeTransition fadeTransition1 = new FadeTransition(Duration.millis(500), feuille1);
+                FadeTransition fadeTransition2 = new FadeTransition(Duration.millis(500), feuille2);
+
                 if (lumiere < 30) {
-                    feuille1.setOpacity(0.5);
-                    feuille2.setOpacity(0.5);
+                    fadeTransition1.setToValue(0.5);
+                    fadeTransition2.setToValue(0.5);
+                    fadeTransition1.play();
+                    fadeTransition2.play();
                 } else if (lumiere <= 70) {
-                    feuille1.setOpacity(1);
-                    feuille2.setOpacity(1);
+                    fadeTransition1.setToValue(1);
+                    fadeTransition2.setToValue(1);
+                    fadeTransition1.play();
+                    fadeTransition2.play();
                 } else {
-                    feuille1.setOpacity(1.2);  // Effet d'excès de lumière (légèrement plus lumineux)
-                    feuille2.setOpacity(1.2);
+                    fadeTransition1.setToValue(1.2);
+                    fadeTransition2.setToValue(1.2);
+                    fadeTransition1.play();
+                    fadeTransition2.play();
                 }
             }
         }
