@@ -78,7 +78,7 @@
                         </FXCollections>
                     </items>
                     <value>
-                        <String fx:value="Élève" /> <!-- Définir le rôle par défaut -->
+                        <String fx:value="Élève" /> <!-- Valeur par défaut -->
                     </value>
                 </ComboBox>
                 <Button onAction="#handleSignup" prefWidth="150" styleClass="button" text="S'inscrire" />
