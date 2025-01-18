@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationSVTController" spacing="10" alignment="CENTER">
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationSVTController">
     <children>
-        <Label fx:id="titreLabel" text="TP Simulation SVT"/>
-        <!-- Autres éléments spécifiques à la simulation en SVT -->
+        <Label text="Faire TP Simulation SVT"/>
+
+        <Label text="Titre du TP:"/>
+        <TextField fx:id="titreField" promptText="Entrez le titre"/>
+
+        <Label text="Détails du TP:"/>
+        <TextField fx:id="detailsField" promptText="Entrez les détails"/>
+
+        <Label text="Température:"/>
+        <Slider fx:id="sliderTemperature" min="0" max="50" value="25"/>
+        <Label fx:id="labelTemperature" text="Température : 25°C"/>
+        <Label fx:id="descriptionTemperature" text="Effet de la température sur les plantes"/>
+
+        <Label text="Humidité:"/>
+        <Slider fx:id="sliderHumidite" min="0" max="100" value="50"/>
+        <Label fx:id="labelHumidite" text="Humidité : 50%"/>
+        <Label fx:id="descriptionHumidite" text="Effet de l'humidité sur les plantes"/>
+
+        <Label text="Lumière:"/>
+        <Slider fx:id="sliderLumiere" min="0" max="100" value="70"/>
+        <Label fx:id="labelLumiere" text="Lumière : 70%"/>
+        <Label fx:id="descriptionLumiere" text="Effet de la lumière sur les plantes"/>
+
+        <StackPane fx:id="stackPanePlantes" prefWidth="600" prefHeight="400"/>
+
+        <!-- Bouton pour enregistrer le TP -->
+        <Button fx:id="btnEnregistrer" text="Enregistrer TP" onAction="#enregistrerTP" layoutY="450" />
+
     </children>
 </VBox>
