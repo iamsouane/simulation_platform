@@ -6,14 +6,17 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Cylinder;
 import javafx.util.Duration;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class CreerTPSimulationSVTController {
 
@@ -41,6 +44,8 @@ public class CreerTPSimulationSVTController {
     private Label labelLumiere;
     @FXML
     private Label descriptionLumiere;
+    @FXML
+    private Button btnEnregistrer; // Le bouton pour enregistrer le TP
 
     private Professeur professeur;
 
@@ -259,5 +264,58 @@ public class CreerTPSimulationSVTController {
         } else {
             descriptionLumiere.setText("Excès de lumière, la photosynthèse peut être perturbée.");
         }
+    }
+
+    @FXML
+    public void enregistrerTP() {
+        // Récupérer les données des champs du formulaire
+        String titre = titreField.getText();
+        String details = detailsField.getText();
+        String matiere = "SVT"; // On suppose que c'est un TP de SVT, vous pouvez ajouter un choix de matière
+        String typeTP = "SIMULATION"; // Idem, vous pouvez ajouter un champ pour choisir le type de TP
+        int createurId = professeur.getId(); // Utilisez l'ID du professeur connecté
+
+        // Insérer le TP dans la base de données
+        boolean success = enregistrerTPDansBaseDeDonnees(titre, details, matiere, typeTP, createurId);
+
+        if (success) {
+            // Afficher une alerte de succès
+            showAlert("Succès", "Le TP a été enregistré avec succès.", Alert.AlertType.INFORMATION);
+        } else {
+            // Afficher une alerte d'erreur
+            showAlert("Erreur", "Une erreur est survenue lors de l'enregistrement du TP.", Alert.AlertType.ERROR);
+        }
+    }
+
+    private boolean enregistrerTPDansBaseDeDonnees(String titre, String details, String matiere, String typeTP, int createurId) {
+        String url = "jdbc:mysql://localhost:3306/simulation_platform";
+        String user = "root";
+        String password = "1234"; // Remplacez par votre mot de passe
+
+        String sql = "INSERT INTO tp (titre, details, matiere, typeTP, createur) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, titre);
+            stmt.setString(2, details);
+            stmt.setString(3, matiere);
+            stmt.setString(4, typeTP);
+            stmt.setInt(5, createurId);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; // Retourne true si l'insertion a réussi
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retourne false en cas d'erreur
+        }
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

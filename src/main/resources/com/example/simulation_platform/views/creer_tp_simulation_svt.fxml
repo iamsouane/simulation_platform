@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationSVTController">
     <children>
@@ -33,5 +34,9 @@
         <Label fx:id="descriptionLumiere" text="Effet de la lumière sur les plantes"/>
 
         <StackPane fx:id="stackPanePlantes" prefWidth="600" prefHeight="400"/>
+
+        <!-- Bouton pour enregistrer le TP -->
+        <Button fx:id="btnEnregistrer" text="Enregistrer TP" onAction="#enregistrerTP" layoutY="450" />
+
     </children>
 </VBox>
