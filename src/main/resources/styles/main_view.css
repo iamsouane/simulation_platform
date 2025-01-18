@@ -1,0 +1,88 @@
+/* Fond de la page avec une image */
+.root {
+        -fx-background-image: url("../images/main_view.jpg"); /* Chemin vers l'image */
+        -fx-background-size: cover; /* L'image couvre toute la surface */
+        -fx-background-repeat: no-repeat; /* L'image ne se répète pas */
+        -fx-background-position: center; /* L'image est centrée */
+        -fx-padding: 20;
+        -fx-spacing: 20;
+        -fx-alignment: center;
+}
+
+/* Titre principal */
+.label {
+        -fx-font-family: "Segoe UI", sans-serif;
+        -fx-font-size: 34px;  /* Augmenté pour un titre plus visible */
+        -fx-text-fill: #ffffff;
+        -fx-font-weight: bold;
+        -fx-alignment: center;
+}
+
+/* Formulaires */
+.form-box {
+        -fx-background-color: rgba(255, 255, 255, 0.9);
+        -fx-border-color: #ddd;
+        -fx-border-radius: 10;
+        -fx-background-radius: 10;
+        -fx-padding: 20;
+        -fx-spacing: 15;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+        -fx-pref-width: 300; /* Ajout d'une largeur préférée pour les boîtes de formulaire */
+}
+
+/* Images et avatars */
+.image-view {
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0.1, 0, 2);
+        -fx-padding: 10;
+}
+
+/* Boutons */
+.button {
+        -fx-cursor: hand;
+        -fx-background-color: #0077b6;
+        -fx-text-fill: white;
+        -fx-background-radius: 10;
+        -fx-font-size: 14px;
+        -fx-padding: 10 20;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+        -fx-font-family: "Segoe UI", sans-serif; /* Ajouter une police pour uniformité */
+}
+
+.button:hover {
+        -fx-background-color: #005f8c;
+}
+
+/* Champs de texte */
+.text-field, .password-field {
+        -fx-background-color: rgba(255, 255, 255, 0.8);
+        -fx-border-color: #ddd;
+        -fx-border-radius: 5;
+        -fx-background-radius: 5;
+        -fx-padding: 10;
+        -fx-font-size: 14px;
+        -fx-font-family: "Segoe UI", sans-serif;  /* Uniformité avec les autres éléments */
+}
+
+/* Combobox */
+.combo-box {
+        -fx-border-color: #ddd;
+        -fx-border-radius: 5;
+        -fx-background-radius: 5;
+        -fx-padding: 5;
+        -fx-font-size: 14px;
+        -fx-background-color: rgba(255, 255, 255, 0.8);
+        -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Ajout de l'alignement du titre de formulaire */
+.form-title {
+        -fx-font-size: 18px;
+        -fx-font-weight: bold;
+        -fx-font-family: "Segoe UI", sans-serif;
+        -fx-text-fill: #0077b6;
+}
+
+/* Espace flexible dans les formulaires */
+.form-box > .button {
+        -fx-alignment: center;  /* Aligner le bouton au centre du formulaire */
+}
