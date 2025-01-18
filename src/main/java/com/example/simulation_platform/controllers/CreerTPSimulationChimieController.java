@@ -185,18 +185,6 @@ public class CreerTPSimulationChimieController {
                 insertSimulationStatement.setInt(1, idTp);
                 insertSimulationStatement.executeUpdate();
 
-                // Enregistrer le résultat de la simulation dans la table simulation_resultat
-                String insertResultatQuery = "INSERT INTO simulation_resultat (titre, details, solution, indicateur, couleur_finale, resultat, createur) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                PreparedStatement insertResultatStatement = connection.prepareStatement(insertResultatQuery);
-                insertResultatStatement.setString(1, titre);
-                insertResultatStatement.setString(2, details);
-                insertResultatStatement.setString(3, selectedSolution);
-                insertResultatStatement.setString(4, selectedIndicateur);
-                insertResultatStatement.setString(5, couleurFinale);
-                insertResultatStatement.setString(6, description);
-                insertResultatStatement.setInt(7, professeur.getId());
-                insertResultatStatement.executeUpdate();
-
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Simulation et résultat enregistrés avec succès.");
             }
         } catch (SQLException e) {
