@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.simulation_platform.controllers.ConsulterResultatsEleveController">
+
+    <Label text="Résultats des élèves" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="resultatsTable">
+        <columns>
+            <TableColumn fx:id="tpColumn" text="TP" prefWidth="200"/>
+            <TableColumn fx:id="eleveColumn" text="Élève" prefWidth="200"/>
+            <TableColumn fx:id="noteColumn" text="Note" prefWidth="100"/>
+            <TableColumn fx:id="commentairesColumn" text="Commentaires" prefWidth="300"/>
+        </columns>
+    </TableView>
+
+    <Button text="Retour" onAction="#handleRetour"/>
+
+</VBox>

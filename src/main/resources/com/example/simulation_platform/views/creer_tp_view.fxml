@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections?>
 
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPController" spacing="10" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPController"
+      spacing="15" alignment="CENTER" styleClass="container"
+      stylesheets="@../../../../styles/creer_tp_view.css">
+
     <children>
-        <Label text="Créer TP"/>
-        <TextField fx:id="titreField" promptText="Titre"/>
-        <TextField fx:id="detailsField" promptText="Détails"/>
-        <ComboBox fx:id="matiereComboBox">
+        <!-- Icône en haut -->
+        <ImageView fx:id="loginIcon" fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../images/create_icon.png"/>
+            </image>
+        </ImageView>
+
+        <Label text="Créer un TP" styleClass="title"/>
+
+        <TextField fx:id="titreField" promptText="Titre du TP" styleClass="text-field"/>
+        <TextField fx:id="detailsField" promptText="Détails du TP" styleClass="text-field"/>
+
+        <ComboBox fx:id="matiereComboBox" styleClass="combo-box">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Chimie"/>
@@ -18,7 +32,8 @@
                 </FXCollections>
             </items>
         </ComboBox>
-        <ComboBox fx:id="typeTPComboBox">
+
+        <ComboBox fx:id="typeTPComboBox" styleClass="combo-box">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Quizz"/>
@@ -26,6 +41,9 @@
                 </FXCollections>
             </items>
         </ComboBox>
-        <Button text="Créer" onAction="#handleCreer"/>
+
+        <Button text="Créer TP" onAction="#handleCreer" styleClass="button-primary"/>
+        <Button text="Retour" onAction="#handleRetour" styleClass="button-secondary"/>
+
     </children>
 </VBox>

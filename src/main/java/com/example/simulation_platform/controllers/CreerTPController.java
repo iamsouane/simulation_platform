@@ -105,6 +105,22 @@ public class CreerTPController {
         return null;
     }
 
+    @FXML
+    private void handleRetour() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/professeur_view.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            ProfesseurController controller = loader.getController();
+            controller.setProfesseur(professeur);
+            controller.setStage(stage);
+
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

@@ -1,5 +1,6 @@
 /* Fond de la page avec une image */
 .root {
+        -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
         -fx-background-image: url("../images/main_view.jpg"); /* Chemin vers l'image */
         -fx-background-size: cover; /* L'image couvre toute la surface */
         -fx-background-repeat: no-repeat; /* L'image ne se répète pas */
@@ -20,6 +21,7 @@
 
 /* Formulaires */
 .form-box {
+        -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
         -fx-background-color: rgba(255, 255, 255, 0.9);
         -fx-border-color: #ddd;
         -fx-border-radius: 10;
@@ -49,7 +51,7 @@
 }
 
 .button:hover {
-        -fx-background-color: #005f8c;
+        -fx-background-color: #d9534f;
 }
 
 /* Champs de texte */

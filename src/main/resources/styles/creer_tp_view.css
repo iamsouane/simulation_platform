@@ -1,0 +1,64 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-image: url("../images/creer_tp.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+}
+
+.container {
+    -fx-background-color: white;
+    -fx-padding: 25;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 5);
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0077b6;
+}
+
+.text-field {
+    -fx-pref-width: 250px;
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #0077b6;
+}
+
+.combo-box {
+    -fx-pref-width: 250px;
+}
+
+/* Style du bouton principal (Créer TP) */
+.button-primary {
+    -fx-background-color: #0077b6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button-primary:hover {
+    -fx-background-color: #d9534f;
+}
+
+/* Nouveau style pour le bouton retour */
+.button-secondary {
+    -fx-background-color: #0077b6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #d9534f;
+}

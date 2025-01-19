@@ -48,7 +48,7 @@ public class ProfesseurController {
                 String prenom = resultSet.getString("prenom");
 
                 // Mise à jour du message de bienvenue
-                bienvenueLabel.setText("Bienvenue " + prenom + " " + nom + "!");
+                bienvenueLabel.setText("Bienvenue " + prenom.toUpperCase() + " " + nom.toUpperCase() + "!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,37 +75,21 @@ public class ProfesseurController {
 
     @FXML
     private void handleConsulterResultats() {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = """
-                SELECT r.note, r.commentaires, t.titre, u.nom AS eleveNom, u.prenom AS elevePrenom
-                FROM resultat r
-                JOIN tp t ON r.tp = t.idTP
-                JOIN utilisateur u ON r.eleve = u.idUtilisateur
-                WHERE t.createur = ?;
-                """;
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, professeur.getId());
-            ResultSet resultSet = statement.executeQuery();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/consulter_resultats_eleve_view.fxml"));
+            Scene scene = new Scene(loader.load());
 
-            StringBuilder resultats = new StringBuilder("Résultats des élèves :\n");
+            // Récupérer le contrôleur et lui passer le professeur et le stage
+            ConsulterResultatsEleveController controller = loader.getController();
+            controller.setProfesseur(professeur);
+            controller.setStage(stage);
+            controller.loadResultats(); // Charger les résultats
 
-            while (resultSet.next()) {
-                String eleveNom = resultSet.getString("eleveNom");
-                String elevePrenom = resultSet.getString("elevePrenom");
-                int note = resultSet.getInt("note");
-                String commentaires = resultSet.getString("commentaires");
-                String tpTitre = resultSet.getString("titre");
-
-                resultats.append("TP: ").append(tpTitre).append("\n");
-                resultats.append("Élève: ").append(elevePrenom).append(" ").append(eleveNom).append("\n");
-                resultats.append("Note: ").append(note).append("/20\n");
-                resultats.append("Commentaires: ").append(commentaires).append("\n\n");
-            }
-
-            showAlert(Alert.AlertType.INFORMATION, "Résultats", resultats.toString());
-        } catch (SQLException e) {
+            // Changer la scène pour afficher les résultats
+            stage.setScene(scene);
+        } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la récupération des résultats.");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue des résultats.");
         }
     }
 
@@ -115,12 +99,16 @@ public class ProfesseurController {
             // Afficher un message d'alerte pour informer de la déconnexion
             showAlert(Alert.AlertType.INFORMATION, "Déconnexion", "Vous avez été déconnecté.");
 
-            // Charger la scène de connexion (assurez-vous que le fichier FXML existe)
+            // Charger la scène de connexion (MainView)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/main_view.fxml"));
             Scene loginScene = new Scene(loader.load());
 
-            // Obtenir le stage actuel et le remplacer par celui de la page de connexion
+            // Récupérer le contrôleur et lui passer le stage
+            MainViewController mainController = loader.getController();
             Stage primaryStage = (Stage) bienvenueLabel.getScene().getWindow();
+            mainController.setStage(primaryStage);
+
+            // Remettre la scène principale
             primaryStage.setScene(loginScene);
             primaryStage.show();
         } catch (IOException e) {
@@ -128,6 +116,7 @@ public class ProfesseurController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page de connexion.");
         }
     }
+
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
