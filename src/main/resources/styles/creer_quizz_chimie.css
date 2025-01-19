@@ -84,7 +84,6 @@
     -fx-background-color: #d9534f;
 }
 
-.button-submit:hover {
+.button-action:hover {
     -fx-background-color: #d9534f;
 }
-
