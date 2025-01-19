@@ -1,13 +1,13 @@
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-background-image: url("../images/results_background.png"); /* Illustration de fond */
+    -fx-background-image: url("../images/results_background1.jpg"); /* Illustration de fond */
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-padding: 20;
 }
 
-VBox {
+.container {
     -fx-background-color: rgba(255, 255, 255, 0.85); /* Légère transparence pour voir le fond */
     -fx-padding: 20;
     -fx-border-radius: 10;
@@ -15,12 +15,19 @@ VBox {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 5);
 }
 
+/* Fond transparent autour du titre */
+.title-background {
+    -fx-background-color: rgba(255, 255, 255, 0.7); /* Transparent avec un fond blanc léger */
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-alignment: center;
+}
+
 /* Titre principal */
-Label {
+.title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #0077b6;
-    -fx-padding: 10 0;
 }
 
 /* TableView */

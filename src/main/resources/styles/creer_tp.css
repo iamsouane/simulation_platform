@@ -17,12 +17,22 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 5);
 }
 
+/* Fond transparent autour du titre */
+.title-background {
+    -fx-background-color: rgba(255, 255, 255, 0.7); /* Transparent avec un fond blanc léger */
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-alignment: center;
+}
+
+/* Titre principal */
 .title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #0077b6;
 }
 
+/* TextField */
 .text-field {
     -fx-pref-width: 250px;
     -fx-padding: 10;
@@ -31,11 +41,12 @@
     -fx-border-color: #0077b6;
 }
 
+/* ComboBox */
 .combo-box {
     -fx-pref-width: 250px;
 }
 
-/* Style des boutons*/
+/* Style des boutons */
 .button {
     -fx-background-color: #0077b6;
     -fx-text-fill: white;

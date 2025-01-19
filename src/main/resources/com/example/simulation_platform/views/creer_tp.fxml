@@ -9,7 +9,7 @@
 <?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPController"
       spacing="15" alignment="CENTER" styleClass="container"
-      stylesheets="@../../../../styles/creer_tp_view.css">
+      stylesheets="@../../../../styles/creer_tp.css">
 
     <children>
         <!-- Icône en haut -->
@@ -19,7 +19,10 @@
             </image>
         </ImageView>
 
-        <Label text="Créer un TP" styleClass="title"/>
+        <!-- Titre avec arrière-plan transparent -->
+        <HBox alignment="CENTER" styleClass="title-background">
+            <Label text="Créer un TP" styleClass="title"/>
+        </HBox>
 
         <TextField fx:id="titreField" promptText="Titre du TP" styleClass="text-field"/>
         <TextField fx:id="detailsField" promptText="Détails du TP" styleClass="text-field"/>
@@ -31,6 +34,7 @@
                     <String fx:value="SVT"/>
                 </FXCollections>
             </items>
+            <value>Chimie</value> <!-- Valeur par défaut -->
         </ComboBox>
 
         <ComboBox fx:id="typeTPComboBox" styleClass="combo-box">
@@ -40,6 +44,7 @@
                     <String fx:value="Simulation"/>
                 </FXCollections>
             </items>
+            <value>Quizz</value> <!-- Valeur par défaut -->
         </ComboBox>
 
         <Button text="Créer TP" onAction="#handleCreer" styleClass="button"/>

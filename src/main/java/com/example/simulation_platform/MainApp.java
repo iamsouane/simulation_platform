@@ -14,8 +14,13 @@ public class MainApp extends Application {
         Scene scene = new Scene(loader.load());
         MainViewController controller = loader.getController();
         controller.setStage(primaryStage);
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Plateforme de Simulation");
+
+        // Maximiser la fenêtre au lancement
+        primaryStage.setMaximized(true);
+
         primaryStage.show();
     }
 
