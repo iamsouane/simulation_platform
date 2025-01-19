@@ -8,17 +8,17 @@ import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreerTPQuizzSVTController {
 
-    @FXML
-    private TextField titreField;
     @FXML
     private ComboBox<String> questionsComboBox;
     @FXML
@@ -51,8 +51,6 @@ public class CreerTPQuizzSVTController {
 
     @FXML
     public void initialize() {
-        titreField.setText(titre);  // Initialiser le champ titre avec la valeur transférée
-
         for (Question question : banqueDeQuestions.getQuestions()) {
             questionsComboBox.getItems().add(question.getEnonce());
         }
@@ -100,11 +98,10 @@ public class CreerTPQuizzSVTController {
             connection.setAutoCommit(false);
 
             // Enregistrer le TP
-            String tpQuery = "INSERT INTO tp (titre, details, matiere, typeTP, createur) VALUES (?, ?, 'SVT', 'QUIZZ', ?)";
+            String tpQuery = "INSERT INTO tp (details, matiere, typeTP, createur) VALUES (?, 'SVT', 'QUIZZ', ?)";
             PreparedStatement tpStatement = connection.prepareStatement(tpQuery, Statement.RETURN_GENERATED_KEYS);
-            tpStatement.setString(1, titre);
-            tpStatement.setString(2, details);
-            tpStatement.setInt(3, professeur.getId()); // Utilisateur créateur
+            tpStatement.setString(1, details);
+            tpStatement.setInt(2, professeur.getId()); // Utilisateur créateur
             tpStatement.executeUpdate();
             ResultSet tpKeys = tpStatement.getGeneratedKeys();
             tpKeys.next();
@@ -159,6 +156,29 @@ public class CreerTPQuizzSVTController {
                 reponsesListView.getItems().add(reponse.getTexte() + (reponse.isEstCorrecte() ? " (Correct)" : ""));
             }
             questionsVBox.getChildren().addAll(questionLabel, reponsesListView);
+        }
+    }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de création de TP
+            CreerTPController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setProfesseur(professeur);  // Transférer le professeur
+            controller.setStage((Stage) questionsComboBox.getScene().getWindow());  // Passer le stage actuel
+
+            // Mettre à jour la scène avec la vue de création de TP
+            Stage stage = (Stage) questionsComboBox.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
         }
     }
 

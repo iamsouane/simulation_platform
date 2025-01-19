@@ -1,6 +1,5 @@
 package com.example.simulation_platform.controllers;
 
-import com.example.simulation_platform.controllers.CreerTPController;
 import com.example.simulation_platform.models.BanqueDeQuestionsChimie;
 import com.example.simulation_platform.models.Professeur;
 import com.example.simulation_platform.models.Question;

@@ -1,16 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:id="rootPane"
+           fx:controller="com.example.simulation_platform.controllers.CreerTPQuizzSVTController"
+           stylesheets="@../../../../styles/creer_quizz_svt.css"
+           styleClass="root-pane">
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPQuizzSVTController" spacing="10" alignment="CENTER">
-    <children>
-        <Label text="Créer TP Quizz SVT"/>
-        <TextField fx:id="titreField" promptText="Titre"/>
-        <ComboBox fx:id="questionsComboBox" promptText="Sélectionnez une question"/>
-        <ListView fx:id="optionsListView"/>
-        <Button text="Ajouter Question" onAction="#handleAjouterQuestion"/>
-        <VBox fx:id="questionsVBox" spacing="10"/>
-        <Button text="Créer Quizz SVT" onAction="#handleCreer"/>
-    </children>
-</VBox>
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true"
+                hbarPolicy="NEVER" vbarPolicy="ALWAYS" styleClass="scroll-pane">
+        <content>
+            <VBox fx:id="contentBox" spacing="15" alignment="CENTER" styleClass="container">
+
+                <!-- Titre avec image d'illustration -->
+                <ImageView fx:id="quizzIcon" fitHeight="100" fitWidth="100" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../images/create_icon.png"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Créer TP Quizz SVT" styleClass="title"/>
+
+                <!-- ComboBox pour sélectionner une question -->
+                <ComboBox fx:id="questionsComboBox" promptText="Sélectionnez une question" styleClass="combo-box"/>
+
+                <!-- ListView pour afficher les options -->
+                <ListView fx:id="optionsListView" styleClass="list-view"/>
+
+                <!-- Bouton pour ajouter une question -->
+                <Button text="Ajouter Question" onAction="#handleAjouterQuestion" styleClass="button-action"/>
+
+                <!-- VBox pour afficher les questions ajoutées -->
+                <VBox fx:id="questionsVBox" spacing="10" styleClass="questions-container"/>
+
+                <!-- Bouton pour créer le quizz -->
+                <Button text="Créer Quizz SVT" onAction="#handleCreer" styleClass="button-submit"/>
+
+                <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+
+            </VBox>
+        </content>
+    </ScrollPane>
+
+</StackPane>
