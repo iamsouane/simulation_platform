@@ -8,9 +8,15 @@ import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,6 +167,31 @@ public class CreerTPQuizzChimieController {
             questionsVBox.getChildren().addAll(questionLabel, reponsesListView);
         }
     }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de création de TP
+            CreerTPController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setProfesseur(professeur);  // Transférer le professeur
+            controller.setStage((Stage) titreField.getScene().getWindow());  // Passer le stage actuel
+
+            // Mettre à jour la scène avec la vue de création de TP
+            Stage stage = (Stage) titreField.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
+        }
+    }
+
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

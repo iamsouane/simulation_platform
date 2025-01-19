@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.CreerTPQuizzChimieController" spacing="10" alignment="CENTER">
-    <children>
-        <Label text="Créer TP Quizz Chimie"/>
-        <TextField fx:id="titreField" promptText="Titre"/>
-        <ComboBox fx:id="questionsComboBox" promptText="Sélectionnez une question"/>
-        <ListView fx:id="optionsListView"/>
-        <Button text="Ajouter Question" onAction="#handleAjouterQuestion"/>
-        <VBox fx:id="questionsVBox" spacing="10"/>
-        <Button text="Créer Quizz Chimie" onAction="#handleCreer"/>
-    </children>
-</VBox>
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:id="rootPane"
+           fx:controller="com.example.simulation_platform.controllers.CreerTPQuizzChimieController"
+           stylesheets="@../../../../styles/creer_quizz_chimie.css"
+           styleClass="root-pane">
+
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true"
+                hbarPolicy="NEVER" vbarPolicy="ALWAYS" styleClass="scroll-pane">
+        <content>
+            <VBox fx:id="contentBox" spacing="15" alignment="CENTER" styleClass="container">
+
+                <!-- Titre avec image d'illustration -->
+                <ImageView fx:id="quizzIcon" fitHeight="100" fitWidth="100" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../images/create_icon.png"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Créer TP Quizz Chimie" styleClass="title"/>
+
+                <!-- Input du titre -->
+                <TextField fx:id="titreField" promptText="Titre de la question" styleClass="input-field"/>
+
+                <!-- ComboBox pour sélectionner une question -->
+                <ComboBox fx:id="questionsComboBox" promptText="Sélectionnez une question" styleClass="combo-box"/>
+
+                <!-- ListView pour afficher les options -->
+                <ListView fx:id="optionsListView" styleClass="list-view"/>
+
+                <!-- Bouton pour ajouter une question -->
+                <Button text="Ajouter Question" onAction="#handleAjouterQuestion" styleClass="button-action"/>
+
+                <!-- VBox pour afficher les questions ajoutées -->
+                <VBox fx:id="questionsVBox" spacing="10" styleClass="questions-container"/>
+
+                <!-- Bouton pour créer le quizz -->
+                <Button text="Créer Quizz Chimie" onAction="#handleCreer" styleClass="button-submit"/>
+
+                <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+
+            </VBox>
+        </content>
+    </ScrollPane>
+
+</StackPane>
