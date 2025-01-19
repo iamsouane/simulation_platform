@@ -35,8 +35,8 @@
     -fx-pref-width: 250px;
 }
 
-/* Style du bouton principal (Créer TP) */
-.button-primary {
+/* Style des boutons*/
+.button {
     -fx-background-color: #0077b6;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -45,20 +45,6 @@
     -fx-background-radius: 5;
 }
 
-.button-primary:hover {
-    -fx-background-color: #d9534f;
-}
-
-/* Nouveau style pour le bouton retour */
-.button-secondary {
-    -fx-background-color: #0077b6;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-}
-
-.button-secondary:hover {
+.button:hover {
     -fx-background-color: #d9534f;
 }

@@ -1,0 +1,23 @@
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.simulation_platform.controllers.ConsulterResultatsEleveController"
+      alignment="CENTER" styleClass="container"
+      stylesheets="@../../../../styles/consulter_resultat_eleve.css">
+
+    <Label text="Résultats des élèves" styleClass="title"/>
+
+    <TableView fx:id="resultatsTable">
+        <columns>
+            <TableColumn fx:id="tpColumn" text="📝 TP" prefWidth="200"/>
+            <TableColumn fx:id="eleveColumn" text="👩‍🎓 Élève" prefWidth="200"/>
+            <TableColumn fx:id="noteColumn" text="📊 Note" prefWidth="100"/>
+            <TableColumn fx:id="commentairesColumn" text="💬 Commentaires" prefWidth="300"/>
+        </columns>
+    </TableView>
+
+    <Button text="Retour" onAction="#handleRetour" styleClass="button-back"/>
+</VBox>

@@ -42,8 +42,7 @@
             </items>
         </ComboBox>
 
-        <Button text="Créer TP" onAction="#handleCreer" styleClass="button-primary"/>
-        <Button text="Retour" onAction="#handleRetour" styleClass="button-secondary"/>
-
+        <Button text="Créer TP" onAction="#handleCreer" styleClass="button"/>
+        <Button text="Retour" onAction="#handleRetour" styleClass="button"/>
     </children>
 </VBox>

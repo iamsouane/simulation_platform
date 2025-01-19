@@ -59,7 +59,7 @@ public class ProfesseurController {
     @FXML
     private void handleCreerTP() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp.fxml"));
             Scene scene = new Scene(loader.load());
 
             CreerTPController controller = loader.getController();
@@ -76,7 +76,7 @@ public class ProfesseurController {
     @FXML
     private void handleConsulterResultats() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/consulter_resultats_eleve_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/consulter_resultats_eleve.fxml"));
             Scene scene = new Scene(loader.load());
 
             // Récupérer le contrôleur et lui passer le professeur et le stage
