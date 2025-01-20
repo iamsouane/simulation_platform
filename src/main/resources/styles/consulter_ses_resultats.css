@@ -1,5 +1,6 @@
 /* Style de la vue principale */
 .root {
+    -fx-background-image: url("../images/results_background.png");
     -fx-background-color: #f4f4f9;  /* Arrière-plan gris clair pour la vue */
     -fx-padding: 30;
     -fx-alignment: center;
