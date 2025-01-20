@@ -1,0 +1,107 @@
+/* Arrière-plan général */
+.root {
+    -fx-background-image: url('../images/lab_back_svt.jpg'); /* Remplacer par l'URL de votre image */
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-padding: 10px; /* Réduit le padding général pour libérer de l'espace */
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Titre principal */
+#headerLabel {
+    -fx-text-fill: #0077b6; /* Bleu */
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 5px 0; /* Réduit le padding */
+}
+
+/* Sliders */
+.slider {
+    -fx-base: #0077b6;
+    -fx-background-color: #eeeeee;
+    -fx-border-radius: 10px;
+    -fx-padding: 3px; /* Réduit le padding du slider */
+}
+
+.slider .track {
+    -fx-background-color: #0077b6;
+}
+
+.slider .thumb {
+    -fx-background-color: white;
+    -fx-border-color: #0077b6;
+}
+
+/* Labels pour les sliders */
+.valueLabel {
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-padding: 3px 0; /* Réduit le padding */
+}
+
+/* Descriptions des effets des sliders */
+.descriptionLabel {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 3px 0; /* Réduit le padding */
+    -fx-background-color: rgba(0, 119, 182, 0.8);
+    -fx-background-radius: 10px;
+    -fx-margin: 5px 0; /* Réduit la marge */
+}
+
+/* StackPane (pour les plantes) */
+#stackPanePlantes {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-background-radius: 15px;
+    -fx-padding: 10px; /* Réduit le padding pour une meilleure visibilité */
+    -fx-pref-width: 100%; /* Assure une largeur maximale */
+    -fx-pref-height: 300px; /* Réduit la hauteur pour que les plantes soient visibles */
+}
+
+/* Bouton */
+.submitButton {
+    -fx-background-color: #0077b6;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-border-radius: 25px;
+    -fx-padding: 8px 16px; /* Réduit le padding pour plus de compacité */
+    -fx-transition: background-color 0.3s;
+}
+
+/* Effet de survol pour le bouton */
+.submitButton:hover {
+    -fx-background-color: #005f8d;
+}
+
+/* Animation des transitions (par exemple pour les transitions de température) */
+.scale-transition {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-duration: 0.5s;
+}
+
+/* Tooltip personnalisé */
+.tooltip {
+    -fx-background-color: rgba(0, 119, 182, 0.8);
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+}
+
+/* Ajout de marges entre les composants */
+VBox {
+    -fx-spacing: 15px; /* Réduit l'espacement entre les éléments */
+}
+
+/* Styling pour le bouton avec icône */
+.submitButton > .graphic {
+    -fx-padding: 3px;
+}
+
+.submitButton > .graphic > ImageView {
+    -fx-fit-width: 18px;
+    -fx-fit-height: 18px;
+}

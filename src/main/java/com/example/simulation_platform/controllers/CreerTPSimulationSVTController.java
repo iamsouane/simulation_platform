@@ -21,10 +21,6 @@ import java.sql.SQLException;
 public class CreerTPSimulationSVTController {
 
     @FXML
-    private TextField titreField;
-    @FXML
-    private TextField detailsField;
-    @FXML
     private StackPane stackPanePlantes;
     @FXML
     private Slider sliderTemperature;
@@ -48,17 +44,19 @@ public class CreerTPSimulationSVTController {
     private Button btnEnregistrer; // Le bouton pour enregistrer le TP
 
     private Professeur professeur;
+    private String titre;
+    private String details;
 
     public void setProfesseur(Professeur professeur) {
         this.professeur = professeur;
     }
 
     public void setTitre(String titre) {
-        titreField.setText(titre);
+        this.titre = titre;
     }
 
     public void setDetails(String details) {
-        detailsField.setText(details);
+        this.details = details;
     }
 
     @FXML
@@ -268,21 +266,23 @@ public class CreerTPSimulationSVTController {
 
     @FXML
     public void enregistrerTP() {
-        // Récupérer les données des champs du formulaire
-        String titre = titreField.getText();
-        String details = detailsField.getText();
-        String matiere = "SVT"; // On suppose que c'est un TP de SVT, vous pouvez ajouter un choix de matière
-        String typeTP = "SIMULATION"; // Idem, vous pouvez ajouter un champ pour choisir le type de TP
-        int createurId = professeur.getId(); // Utilisez l'ID du professeur connecté
+        // Vérification que titre et details sont non nuls et non vides
+        if (titre == null || titre.isEmpty() || details == null || details.isEmpty()) {
+            showAlert("Erreur", "Veuillez renseigner tous les champs avant d'enregistrer.", Alert.AlertType.ERROR);
+            return;
+        }
 
-        // Insérer le TP dans la base de données
+        // Paramètres du TP
+        String matiere = "SVT"; // On suppose que c'est un TP de SVT
+        String typeTP = "SIMULATION"; // Type de TP
+        int createurId = professeur.getId(); // ID du professeur connecté
+
+        // Enregistrement dans la base de données
         boolean success = enregistrerTPDansBaseDeDonnees(titre, details, matiere, typeTP, createurId);
 
         if (success) {
-            // Afficher une alerte de succès
             showAlert("Succès", "Le TP a été enregistré avec succès.", Alert.AlertType.INFORMATION);
         } else {
-            // Afficher une alerte d'erreur
             showAlert("Erreur", "Une erreur est survenue lors de l'enregistrement du TP.", Alert.AlertType.ERROR);
         }
     }
