@@ -1,0 +1,58 @@
+/* Style de la vue principale */
+.root {
+    -fx-background-color: #f4f4f9;  /* Arrière-plan gris clair pour la vue */
+    -fx-padding: 30;
+    -fx-alignment: center;
+}
+
+/* Style du titre */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0077b6; /* Bleu, comme spécifié précédemment */
+    -fx-padding: 10 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3); /* Ombre douce */
+}
+
+/* Style pour les résultats */
+.results-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 15;
+    -fx-background-color: rgba(0, 0, 0, 0.6);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+    -fx-max-width: 500px;
+    -fx-wrap-text: true;  /* Assurez-vous que le texte peut être retourné à la ligne */
+}
+
+/* Style des boutons dans cette vue */
+.button-container {
+    -fx-padding: 20;
+    -fx-alignment: center;
+}
+
+/* Style du bouton */
+.button {
+    -fx-background-color: #0077b6; /* Bleu */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0, 0, 2);
+    -fx-cursor: hand;
+}
+
+/* Effet au survol du bouton */
+.button:hover {
+    -fx-background-color: #005f8a; /* Une couleur bleu foncé lors du survol */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 8, 0, 0, 4);
+}
+
+/* Style de l'alignement des éléments à l'intérieur de VBox */
+.root > .button-container > .button {
+    -fx-margin-top: 20px;  /* Espacement supplémentaire en haut du bouton */
+}

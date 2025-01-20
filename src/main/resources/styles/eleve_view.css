@@ -1,0 +1,74 @@
+/* Fond de la page avec une image et un dégradé */
+.root {
+    -fx-background-image: url("../images/professeur_view.jpg"); /* Remplacez par votre image de fond */
+    -fx-background-size: cover; /* L'image couvre toute la surface */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 20;
+}
+
+/* Style de la section de bienvenue */
+.welcome-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* Titre des TP */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 0;
+}
+
+/* Liste des TP */
+.tp-list-view {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+}
+
+/* Conteneur des boutons */
+.button-container {
+    -fx-padding: 20;
+    -fx-alignment: center;
+}
+
+/* Style des boutons par défaut */
+.button {
+    -fx-cursor: hand;
+    -fx-background-color: #0077b6; /* Couleur bleue par défaut */
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+}
+
+/* Style des boutons au survol */
+.button:hover {
+    -fx-background-color: #d9534f; /* Couleur rouge au survol */
+    -fx-text-fill: white; /* Assurez-vous que le texte reste blanc */
+    -fx-opacity: 1; /* Suppression de la transparence si elle cause des problèmes */
+}
+
+/* Style des icônes dans les boutons */
+.button > .graphic {
+    -fx-margin-right: 10px; /* Espacement entre l'icône et le texte */
+}
+
+/* Style des étiquettes générales */
+.label {
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0077b6;
+}
+
+/* Image d'avatar ou logo */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0.1, 0, 2);
+    -fx-padding: 10;
+}

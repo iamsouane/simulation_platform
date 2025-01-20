@@ -1,0 +1,21 @@
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.Button?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.ConsulterSesResultatsController"
+      spacing="20" alignment="CENTER"
+      stylesheets="@../../../../styles/consulter_ses_resultats.css"
+      styleClass="root">
+    <children>
+        <!-- Titre -->
+        <Label text="Consulter vos résultats" styleClass="title-label"/>
+
+        <!-- Zone pour afficher les résultats -->
+        <Label fx:id="resultsLabel" styleClass="results-label"/>
+
+        <!-- Retour à l'interface principale -->
+        <VBox spacing="15" alignment="CENTER" styleClass="button-container">
+            <Button text="Retour à la liste des TP" onAction="#handleRetour" styleClass="button" prefWidth="250"/>
+        </VBox>
+    </children>
+</VBox>

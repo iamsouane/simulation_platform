@@ -50,8 +50,12 @@ public class ConsulterResultatsEleveController {
         // Associer les colonnes avec les propriétés du modèle Resultat
         tpColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTp().getTitre()));
         eleveColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEleve().getPrenom() + " " + cellData.getValue().getEleve().getNom()));
-        noteColumn.setCellValueFactory(new PropertyValueFactory<>("note"));
-        commentairesColumn.setCellValueFactory(new PropertyValueFactory<>("commentaires"));
+
+        // Utiliser SimpleIntegerProperty pour les entiers, pour la colonne "note"
+        noteColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNote()).asObject());
+
+        // Associer les commentaires à la colonne "commentaires"
+        commentairesColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCommentaires()));
     }
 
     public void loadResultats() {

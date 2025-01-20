@@ -5,25 +5,25 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.EleveController"
       spacing="20" alignment="CENTER"
-      stylesheets="@/eleve_view.css"
+      stylesheets="@../../../../styles/eleve_view.css"
       styleClass="root">
     <children>
         <!-- Conteneur principal avec un message de bienvenue -->
         <VBox alignment="CENTER" spacing="10">
             <Label fx:id="welcomeLabel" text="Bienvenue Élève"
-                   style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+                   styleClass="welcome-label"/>
         </VBox>
 
         <!-- Titre de la liste des TP -->
         <Label text="Liste des TP disponibles"
-               style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-padding: 10 0;"/>
+               styleClass="title-label"/>
 
         <!-- Liste des TP disponibles -->
         <ListView fx:id="tpListView"
-                  maxWidth="400" maxHeight="300"/>
+                  maxWidth="400" maxHeight="300" styleClass="tp-list-view"/>
 
         <!-- Boutons pour les actions -->
-        <VBox spacing="15" alignment="CENTER" style="-fx-padding: 20;">
+        <VBox spacing="15" alignment="CENTER" styleClass="button-container">
             <Button text="Faire TP Quizz" onAction="#handleFaireTPQuizz" styleClass="button" prefWidth="250"/>
             <Button text="Faire TP Simulation" onAction="#handleFaireTPSimulation" styleClass="button" prefWidth="250"/>
             <Button text="Consulter Résultat" onAction="#handleConsulterResultat" styleClass="button" prefWidth="250"/>

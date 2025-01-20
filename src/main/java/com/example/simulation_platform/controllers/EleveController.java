@@ -189,39 +189,44 @@ public class EleveController {
 
     @FXML
     private void handleConsulterResultat() {
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String query = "SELECT * FROM resultat WHERE eleve = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, eleve.getId());
-            ResultSet resultSet = statement.executeQuery();
-            StringBuilder resultats = new StringBuilder("Résultats :\n");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/consulter_ses_resultats.fxml"));
+            VBox consulterResultatsView = loader.load();
+            ConsulterSesResultatsController controller = loader.getController();
+            controller.setEleve(eleve);
 
-            while (resultSet.next()) {
-                int note = resultSet.getInt("note");
-                String commentaires = resultSet.getString("commentaires");
-                resultats.append("TP: ").append(resultSet.getInt("tp")).append("\n");
-                resultats.append("Note: ").append(note).append("/20\n");
-                resultats.append("Commentaires: ").append(commentaires).append("\n\n");
-            }
+            Scene scene = new Scene(consulterResultatsView);
+            stage.setScene(scene);
+            stage.setTitle("Consulter vos résultats");
 
-            showAlert(Alert.AlertType.INFORMATION, "Résultats", resultats.toString());
-        } catch (SQLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors de la récupération des résultats.");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors du chargement des résultats.");
         }
     }
+
 
     @FXML
     private void handleLogout() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/login_view.fxml"));
-            VBox loginView = loader.load();
-            Scene scene = new Scene(loginView);
+            // Afficher un message d'alerte pour informer de la déconnexion
+            showAlert(Alert.AlertType.INFORMATION, "Déconnexion", "Vous avez été déconnecté.");
 
-            stage.setScene(scene);
-            stage.setTitle("Connexion - Simulation Platform");
+            // Charger la scène de connexion (MainView)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/main_view.fxml"));
+            Scene loginScene = new Scene(loader.load());
+
+            // Récupérer le contrôleur et lui passer le stage
+            MainViewController mainController = loader.getController();
+            Stage primaryStage = (Stage) welcomeLabel.getScene().getWindow();
+            mainController.setStage(primaryStage);
+
+            // Remettre la scène principale
+            primaryStage.setScene(loginScene);
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page de connexion.");
         }
     }
 
