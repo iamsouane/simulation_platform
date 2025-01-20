@@ -9,7 +9,7 @@
 <?import javafx.scene.control.Button?>
 <StackPane xmlns:fx="http://javafx.com/fxml" fx:id="rootPane"
            fx:controller="com.example.simulation_platform.controllers.CreerTPQuizzChimieController"
-           stylesheets="@../../../../styles/creer_quizz_chimie.css"
+           stylesheets="@../../../../styles/creer_tp_quizz_chimie.css"
            styleClass="root-pane">
 
     <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true"

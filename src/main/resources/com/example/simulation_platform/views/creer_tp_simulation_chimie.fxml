@@ -2,21 +2,48 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
 
+<?import javafx.scene.image.Image?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationChimieController"
-      spacing="10" alignment="CENTER">
+      spacing="10" alignment="CENTER" stylesheets="@../../../../styles/creer_tp_simulation_chimie.css">
     <children>
-        <Label text="Créer TP Simulation Chimie"/>
-        <TextField fx:id="titreField" promptText="Titre"/>
-        <TextField fx:id="detailsField" promptText="Détails"/>
-        <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution"/>
-        <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur"/>
-        <Button text="Demarrer" onAction="#handleCreer"/>
-        <Text fx:id="resultatText" layoutX="50" layoutY="550" />
-        <StackPane fx:id="simulationContainer" prefWidth="600" prefHeight="600" />
-        <Button text="Soumettre" onAction="#handleSoumettre"/>
+        <!-- Titre -->
+        <Label text="Créer TP Simulation Chimie" id="titleLabel"/>
+
+        <!-- ComboBoxes -->
+        <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution" id="solutionComboBox"/>
+        <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur" id="indicateurComboBox"/>
+
+        <!-- Bouton Démarrer -->
+        <Button fx:id="startButton" text="Démarrer" onAction="#handleCreer" id="startButton">
+            <graphic>
+                <ImageView fitWidth="30" fitHeight="30">
+                    <image>
+                        <Image url="@../../../../images/start_icon.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+
+        <!-- Affichage des résultats -->
+        <Text fx:id="resultatText" layoutX="50" layoutY="550" id="resultatText"/>
+
+        <!-- StackPane pour la simulation -->
+        <StackPane fx:id="simulationContainer" prefWidth="600" prefHeight="600" id="simulationContainer">
+            <!-- Espace réservé pour la simulation 3D -->
+            <ImageView fx:id="simulationImage" visible="false"/>
+        </StackPane>
+
+        <!-- HBox pour aligner les boutons horizontalement -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Soumettre" onAction="#handleSoumettre" id="submitButton"/>
+            <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+        </HBox>
     </children>
 </VBox>

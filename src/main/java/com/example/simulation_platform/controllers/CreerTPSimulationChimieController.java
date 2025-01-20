@@ -4,6 +4,8 @@ import com.example.simulation_platform.models.Professeur;
 import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -11,8 +13,10 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,10 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreerTPSimulationChimieController {
-    @FXML
-    private TextField titreField;
-    @FXML
-    private TextField detailsField;
     @FXML
     private StackPane simulationContainer;
     @FXML
@@ -35,6 +35,8 @@ public class CreerTPSimulationChimieController {
     private Text resultatText;
 
     private Professeur professeur;
+    private String titre;
+    private String details;
     private Map<String, Color> solutionsMap;
     private Map<String, Color> indicateursMap;
     private Map<String, Map<String, Color>> solutionIndicateurColorsMap;
@@ -66,11 +68,11 @@ public class CreerTPSimulationChimieController {
     }
 
     public void setTitre(String titre) {
-        titreField.setText(titre);
+        this.titre = titre;
     }
 
     public void setDetails(String details) {
-        detailsField.setText(details);
+        this.details = details;
     }
 
     @FXML
@@ -131,14 +133,6 @@ public class CreerTPSimulationChimieController {
 
     @FXML
     private void handleCreer() {
-        String titre = titreField.getText();
-        String details = detailsField.getText();
-
-        if (titre.isEmpty() || details.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
-            return;
-        }
-
         String selectedSolution = solutionComboBox.getValue();
         String selectedIndicateur = indicateurComboBox.getValue();
         if (selectedIndicateur == null || selectedSolution == null) {
@@ -151,19 +145,13 @@ public class CreerTPSimulationChimieController {
 
     @FXML
     private void handleSoumettre() {
-        String titre = titreField.getText();
-        String details = detailsField.getText();
         String selectedSolution = solutionComboBox.getValue();
         String selectedIndicateur = indicateurComboBox.getValue();
-        String description = resultatText.getText();
 
-        if (titre.isEmpty() || details.isEmpty() || selectedSolution == null || selectedIndicateur == null) {
+        if (selectedSolution == null || selectedIndicateur == null) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez remplir tous les champs.");
             return;
         }
-
-        Color finalColor = solutionIndicateurColorsMap.get(selectedSolution).get(selectedIndicateur);
-        String couleurFinale = getColorName(finalColor);
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             // Insérer dans la table tp
@@ -227,11 +215,11 @@ public class CreerTPSimulationChimieController {
 
         if (selectedSolution != null) {
             if (selectedSolution.contains("acide")) {
-                description += "La solution est acide\n";
+                description += "Resultat de la solution:\n";
             } else if (selectedSolution.contains("basique")) {
-                description += "La solution est basique\n";
+                description += "Resultat de la solution:\n";
             } else {
-                description += "La solution est neutre\n";
+                description += "Resultat de la solution:\n";
             }
 
             Color finalColor = solutionIndicateurColorsMap.get(selectedSolution).get(selectedIndicateur);
@@ -240,31 +228,31 @@ public class CreerTPSimulationChimieController {
 
             if ("Phénolphtaléine".equals(selectedIndicateur)) {
                 if (finalColor.equals(Color.TRANSPARENT)) {
-                    description += "pH: < 8,2 (Acide ou Neutre)";
+                    description += "pH: < 8,2 (La solution est donc Acide ou Neutre)";
                 } else if (finalColor.equals(Color.PINK)) {
-                    description += "pH: > 8,2 (Basique)";
+                    description += "pH: > 8,2 (La solution est donc Basique)";
                 }
             } else if ("Bleu de bromothymol".equals(selectedIndicateur)) {
                 if (finalColor.equals(Color.YELLOW)) {
-                    description += "pH: < 7 (Acide)";
+                    description += "pH: < 7 (La solution est donc Acide)";
                 } else if (finalColor.equals(Color.GREEN)) {
-                    description += "pH: 7 (Neutre)";
+                    description += "pH: 7 (La solution est donc Neutre)";
                 } else if (finalColor.equals(Color.BLUE)) {
-                    description += "pH: > 7 (Basique)";
+                    description += "pH: > 7 (La solution est donc Basique)";
                 }
             } else if ("Jus de chou rouge".equals(selectedIndicateur)) {
                 if (finalColor.equals(Color.RED)) {
-                    description += "pH: < 7 (Acide)";
+                    description += "pH: < 7 (La solution est donc Acide)";
                 } else if (finalColor.equals(Color.VIOLET)) {
-                    description += "pH: 7 (Neutre)";
+                    description += "pH: 7 (La solution est donc Neutre)";
                 } else if (finalColor.equals(Color.GREEN) || finalColor.equals(Color.BLUE)) {
-                    description += "pH: > 7 (Basique)";
+                    description += "pH: > 7 (La solution est donc Basique)";
                 }
             } else if ("Rouge de méthyle".equals(selectedIndicateur)) {
                 if (finalColor.equals(Color.RED)) {
-                    description += "pH: < 4,4 (Acide)";
+                    description += "pH: < 4,4 (La solution est donc Acide)";
                 } else if (finalColor.equals(Color.YELLOW)) {
-                    description += "pH: > 6,2 (Basique)";
+                    description += "pH: > 6,2 (La solution est donc Basique)";
                 }
             } else {
                 description += "pH: Indéterminé pour cet indicateur";
@@ -365,6 +353,32 @@ public class CreerTPSimulationChimieController {
         timeline.setCycleCount(1);
         timeline.play();
     }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de création de TP
+            CreerTPController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setProfesseur(professeur);  // Transférer le professeur
+
+            // Afficher la nouvelle scène
+            Stage stage = (Stage) simulationContainer.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
+        }
+    }
+
+
 
     @FXML
     private void showAlert(Alert.AlertType alertType, String title, String message) {
