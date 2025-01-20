@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPQuizzSVTController" spacing="10" alignment="CENTER">
-    <children>
-        <Label fx:id="titreLabel" text="TP Quizz SVT"/>
-        <VBox fx:id="questionsVBox" spacing="10"/>
-        <Button text="Soumettre" onAction="#handleSoumettre"/>
-    </children>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.FaireTPQuizzSVTController"
+      stylesheets="@../../../../styles/faire_tp_quizz_svt.css" styleClass="root"
+      spacing="15" alignment="CENTER">
+
+    <!-- Icône du quizz avec style -->
+    <ImageView fx:id="quizzIcon" fitHeight="100" fitWidth="100" preserveRatio="true" styleClass="quizz-icon">
+        <image>
+            <Image url="@../../../../images/create_icon.png"/>
+        </image>
+    </ImageView>
+
+    <!-- Titre principal avec style -->
+    <Label text="TP Quizz SVT" styleClass="title"/>
+
+    <!-- Formulaire pour les questions avec style -->
+    <VBox fx:id="questionsVBox" spacing="10" styleClass="form-box">
+        <!-- Questions seront ajoutées ici dynamiquement -->
+    </VBox>
+
+    <!-- Bouton de soumission avec style -->
+    <Button text="Soumettre" onAction="#handleSoumettre" styleClass="button-action"/>
+
 </VBox>

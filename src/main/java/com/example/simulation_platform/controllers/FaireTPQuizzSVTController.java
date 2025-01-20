@@ -24,8 +24,6 @@ public class FaireTPQuizzSVTController {
 
     @FXML
     private VBox questionsVBox;
-    @FXML
-    private Label titreLabel;
 
     private List<Question> questions;
     private TP tp;
@@ -42,7 +40,6 @@ public class FaireTPQuizzSVTController {
 
     public void setTP(TP tp) {
         this.tp = tp;
-        titreLabel.setText(tp.getTitre());
         questions = getQuestionsFromTP(tp);
         afficheQuestions();
     }
