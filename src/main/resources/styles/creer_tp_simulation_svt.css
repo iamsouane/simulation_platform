@@ -57,7 +57,7 @@
     -fx-background-radius: 15px;
     -fx-padding: 10px; /* Réduit le padding pour une meilleure visibilité */
     -fx-pref-width: 100%; /* Assure une largeur maximale */
-    -fx-pref-height: 350px; /* Réduit la hauteur pour que les plantes soient visibles */
+    -fx-pref-height: 300px; /* Réduit la hauteur pour que les plantes soient visibles */
 }
 
 /* Bouton */
