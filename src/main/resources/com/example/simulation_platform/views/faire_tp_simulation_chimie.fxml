@@ -1,18 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.scene.image.Image?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationChimieController"
-      spacing="10" alignment="CENTER">
+      spacing="10" alignment="CENTER" stylesheets="@../../../../styles/faire_tp_simulation_chimie.css">
     <children>
-        <Label text="Simulation Chimie"/>
-        <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution"/>
-        <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur"/>
-        <Button text="Démarrer" onAction="#handleCreer"/>
-        <Text fx:id="resultatText" wrappingWidth="400" fill="black"/>
-        <StackPane fx:id="simulationContainer" prefWidth="600" prefHeight="600"/>
+        <!-- Titre -->
+        <Label text="Faire TP Simulation Chimie" id="titleLabel"/>
+
+        <!-- ComboBoxes -->
+        <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution" id="solutionComboBox"/>
+        <ComboBox fx:id="indicateurComboBox" promptText="Choisir un indicateur" id="indicateurComboBox"/>
+
+        <!-- Bouton Démarrer -->
+        <Button fx:id="startButton" text="Démarrer" onAction="#handleCreer" id="startButton">
+            <graphic>
+                <ImageView fitWidth="30" fitHeight="30">
+                    <image>
+                        <Image url="@../../../../images/start_icon.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+
+        <!-- Affichage des résultats -->
+        <Text fx:id="resultatText" layoutX="50" layoutY="550" id="resultatText"/>
+
+        <!-- StackPane pour la simulation -->
+        <StackPane fx:id="simulationContainer" prefWidth="600" prefHeight="600" id="simulationContainer">
+            <!-- Espace réservé pour la simulation 3D -->
+            <ImageView fx:id="simulationImage" visible="false"/>
+        </StackPane>
+
+        <!-- HBox pour aligner les boutons horizontalement -->
+
     </children>
 </VBox>
