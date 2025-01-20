@@ -1,6 +1,6 @@
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-background-image: url("../images/results_background1.jpg"); /* Illustration de fond */
+    -fx-background-image: url("../images/results_background.png"); /* Illustration de fond */
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;

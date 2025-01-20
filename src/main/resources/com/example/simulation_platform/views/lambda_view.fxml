@@ -1,12 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.LambdaController" spacing="10" alignment="CENTER">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.simulation_platform.controllers.LambdaController"
+      spacing="20" alignment="CENTER"
+      stylesheets="@../../../../styles/eleve_view.css"
+      styleClass="root">
     <children>
-        <Label text="Bienvenue Utilisateur Lambda"/>
-        <Button text="Tester TP" onAction="#handleTesterTP"/>
-        <Button text="Se Déconnecter" onAction="#handleLogout"/>
+        <!-- Conteneur principal avec un message de bienvenue -->
+        <VBox alignment="CENTER" spacing="10">
+            <Label fx:id="welcomeLabel" text="Bienvenue Lambda"
+                   styleClass="welcome-label"/>
+        </VBox>
+
+        <!-- Titre de la liste des TP -->
+        <Label text="Liste des TP disponibles"
+               styleClass="title-label"/>
+
+        <!-- Liste des TP disponibles -->
+        <ListView fx:id="tpListView"
+                  maxWidth="400" maxHeight="300" styleClass="tp-list-view"/>
+
+        <!-- Boutons pour les actions -->
+        <VBox spacing="15" alignment="CENTER" styleClass="button-container">
+            <Button text="Faire TP Quizz" onAction="#handleFaireTPQuizz" styleClass="button" prefWidth="250"/>
+            <Button text="Faire TP Simulation" onAction="#handleFaireTPSimulation" styleClass="button" prefWidth="250"/>
+            <Button text="Se Déconnecter" onAction="#handleLogout" styleClass="button" prefWidth="250"/>
+        </VBox>
     </children>
 </VBox>

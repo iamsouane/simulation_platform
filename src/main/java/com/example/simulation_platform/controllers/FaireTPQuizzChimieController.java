@@ -1,9 +1,6 @@
 package com.example.simulation_platform.controllers;
 
-import com.example.simulation_platform.models.Eleve;
-import com.example.simulation_platform.models.Question;
-import com.example.simulation_platform.models.Reponse;
-import com.example.simulation_platform.models.TP;
+import com.example.simulation_platform.models.*;
 import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,6 +25,7 @@ public class FaireTPQuizzChimieController {
     private List<Question> questions;
     private TP tp;
     private Eleve eleve;
+    private Lambda lambda;
     private Stage stage;
 
     public void setStage(Stage stage) {
@@ -36,6 +34,10 @@ public class FaireTPQuizzChimieController {
 
     public void setEleve(Eleve eleve) {
         this.eleve = eleve;
+    }
+
+    public void setLambda(Lambda lambda) {
+        this.lambda = lambda;
     }
 
     public void setTP(TP tp) {

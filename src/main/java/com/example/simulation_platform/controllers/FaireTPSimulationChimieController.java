@@ -1,6 +1,7 @@
 package com.example.simulation_platform.controllers;
 
 import com.example.simulation_platform.models.Eleve;
+import com.example.simulation_platform.models.Lambda;
 import com.example.simulation_platform.models.Professeur;
 import com.example.simulation_platform.models.TP;
 import javafx.animation.*;
@@ -30,6 +31,7 @@ public class FaireTPSimulationChimieController {
     private Professeur professeur;
     private Stage stage;
     private Eleve eleve;
+    private Lambda lambda;
     private TP tp;
 
     private Map<String, Color> solutionsMap;
@@ -45,6 +47,10 @@ public class FaireTPSimulationChimieController {
 
     public void setEleve(Eleve eleve) {
         this.eleve = eleve;
+    }
+
+    public void setLambda(Lambda lambda) {
+        this.lambda = lambda;
     }
 
     public void setTP(TP tp) {
