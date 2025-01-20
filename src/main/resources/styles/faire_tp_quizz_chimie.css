@@ -1,0 +1,89 @@
+/* Fond de la page avec une image */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-background-image: url("../images/quizz_background.jpg"); /* Chemin vers l'image spécifique au quizz */
+    -fx-background-size: cover; /* L'image couvre toute la surface */
+    -fx-background-repeat: no-repeat; /* L'image ne se répète pas */
+    -fx-background-position: center; /* L'image est centrée */
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-alignment: center;
+}
+
+/* Titre principal */
+.title {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 28px;  /* Taille adaptée pour un titre visible */
+    -fx-text-fill: #0077b6;  /* Bleu pour l'harmonie avec le style général */
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Formulaire pour les questions */
+.form-box {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Fond semi-transparent */
+    -fx-border-color: #0077b6; /* Bleu pour les bordures */
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+    -fx-pref-width: 350; /* Largeur de formulaire ajustée */
+}
+
+/* Icône du quizz */
+#quizzIcon {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0.1, 0, 2);
+    -fx-padding: 10;
+}
+
+/* Boutons d'action */
+.button-action, .button-submit {
+    -fx-cursor: hand;
+    -fx-background-color: #0077b6; /* Bleu principal */
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+    -fx-font-family: "Segoe UI", sans-serif; /* Uniformité */
+}
+
+.button-action:hover, .button-submit:hover {
+    -fx-background-color: #005f8e; /* Bleu plus foncé au survol */
+}
+
+/* Champs de texte */
+.input-field, .combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-border-color: #0077b6; /* Bleu pour les bordures */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Liste des options */
+.list-view {
+    -fx-background-color: rgba(250, 250, 250, 1);
+    -fx-border-color: #0077b6; /* Bleu pour les bordures */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-pref-width: 300px;
+    -fx-min-height: 100px;
+    -fx-padding: 5;
+}
+
+/* Alignement du formulaire */
+.form-box > .button {
+    -fx-alignment: center;  /* Aligner le bouton au centre du formulaire */
+}
+
+.button-action:hover {
+    -fx-background-color: #d9534f;
+}
+
+.button-action:hover {
+    -fx-background-color: #d9534f;
+}
