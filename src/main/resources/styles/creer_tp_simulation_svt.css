@@ -1,6 +1,6 @@
 /* Arrière-plan général */
 .root {
-    -fx-background-image: url('../images/lab_back1.jpg'); /* Remplacer par l'URL de votre image */
+    -fx-background-image: url('../images/lab_back.jpg'); /* Remplacer par l'URL de votre image */
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-padding: 10px; /* Réduit le padding général pour libérer de l'espace */
