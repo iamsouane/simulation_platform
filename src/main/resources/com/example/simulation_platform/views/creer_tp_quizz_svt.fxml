@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 <StackPane xmlns:fx="http://javafx.com/fxml" fx:id="rootPane"
            fx:controller="com.example.simulation_platform.controllers.CreerTPQuizzSVTController"
            stylesheets="@../../../../styles/creer_quizz_svt.css"
@@ -24,7 +25,10 @@
                     </image>
                 </ImageView>
 
-                <Label text="Créer TP Quizz SVT" styleClass="title"/>
+                <!-- Titre avec arrière-plan transparent -->
+                <HBox alignment="CENTER" styleClass="title-background">
+                    <Label text="Créer TP Quizz Chimie" styleClass="title"/>
+                </HBox>
 
                 <!-- ComboBox pour sélectionner une question -->
                 <ComboBox fx:id="questionsComboBox" promptText="Sélectionnez une question" styleClass="combo-box"/>
@@ -38,10 +42,11 @@
                 <!-- VBox pour afficher les questions ajoutées -->
                 <VBox fx:id="questionsVBox" spacing="10" styleClass="questions-container"/>
 
-                <!-- Bouton pour créer le quizz -->
-                <Button text="Créer Quizz SVT" onAction="#handleCreer" styleClass="button-submit"/>
-
-                <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+                <!-- Bouton pour créer le quizz et retour -->
+                <HBox spacing="15" alignment="CENTER">
+                    <Button text="Soumettre" onAction="#handleCreer" styleClass="button-submit"/>
+                    <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+                </HBox>
 
             </VBox>
         </content>
