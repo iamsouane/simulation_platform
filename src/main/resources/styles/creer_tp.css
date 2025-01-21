@@ -19,10 +19,12 @@
 
 /* Fond transparent autour du titre */
 .title-background {
-    -fx-background-color: rgba(255, 255, 255, 0.7); /* Transparent avec un fond blanc léger */
-    -fx-padding: 10;
+    -fx-background-color: rgba(255, 255, 255); /* Fond légèrement transparent */
+    -fx-padding: 10 20; /* Ajuste l'espace autour du titre */
     -fx-border-radius: 10;
     -fx-alignment: center;
+    -fx-min-width: 80px; /* Adapte la largeur au texte */
+    -fx-max-width: 160px; /* Garde la largeur au plus juste */
 }
 
 /* Titre principal */
