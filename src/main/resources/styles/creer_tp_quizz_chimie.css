@@ -10,6 +10,22 @@
     -fx-alignment: center;
 }
 
+.root-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.5); /* Ajuste l'opacité ici */
+}
+
+
+/* Conteneur principal */
+.container {
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Fond semi-transparent */
+    -fx-border-color: #0077b6; /* Bleu pour les bordures */
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+}
+
 /* Titre principal */
 .title {
     -fx-font-family: "Segoe UI", sans-serif;
@@ -17,6 +33,16 @@
     -fx-text-fill: #0077b6;  /* Bleu pour l'harmonie avec le style général */
     -fx-font-weight: bold;
     -fx-alignment: center;
+}
+
+/* Fond transparent autour du titre */
+.title-background {
+    -fx-background-color: rgba(255, 255, 255); /* Fond légèrement transparent */
+    -fx-padding: 10 20; /* Ajuste l'espace autour du titre */
+    -fx-border-radius: 10;
+    -fx-alignment: center;
+    -fx-min-width: 100px; /* Adapte la largeur au texte */
+    -fx-max-width: 350px; /* Garde la largeur au plus juste */
 }
 
 /* Formulaire pour les questions */
@@ -44,7 +70,7 @@
     -fx-text-fill: white;
     -fx-background-radius: 10;
     -fx-font-size: 16px;
-    -fx-padding: 10 20;
+    -fx-padding: 8 18;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
     -fx-font-family: "Segoe UI", sans-serif; /* Uniformité */
 }
@@ -87,3 +113,11 @@
 .button-action:hover {
     -fx-background-color: #d9534f;
 }
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
