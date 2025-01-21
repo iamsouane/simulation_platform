@@ -12,7 +12,7 @@
 
 /* Style pour le titre */
 #titleLabel {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #0077b6;
@@ -20,7 +20,7 @@
 
 /* Style des ComboBox */
 #solutionComboBox, #indicateurComboBox {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-radius: 15px;
     -fx-padding: 8px;
     -fx-font-size: 14px;
@@ -29,13 +29,13 @@
     -fx-border-radius: 15px;
 }
 
-/* Style pour le bouton Démarrer avec icône */
+/* Bouton avec icône (Démarrer) */
 #startButton {
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: #0077b6;
     -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-padding: 5px 15px;
+    -fx-padding: 8px 20px;
     -fx-background-radius: 15px;
     -fx-content-display: left; /* Pour afficher l'icône à gauche du texte */
     -fx-graphic: url("../images/start_icon.png"); /* L'icône à afficher */
@@ -43,12 +43,13 @@
 
 /* Effet de survol pour le bouton Démarrer */
 #startButton:hover {
-    -fx-background-color: #d9534f;
+    -fx-background-color: #005f8d; /* Changement de couleur de fond pour un effet de survol */
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0, 2, 2); /* Ombre subtile lors du survol */
 }
 
-/* Style pour le texte de résultat */
+/* Style du texte de résultat */
 #resultatText {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 16px;
     -fx-text-fill: #333;
     -fx-font-weight: normal;
@@ -58,33 +59,180 @@
 
 /* Style de l'animation de simulation */
 #simulationContainer {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-font-family: "Segoe UI", sans-serif;
 }
 
-/* Bouton Soumettre */
-#submitButton {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+/* Style pour les boutons d'action (Soumettre, Retour) */
+.button-action, .submitButton {
+    -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: #0077b6;
     -fx-text-fill: white;
     -fx-font-size: 16px;
-    -fx-padding: 5px 15px;
+    -fx-padding: 8px 20px;
     -fx-background-radius: 15px;
+    -fx-transition: background-color 0.3s ease;
 }
 
+/* Effet de survol pour tous les boutons d'action */
+.button-action:hover, .submitButton:hover {
+    -fx-background-color: #d9534f; /* Changement de couleur de fond sur le survol */
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0, 2, 2); /* Ombre subtile pour survol */
+}
+
+/* Bouton "Retour" avec effet de survol */
 .button-action {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: #0077b6;
     -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-padding: 5px 15px;
     -fx-background-radius: 15px;
-}
-
-/* Effet de survol pour le bouton Démarrer */
-#submitButton:hover {
-    -fx-background-color: #d9534f;
 }
 
 .button-action:hover {
+    -fx-background-color: #005f8d;
+}
+
+/* Bouton avec icône (Enregistrer TP) */
+.submitButton {
+    -fx-background-color: #0077b6;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-border-radius: 25px;
+    -fx-padding: 8px 16px;
+}
+
+/* Ajustement des icônes dans le bouton */
+.submitButton > .graphic {
+    -fx-padding: 3px;
+}
+
+.submitButton > .graphic > ImageView {
+    -fx-fit-width: 20px;/* Arrière-plan général */
+    .root {
+        -fx-background-image: url('../images/lab_back.jpg'); /* Remplacer par l'URL de votre image */
+        -fx-background-size: cover;
+        -fx-background-position: center center;
+        -fx-padding: 10px; /* Réduit le padding général pour libérer de l'espace */
+        -fx-font-family: 'Segoe UI', sans-serif;
+        -fx-font-size: 14px;
+    }
+
+    /* Titre principal */
+    #headerLabel {
+        -fx-text-fill: #0077b6; /* Bleu */
+        -fx-font-size: 24px;
+        -fx-font-weight: bold;
+        -fx-alignment: center;
+        -fx-padding: 5px 0; /* Réduit le padding */
+    }
+
+    /* Sliders */
+    .slider {
+        -fx-base: #0077b6;
+        -fx-background-color: #eeeeee;
+        -fx-border-radius: 10px;
+        -fx-padding: 3px; /* Réduit le padding du slider */
+    }
+
+    .slider .track {
+        -fx-background-color: #0077b6;
+    }
+
+    .slider .thumb {
+        -fx-background-color: white;
+        -fx-border-color: #0077b6;
+    }
+
+    /* Labels pour les sliders */
+    .valueLabel {
+        -fx-text-fill: #333;
+        -fx-font-size: 14px;
+        -fx-padding: 3px 0; /* Réduit le padding */
+    }
+
+    /* Descriptions des effets des sliders */
+    .descriptionLabel {
+        -fx-text-fill: #ffffff;
+        -fx-font-size: 14px;
+        -fx-padding: 3px 0; /* Réduit le padding */
+        -fx-background-color: rgba(0, 119, 182, 0.8);
+        -fx-background-radius: 10px;
+        -fx-margin: 5px 0; /* Réduit la marge */
+    }
+
+    /* StackPane (pour les plantes) */
+    #stackPanePlantes {
+        -fx-background-color: rgba(255, 255, 255, 0.5);
+        -fx-background-radius: 15px;
+        -fx-padding: 10px; /* Réduit le padding pour une meilleure visibilité */
+        -fx-pref-width: 100%; /* Assure une largeur maximale */
+        -fx-pref-height: 300px; /* Réduit la hauteur pour que les plantes soient visibles */
+    }
+
+    /* Bouton */
+    .submitButton {
+        -fx-background-color: #0077b6;
+        -fx-text-fill: white;
+        -fx-font-size: 16px;
+        -fx-border-radius: 25px;
+        -fx-padding: 8px 16px; /* Réduit le padding pour plus de compacité */
+        -fx-transition: background-color 0.3s;
+    }
+
+    /* Effet de survol pour le bouton */
+    .submitButton:hover {
+        -fx-background-color: #d9534f;
+    }
+
+    /* Animation des transitions (par exemple pour les transitions de température) */
+    .scale-transition {
+        -fx-scale-x: 1.1;
+        -fx-scale-y: 1.1;
+        -fx-duration: 0.5s;
+    }
+
+    /* Tooltip personnalisé */
+    .tooltip {
+        -fx-background-color: rgba(0, 119, 182, 0.8);
+        -fx-text-fill: white;
+        -fx-border-radius: 5px;
+        -fx-font-size: 14px;
+        -fx-padding: 8px;
+    }
+
+    /* Ajout de marges entre les composants */
+    VBox {
+        -fx-spacing: 15px; /* Réduit l'espacement entre les éléments */
+    }
+
+    /* Styling pour le bouton avec icône */
+    .submitButton > .graphic {
+        -fx-padding: 3px;
+    }
+
+    .submitButton > .graphic > ImageView {
+        -fx-fit-width: 18px;
+        -fx-fit-height: 18px;
+    }
+
+    .button-action {
+        -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+        -fx-background-color: #0077b6;
+        -fx-text-fill: white;
+        -fx-font-size: 16px;
+        -fx-padding: 5px 15px;
+        -fx-background-radius: 15px;
+    }
+
+    .button-action:hover {
+        -fx-background-color: #d9534f;
+    }
+    -fx-fit-height: 20px;
+}
+
+/* Bouton Enregistrer TP survol */
+.submitButton:hover {
     -fx-background-color: #d9534f;
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0, 2, 2);
 }

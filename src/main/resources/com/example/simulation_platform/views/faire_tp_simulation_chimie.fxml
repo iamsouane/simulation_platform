@@ -42,7 +42,17 @@
 
         <!-- Conteneur pour aligner les boutons horizontalement -->
         <HBox spacing="10" alignment="CENTER">
-            <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+            <!-- Bouton pour enregistrer le TP -->
+            <Button fx:id="btnEnregistrer" text="Enregistrer TP" onAction="#enregistrerTP" styleClass="submitButton">
+                <graphic>
+                    <ImageView fx:id="btnIcon" fitWidth="20" fitHeight="20">
+                        <image>
+                            <Image url="@../../../../images/create_icon.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button text="Retour" onAction="#handleRetour" styleClass="submitButton"/>
         </HBox>
 
     </children>

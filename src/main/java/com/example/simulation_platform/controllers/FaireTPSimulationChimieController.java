@@ -19,6 +19,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +41,8 @@ public class FaireTPSimulationChimieController {
     private Eleve eleve;
     private Lambda lambda;
     private TP tp;
+    private String titre;
+    private String details;
 
     private Map<String, Color> solutionsMap;
     private Map<String, Color> indicateursMap;
@@ -59,6 +65,13 @@ public class FaireTPSimulationChimieController {
 
     public void setTP(TP tp) {
         this.tp = tp;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     private String getColorName(Color color) {
@@ -315,6 +328,61 @@ public class FaireTPSimulationChimieController {
         }
         timeline.setCycleCount(1);
         timeline.play();
+    }
+
+    @FXML
+    public void enregistrerTP() {
+        if (titre == null || titre.isEmpty() || details == null || details.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez saisir les informations");
+            return;
+        }
+
+        String matiere = "SVT"; // TP de SVT, peut être changé si nécessaire
+        String typeTP = "SIMULATION"; // Type de TP
+        int createurId = eleve.getId(); // ID de l'élève ou professeur créant le TP
+
+        // Insérer le TP dans la base de données
+        boolean success = enregistrerTPDansBaseDeDonnees(titre, details, matiere, typeTP, createurId);
+
+        if (success) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Le tp a ete enregistre avec succes");
+        } else {
+            // Afficher une alerte d'erreur
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Erreur lors de l'enregistrement");
+        }
+    }
+
+    private boolean enregistrerTPDansBaseDeDonnees(String titre, String details, String matiere, String typeTP, int createurId) {
+        String url = "jdbc:mysql://localhost:3306/simulation_platform";
+        String user = "root";
+        String password = "1234"; // Remplacez par votre mot de passe
+
+        String sql = "INSERT INTO tp (titre, details, matiere, typeTP, createur) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, titre);
+            stmt.setString(2, details);
+            stmt.setString(3, matiere);
+            stmt.setString(4, typeTP);
+            stmt.setInt(5, createurId);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @FXML
