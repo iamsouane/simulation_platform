@@ -5,14 +5,16 @@ import com.example.simulation_platform.models.Professeur;
 import com.example.simulation_platform.models.Resultat;
 import com.example.simulation_platform.models.TP;
 import com.example.simulation_platform.utils.DatabaseConnection;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,14 +50,27 @@ public class ConsulterResultatsEleveController {
     @FXML
     public void initialize() {
         // Associer les colonnes avec les propriétés du modèle Resultat
-        tpColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTp().getTitre()));
-        eleveColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEleve().getPrenom() + " " + cellData.getValue().getEleve().getNom()));
+        tpColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getTp() != null) {
+                System.out.println("Détails TP dans TableView : " + cellData.getValue().getTp().getDetails());
+                return new SimpleStringProperty(cellData.getValue().getTp().getDetails());
+            } else {
+                System.out.println("⚠ Erreur : TP null pour un résultat !");
+                return new SimpleStringProperty("N/A");
+            }
+        });
 
-        // Utiliser SimpleIntegerProperty pour les entiers, pour la colonne "note"
-        noteColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNote()).asObject());
+        eleveColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getEleve().getPrenom() + " " + cellData.getValue().getEleve().getNom())
+        );
 
-        // Associer les commentaires à la colonne "commentaires"
-        commentairesColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCommentaires()));
+        noteColumn.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(cellData.getValue().getNote()).asObject()
+        );
+
+        commentairesColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getCommentaires())
+        );
     }
 
     public void loadResultats() {
@@ -63,7 +78,7 @@ public class ConsulterResultatsEleveController {
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             String query = """
-                SELECT r.note, r.commentaires, t.idTP, t.titre, u.idUtilisateur, u.nom, u.prenom
+                SELECT r.note, r.commentaires, t.idTP, t.details, u.idUtilisateur, u.nom, u.prenom
                 FROM resultat r
                 JOIN tp t ON r.tp = t.idTP
                 JOIN utilisateur u ON r.eleve = u.idUtilisateur
@@ -74,14 +89,16 @@ public class ConsulterResultatsEleveController {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int idTP = resultSet.getInt("idTP");
-                String tpTitre = resultSet.getString("titre");
-                TP tp = new TP(tpTitre, "", null, null, professeur); // Les autres attributs sont mis à null pour éviter les erreurs
+                String tpDetails = resultSet.getString("details");
+                System.out.println("Détails TP récupérés : " + tpDetails); // Debugging
+
+                // Respect du constructeur existant de TP
+                TP tp = new TP("", tpDetails, null, null, professeur);
 
                 int idEleve = resultSet.getInt("idUtilisateur");
                 String eleveNom = resultSet.getString("nom");
                 String elevePrenom = resultSet.getString("prenom");
-                Eleve eleve = new Eleve(idEleve, eleveNom, elevePrenom, "", ""); // Email et mot de passe sont inutiles ici
+                Eleve eleve = new Eleve(idEleve, eleveNom, elevePrenom, "", "");
 
                 int note = resultSet.getInt("note");
                 String commentaires = resultSet.getString("commentaires");
@@ -94,8 +111,11 @@ public class ConsulterResultatsEleveController {
             }
 
             resultatsTable.setItems(resultatsList);
+            resultatsTable.refresh(); // Rafraîchir la table
+
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur SQL", "Impossible de charger les résultats.");
         }
     }
 
@@ -112,6 +132,15 @@ public class ConsulterResultatsEleveController {
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la page du professeur.");
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
