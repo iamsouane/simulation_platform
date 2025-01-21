@@ -192,8 +192,10 @@ public class EleveController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/consulter_ses_resultats.fxml"));
             VBox consulterResultatsView = loader.load();
+
             ConsulterSesResultatsController controller = loader.getController();
             controller.setEleve(eleve);
+            controller.setStage(stage);  // Ajout de cette ligne
 
             Scene scene = new Scene(consulterResultatsView);
             stage.setScene(scene);
@@ -204,7 +206,6 @@ public class EleveController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur est survenue lors du chargement des résultats.");
         }
     }
-
 
     @FXML
     private void handleLogout() {

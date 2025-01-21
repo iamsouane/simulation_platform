@@ -62,13 +62,13 @@ public class ConsulterSesResultatsController {
     private void handleRetour() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/eleve_view.fxml"));
-            VBox eleveView = loader.load();
+            Scene scene = new Scene(loader.load());
+
             EleveController controller = loader.getController();
             controller.setEleve(eleve);
             controller.setStage(stage);
-            Scene scene = new Scene(eleveView);
+
             stage.setScene(scene);
-            stage.setTitle("Liste des TP");
         } catch (IOException e) {
             e.printStackTrace();
         }
