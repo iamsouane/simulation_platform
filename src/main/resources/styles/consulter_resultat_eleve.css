@@ -7,20 +7,24 @@
     -fx-padding: 20;
 }
 
+/* Conteneur principal centré */
 .container {
-    -fx-background-color: rgba(255, 255, 255, 0.85); /* Légère transparence pour voir le fond */
+    -fx-background-color: rgba(255, 255, 255, 0.85); /* Légère transparence */
     -fx-padding: 20;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 5);
+    -fx-alignment: CENTER;
 }
 
-/* Fond transparent autour du titre */
+/* Fond ajusté autour du titre */
 .title-background {
-    -fx-background-color: rgba(255, 255, 255, 0.7); /* Transparent avec un fond blanc léger */
-    -fx-padding: 10;
+    -fx-background-color: rgba(255, 255, 255); /* Fond légèrement transparent */
+    -fx-padding: 10 20; /* Ajuste l'espace autour du titre */
     -fx-border-radius: 10;
     -fx-alignment: center;
+    -fx-min-width: 200px; /* Adapte la largeur au texte */
+    -fx-max-width: 500px; /* Garde la largeur au plus juste */
 }
 
 /* Titre principal */
@@ -30,29 +34,36 @@
     -fx-text-fill: #0077b6;
 }
 
-/* TableView */
-TableView {
+/* TableView centré avec une largeur limitée */
+.table-custom {
     -fx-pref-width: 800px;
-    -fx-border-color: rgba(0, 119, 182, 0.7); /* Bordure semi-transparente */
+    -fx-max-width: 800px;
+    -fx-border-color: rgba(0, 119, 182, 0.7);
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-background-color: rgba(255, 255, 255, 0.6); /* Transparence du tableau */
+    -fx-background-color: rgba(255, 255, 255, 0.6);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0.3, 0, 2);
 }
 
-/* Colonnes */
+/* Colonnes centrées */
 TableColumn {
     -fx-alignment: CENTER;
-    -fx-font-size: 14px;
 }
 
-/* Lignes du tableau */
+/* Uniformiser la hauteur des cellules */
+.table-cell {
+    -fx-pref-height: 40px;
+    -fx-alignment: CENTER;
+}
+
+/* Ajuster les lignes du tableau */
 .table-row-cell {
-    -fx-background-color: rgba(255, 255, 255, 0.5); /* Légère transparence */
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-fixed-cell-size: 40px; /* Hauteur fixe */
 }
 
 .table-row-cell:odd {
-    -fx-background-color: rgba(240, 240, 240, 0.5); /* Alternance des couleurs */
+    -fx-background-color: rgba(240, 240, 240, 0.5);
 }
 
 .table-row-cell:even {

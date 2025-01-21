@@ -24,7 +24,7 @@
         <Label text="Résultats des élèves" styleClass="title"/>
     </HBox>
 
-    <TableView fx:id="resultatsTable">
+    <TableView fx:id="resultatsTable" styleClass="table-custom">
         <columns>
             <TableColumn fx:id="tpColumn" text="📝 TP" prefWidth="200"/>
             <TableColumn fx:id="eleveColumn" text="👩‍🎓 Élève" prefWidth="300"/>
