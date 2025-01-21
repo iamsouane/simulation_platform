@@ -366,19 +366,16 @@ public class CreerTPSimulationChimieController {
 
             // Passer les informations nécessaires au contrôleur
             controller.setProfesseur(professeur);  // Transférer le professeur
+            controller.setStage((Stage) resultatText.getScene().getWindow());  // Passer le stage actuel
 
-            // Afficher la nouvelle scène
-            Stage stage = (Stage) simulationContainer.getScene().getWindow();
+            // Mettre à jour la scène avec la vue de création de TP
+            Stage stage = (Stage) resultatText.getScene().getWindow();
             stage.setScene(scene);
-            stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
         }
     }
-
-
 
     @FXML
     private void showAlert(Alert.AlertType alertType, String title, String message) {

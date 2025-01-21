@@ -96,12 +96,29 @@ VBox {
     -fx-spacing: 15px; /* Réduit l'espacement entre les éléments */
 }
 
-/* Styling pour le bouton avec icône */
-.submitButton > .graphic {
-    -fx-padding: 3px;
+/* Bouton Soumettre */
+#submitButton {
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-background-color: #0077b6;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 15px;
 }
 
-.submitButton > .graphic > ImageView {
-    -fx-fit-width: 18px;
-    -fx-fit-height: 18px;
+#submitButton:hover {
+    -fx-background-color: #d9534f;
+}
+
+.button-action {
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
+    -fx-background-color: #0077b6;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 15px;
+}
+
+.button-action:hover {
+    -fx-background-color: #d9534f;
 }

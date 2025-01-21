@@ -5,14 +5,18 @@ import javafx.animation.FillTransition;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Cylinder;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -41,7 +45,7 @@ public class CreerTPSimulationSVTController {
     @FXML
     private Label descriptionLumiere;
     @FXML
-    private Button btnEnregistrer; // Le bouton pour enregistrer le TP
+    private Button handleSoumettre; // Le bouton pour enregistrer le TP
 
     private Professeur professeur;
     private String titre;
@@ -265,7 +269,7 @@ public class CreerTPSimulationSVTController {
     }
 
     @FXML
-    public void enregistrerTP() {
+    public void handleSoumettre() {
         // Vérification que titre et details sont non nuls et non vides
         if (titre == null || titre.isEmpty() || details == null || details.isEmpty()) {
             showAlert("Erreur", "Veuillez renseigner tous les champs avant d'enregistrer.", Alert.AlertType.ERROR);
@@ -308,6 +312,28 @@ public class CreerTPSimulationSVTController {
         } catch (SQLException e) {
             e.printStackTrace();
             return false; // Retourne false en cas d'erreur
+        }
+    }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/creer_tp.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de création de TP
+            CreerTPController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setProfesseur(professeur);  // Transférer le professeur
+            controller.setStage((Stage) descriptionLumiere.getScene().getWindow());  // Passer le stage actuel
+
+            // Mettre à jour la scène avec la vue de création de TP
+            Stage stage = (Stage) descriptionLumiere.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
