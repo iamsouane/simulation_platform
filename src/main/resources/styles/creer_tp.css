@@ -23,8 +23,8 @@
     -fx-padding: 10 20; /* Ajuste l'espace autour du titre */
     -fx-border-radius: 10;
     -fx-alignment: center;
-    -fx-min-width: 80px; /* Adapte la largeur au texte */
-    -fx-max-width: 160px; /* Garde la largeur au plus juste */
+    -fx-min-width: 90px; /* Adapte la largeur au texte */
+    -fx-max-width: 200px; /* Garde la largeur au plus juste */
 }
 
 /* Titre principal */
@@ -36,7 +36,8 @@
 
 /* TextField */
 .text-field {
-    -fx-pref-width: 250px;
+    -fx-pref-width: 200px;  /* Largeur fixe */
+    -fx-max-width: 200px;   /* Empêche l'extension */
     -fx-padding: 10;
     -fx-border-radius: 5;
     -fx-background-radius: 5;

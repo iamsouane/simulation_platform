@@ -1,5 +1,6 @@
 /* Fond de la page avec une image et un dégradé */
 .root {
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
     -fx-background-image: url("../images/professeur_view.jpg"); /* Remplacez par votre image de fond */
     -fx-background-size: cover; /* L'image couvre toute la surface */
     -fx-background-repeat: no-repeat;
@@ -9,6 +10,7 @@
 
 /* Style des boutons par défaut */
 .button {
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
     -fx-cursor: hand;
     -fx-background-color: #0077b6; /* Couleur bleue par défaut */
     -fx-background-radius: 10;
@@ -33,6 +35,7 @@
 
 /* Titre de bienvenue */
 .label {
+    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
     -fx-font-size: 34px;
     -fx-font-weight: bold;
     -fx-text-fill: #0077b6;

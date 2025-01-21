@@ -37,7 +37,7 @@
                         </image>
                     </ImageView>
                 </graphic>
-                <text>Créer TP</text>
+                <text>Créer un TP</text>
             </Button>
 
             <Button onAction="#handleConsulterResultats" styleClass="button" prefWidth="250">
@@ -48,7 +48,7 @@
                         </image>
                     </ImageView>
                 </graphic>
-                <text>Consulter Résultats</text>
+                <text>Consulter Résultats des Eleves</text>
             </Button>
 
             <Button onAction="#handleLogout" styleClass="button" prefWidth="250">
