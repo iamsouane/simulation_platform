@@ -3,6 +3,8 @@ package com.example.simulation_platform.controllers;
 import com.example.simulation_platform.models.*;
 import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -10,6 +12,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -182,6 +185,29 @@ public class FaireTPQuizzSVTController {
             return resultSet.getInt("idQuestion");
         } else {
             throw new SQLException("Question not found for response id: " + idReponse);
+        }
+    }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/eleve_view.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de l'eleve
+            EleveController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setEleve(eleve);  // Transférer le professeur
+            controller.setStage((Stage) questionsVBox.getScene().getWindow());  // Passer le stage actuel
+
+            // Mettre à jour la scène avec la vue de création de TP
+            Stage stage = (Stage) questionsVBox.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
         }
     }
 

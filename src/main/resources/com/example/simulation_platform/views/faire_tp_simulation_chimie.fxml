@@ -40,7 +40,10 @@
             <ImageView fx:id="simulationImage" visible="false"/>
         </StackPane>
 
-        <!-- HBox pour aligner les boutons horizontalement -->
+        <!-- Conteneur pour aligner les boutons horizontalement -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+        </HBox>
 
     </children>
 </VBox>

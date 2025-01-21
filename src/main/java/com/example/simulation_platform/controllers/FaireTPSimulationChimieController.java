@@ -6,6 +6,8 @@ import com.example.simulation_platform.models.Professeur;
 import com.example.simulation_platform.models.TP;
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -15,6 +17,8 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -311,6 +315,29 @@ public class FaireTPSimulationChimieController {
         }
         timeline.setCycleCount(1);
         timeline.play();
+    }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/eleve_view.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de l'eleve
+            EleveController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setEleve(eleve);  // Transférer le professeur
+            controller.setStage((Stage) simulationContainer.getScene().getWindow());  // Passer le stage actuel
+
+            // Mettre à jour la scène avec la vue de l'eleve
+            Stage stage = (Stage) simulationContainer.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de création de TP.");
+        }
     }
 
     @FXML

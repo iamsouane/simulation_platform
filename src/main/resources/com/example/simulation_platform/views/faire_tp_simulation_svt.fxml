@@ -8,6 +8,7 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.simulation_platform.controllers.FaireTPSimulationSVTController"
       id="rootVBox"
@@ -32,15 +33,19 @@
 
         <StackPane fx:id="stackPanePlantes" prefWidth="600" prefHeight="400" styleClass="stackPane"/>
 
-        <!-- Bouton pour enregistrer le TP -->
-        <Button fx:id="btnEnregistrer" text="Enregistrer TP" onAction="#enregistrerTP" styleClass="submitButton">
-            <graphic>
-                <ImageView fx:id="btnIcon" fitWidth="20" fitHeight="20">
-                    <image>
-                        <Image url="@../../../../images/create_icon.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
+        <!-- Conteneur pour aligner les boutons horizontalement -->
+        <HBox spacing="10" alignment="CENTER">
+            <!-- Bouton pour enregistrer le TP -->
+            <Button fx:id="btnEnregistrer" text="Enregistrer TP" onAction="#enregistrerTP" styleClass="submitButton">
+                <graphic>
+                    <ImageView fx:id="btnIcon" fitWidth="20" fitHeight="20">
+                        <image>
+                            <Image url="@../../../../images/create_icon.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button text="Retour" onAction="#handleRetour" styleClass="button-action"/>
+        </HBox>
     </children>
 </VBox>

@@ -8,7 +8,9 @@ import javafx.animation.FillTransition;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,6 +19,7 @@ import javafx.scene.shape.Cylinder;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -327,6 +330,28 @@ public class FaireTPSimulationSVTController {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @FXML
+    private void handleRetour() {
+        try {
+            // Charger la vue de retour vers la page de création de TP
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/simulation_platform/views/eleve_view.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Récupérer le contrôleur de la vue de l'eleve
+            EleveController controller = loader.getController();
+
+            // Passer les informations nécessaires au contrôleur
+            controller.setEleve(eleve);  // Transférer le professeur
+            controller.setStage((Stage) stackPanePlantes.getScene().getWindow());  // Passer le stage actuel
+
+            // Mettre à jour la scène avec la vue de l'eleve
+            Stage stage = (Stage) stackPanePlantes.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
