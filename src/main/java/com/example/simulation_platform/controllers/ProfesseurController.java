@@ -4,9 +4,11 @@ import com.example.simulation_platform.models.Professeur;
 import com.example.simulation_platform.utils.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,6 +34,16 @@ public class ProfesseurController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+
+        // Maximiser la fenêtre
+        stage.setMaximized(true);
+
+        // Ajuster la taille pour correspondre aux dimensions de l'écran
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX(screenBounds.getMinX());
+        stage.setY(screenBounds.getMinY());
+        stage.setWidth(screenBounds.getWidth());
+        stage.setHeight(screenBounds.getHeight());
     }
 
     private void loadProfesseurInfo() {
