@@ -27,7 +27,7 @@
 
                 <!-- Titre avec arrière-plan transparent -->
                 <HBox alignment="CENTER" styleClass="title-background">
-                    <Label text="Créer TP Quizz Chimie" styleClass="title"/>
+                    <Label text="Créer TP Quizz SVT" styleClass="title"/>
                 </HBox>
 
                 <!-- ComboBox pour sélectionner une question -->
