@@ -10,12 +10,21 @@
     -fx-alignment: center;
 }
 
-/* Style pour le titre */
-#titleLabel {
-    -fx-font-family: "Segoe UI", sans-serif; /* Police moderne */
-    -fx-font-size: 24px;
+/* Titre principal */
+.title {
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #0077b6;
+}
+
+/* Fond transparent autour du titre */
+.title-background {
+    -fx-background-color: rgba(255, 255, 255); /* Fond légèrement transparent */
+    -fx-padding: 10 20; /* Ajuste l'espace autour du titre */
+    -fx-border-radius: 10;
+    -fx-alignment: center;
+    -fx-min-width: 90px; /* Adapte la largeur au texte */
+    -fx-max-width: 350px; /* Garde la largeur au plus juste */
 }
 
 /* Style des ComboBox */

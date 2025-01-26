@@ -13,7 +13,10 @@
       spacing="10" alignment="CENTER" stylesheets="@../../../../styles/creer_tp_simulation_chimie.css">
     <children>
         <!-- Titre -->
-        <Label text="Créer TP Simulation Chimie" id="titleLabel"/>
+        <!-- Titre avec arrière-plan transparent -->
+        <HBox alignment="CENTER" styleClass="title-background">
+            <Label text="Créer TP Simulation Chimie" styleClass="title"/>
+        </HBox>
 
         <!-- ComboBoxes -->
         <ComboBox fx:id="solutionComboBox" promptText="Choisir une solution" id="solutionComboBox"/>
