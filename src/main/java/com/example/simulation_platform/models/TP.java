@@ -65,4 +65,10 @@ public class TP {
         resultats.add(resultat);
         return resultat;
     }
+
+    // Redéfinition de la méthode toString pour afficher les TP correctement dans la ListView
+    @Override
+    public String toString() {
+        return matiere + " (" + typeTP + ") - Créé par: " + createur.getNom().toUpperCase() + " " + createur.getPrenom().toUpperCase();
+    }
 }
