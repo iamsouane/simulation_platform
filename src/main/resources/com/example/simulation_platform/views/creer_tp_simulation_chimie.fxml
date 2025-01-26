@@ -12,7 +12,6 @@
       fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationChimieController"
       spacing="10" alignment="CENTER" stylesheets="@../../../../styles/creer_tp_simulation_chimie.css">
     <children>
-        <!-- Titre -->
         <!-- Titre avec arrière-plan transparent -->
         <HBox alignment="CENTER" styleClass="title-background">
             <Label text="Créer TP Simulation Chimie" styleClass="title"/>

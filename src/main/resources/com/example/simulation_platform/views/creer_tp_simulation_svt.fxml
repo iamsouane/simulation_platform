@@ -13,9 +13,14 @@
 <VBox xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.simulation_platform.controllers.CreerTPSimulationSVTController"
       id="rootVBox"
+      spacing="10" alignment="CENTER"
       stylesheets="@../../../../styles/creer_tp_simulation_svt.css">
     <children>
-        <Label text="Créer TP Simulation SVT" id="headerLabel" />
+        <!-- Titre avec arrière-plan transparent -->
+        <HBox alignment="CENTER" styleClass="title-background">
+            <Label text="Créer TP Simulation SVT" styleClass="title"/>
+        </HBox>
+
 
         <Label text="Température:" styleClass="inputLabel"/>
         <Slider fx:id="sliderTemperature" min="0" max="50" value="25" styleClass="slider"/>
@@ -32,7 +37,7 @@
         <Label fx:id="labelLumiere" text="Lumière : 70%" styleClass="valueLabel"/>
         <Label fx:id="descriptionLumiere" text="Effet de la lumière sur les plantes" styleClass="descriptionLabel"/>
 
-        <StackPane fx:id="stackPanePlantes" prefWidth="600" prefHeight="400" styleClass="stackPane"/>
+        <StackPane fx:id="stackPanePlantes" prefWidth="600" prefHeight="450" styleClass="stackPane"/>
 
         <!-- HBox pour aligner les boutons horizontalement -->
         <HBox spacing="20" alignment="CENTER">

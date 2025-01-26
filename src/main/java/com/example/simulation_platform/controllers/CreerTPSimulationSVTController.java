@@ -74,7 +74,7 @@ public class CreerTPSimulationSVTController {
         // Espacement entre les plantes
         double spacing = 150;
         double baseX = -spacing;
-        double y = 50;
+        double y = 30;
 
         // Création et ajout de 4 plantes
         for (int i = 0; i < 4; i++) {

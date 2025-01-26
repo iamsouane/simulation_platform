@@ -9,12 +9,21 @@
 }
 
 /* Titre principal */
-#headerLabel {
-    -fx-text-fill: #0077b6; /* Bleu */
-    -fx-font-size: 24px;
+.title {
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
+    -fx-text-fill: #0077b6;
+    -fx-alignment: center; /* Centre le contenu */
+}
+
+/* Fond transparent autour du titre */
+.title-background {
+    -fx-background-color: rgba(255, 255, 255, 0.5); /* Fond légèrement transparent */
+    -fx-padding: 10 20; /* Ajuste l'espace autour du titre */
+    -fx-border-radius: 10;
     -fx-alignment: center;
-    -fx-padding: 5px 0; /* Réduit le padding */
+    -fx-min-width: 90px; /* Adapte la largeur au texte */
+    -fx-max-width: 350px; /* Garde la largeur au plus juste */
 }
 
 /* Sliders */
@@ -55,9 +64,18 @@
 #stackPanePlantes {
     -fx-background-color: rgba(255, 255, 255, 0.5);
     -fx-background-radius: 15px;
-    -fx-padding: 10px; /* Réduit le padding pour une meilleure visibilité */
-    -fx-pref-width: 100%; /* Assure une largeur maximale */
-    -fx-pref-height: 300px; /* Réduit la hauteur pour que les plantes soient visibles */
+    -fx-padding: 20px; /* Augmenter le padding pour donner plus d'espace interne */
+    -fx-pref-width: 600px; /* Largeur fixe */
+    -fx-pref-height: 450px; /* Hauteur ajustée pour éviter les débordements */
+    -fx-max-width: 800px; /* Limite la largeur du StackPane */
+    -fx-max-height: 500px; /* Limite la hauteur du StackPane */
+    -fx-alignment: center; /* Centrer les éléments dans le StackPane */
+}
+
+#stackPanePlantes > ImageView {
+    -fx-fit-width: true; /* Redimensionne l'image en fonction de la largeur du StackPane */
+    -fx-fit-height: true; /* Redimensionne l'image en fonction de la hauteur du StackPane */
+    -fx-preserve-ratio: true; /* Maintient le ratio de l'image */
 }
 
 /* Bouton */
